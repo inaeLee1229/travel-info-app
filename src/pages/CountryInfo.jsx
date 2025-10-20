@@ -5,6 +5,7 @@ import SearchBar from "../components/SearchBar";
 import countryData from "../data/countryData";
 import { normalizeCountryCode } from "../utils/countryCodeMapper";
 import ContinentSidebar from "../components/ContinentSidebar";
+import "./CountryInfo.css";
 
 const FAV_KEY = "favoriteCountries";
 
@@ -13,6 +14,11 @@ export default function CountryInfo() {
   const countryCode = normalizeCountryCode(rawCode);
 
   const [isFav, setIsFav] = useState(false);
+  const getIsDesktop = () =>
+    typeof window !== "undefined"
+      ? window.matchMedia("(min-width: 1024px)").matches
+      : true;
+  const [isDesktop, setIsDesktop] = useState(getIsDesktop);
 
   const info = countryData[countryCode];
 
@@ -26,6 +32,17 @@ export default function CountryInfo() {
     setIsFav(saved.includes(countryCode));
   }, [countryCode]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const media = window.matchMedia("(min-width: 1024px)");
+    const handleChange = (event) => setIsDesktop(event.matches);
+
+    handleChange(media);
+    media.addEventListener("change", handleChange);
+    return () => media.removeEventListener("change", handleChange);
+  }, []);
+
   const toggleFavorite = () => {
     const saved = JSON.parse(localStorage.getItem(FAV_KEY) || "[]");
     const next = saved.includes(countryCode)
@@ -37,85 +54,36 @@ export default function CountryInfo() {
 
   return (
     <div
+      className="country-info"
       style={{
-        background: "#fff",
-        color: "#111",
-        minHeight: "100vh",
         paddingTop: PAGE_TOP_PADDING,
       }}
     >
-      {/* 상단바: ← 홈(좌), 검색창(가운데), 환율 변환기(우) */}
-      <div
-        style={{
-          position: "relative",
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: "0 24px 16px",
-          height: 48,
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        {/* 좌측: 홈 링크 */}
-        <Link
-          to="/"
-          style={{
-            position: "absolute",
-            left: 24,
-            color: "#2a7bd3",
-            textDecoration: "none",
-            fontWeight: 600,
-            whiteSpace: "nowrap",
-          }}
-        >
+      {/* 상단바: ← 홈, 검색창, 환율 변환기 */}
+      <div className="country-info__toolbar" role="navigation" aria-label="국가 정보 툴바">
+        <Link className="country-info__home" to="/">
           ← 홈
         </Link>
 
-        {/* 가운데: 검색창 */}
-        <div
-          style={{
-            position: "absolute",
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: 360,
-            maxWidth: "75vw",
-          }}
-        >
-          <SearchBar variant="inline" />
+        <div className="country-info__search">
+          <div className="country-info__search-inner">
+            <SearchBar variant="inline" />
+          </div>
         </div>
 
-        {/* 우측: 환율 변환기 버튼 */}
-        <div style={{ position: "absolute", right: 24 }}>
-          <Link
-            to="/exchange"
-            style={{
-              textDecoration: "none",
-              padding: "10px 14px",
-              borderRadius: 9999,
-              border: "1px solid #e5e5e5",
-              background: "#fff",
-              color: "#111",
-              whiteSpace: "nowrap",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
-            }}
-            aria-label="환율 변환기"
-            title="환율 변환기"
-          >
-            환율 변환기
-          </Link>
-        </div>
+        <Link className="country-info__cta" to="/exchange" aria-label="환율 변환기" title="환율 변환기">
+          환율 변환기
+        </Link>
       </div>
 
       {/* 왼쪽 대륙 사이드바 */}
-      <ContinentSidebar headerHeight={GLOBAL_HEADER_HEIGHT} />
+      <ContinentSidebar headerHeight={GLOBAL_HEADER_HEIGHT} isDesktop={isDesktop} />
 
       {/* 본문 */}
       <main
+        className="country-info__main"
         style={{
-          maxWidth: 1000,
-          margin: "0 auto",
-          padding: "24px 24px 48px",
-          paddingLeft: 24 + SIDEBAR_WIDTH,
+          paddingLeft: isDesktop ? 24 + SIDEBAR_WIDTH : 24,
         }}
       >
         {/* 제목 + 즐겨찾기 */}

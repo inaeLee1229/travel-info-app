@@ -31,20 +31,24 @@ export default function SearchBar({ variant = "inline", width = 520 }) {
   };
 
   // 위치 스타일: 헤더 전용/일반
-  const wrapperStyle =
-    variant === "header"
-      ? {
-          position: "absolute",
-          left: "50%",
-          top: 16,                    // 헤더 안에서 살짝 아래
-          transform: "translateX(-50%)",
-          zIndex: 10,
-          width,
-        }
-      : {
-          width,                      // 부모가 정렬을 담당
-          zIndex: 10,
-        };
+  const computedWidth = width;
+  const isHeader = variant === "header";
+  const wrapperStyle = isHeader
+    ? {
+        position: "absolute",
+        left: "50%",
+        top: 16, // 헤더 안에서 살짝 아래
+        transform: "translateX(-50%)",
+        zIndex: 10,
+        width: computedWidth,
+        maxWidth: "min(520px, calc(100vw - 32px))",
+      }
+    : {
+        width: "100%",
+        maxWidth: computedWidth,
+        margin: "0 auto",
+        zIndex: 10,
+      };
 
   return (
     <div style={wrapperStyle}>
@@ -57,6 +61,7 @@ export default function SearchBar({ variant = "inline", width = 520 }) {
           borderRadius: 9999,
           boxShadow: "0 4px 18px rgba(0,0,0,0.06)",
           backgroundColor: "#fff",
+          width: "100%",
         }}
       >
         <input
@@ -88,6 +93,7 @@ export default function SearchBar({ variant = "inline", width = 520 }) {
             borderRadius: 12,
             boxShadow: "0 10px 24px rgba(0,0,0,.08)",
             overflow: "hidden",
+            width: "100%",
           }}
           onMouseDown={(e) => e.preventDefault()} // 클릭 시 input blur 방지
         >
