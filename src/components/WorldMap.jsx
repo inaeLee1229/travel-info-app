@@ -1,21 +1,39 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import worldMap from "../assets/world_clickable_with_names.svg?raw";
 import { useNavigate } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase";
 
 export default function WorldMap() {
-  const handleClick = (e) => {
-    if (e.target.tagName === "path") {
-      const countryId = e.target.id;
-    if (countryId) {
-      navigate(`/country/${countryId}`); 
-    }
-  }
-  };
-
   const navigate = useNavigate();
 
+  const handleClick = useCallback(
+    (e) => {
+      const target = e.target.closest("path");
+      if (!target?.id) return;
+      navigate(`/country/${target.id}`);
+    },
+    [navigate]
+  );
+
+  const handleMouseOver = useCallback((e) => {
+    if (e.target.tagName === "path" && e.target.getAttribute("name")) {
+      const existingTitle = e.target.querySelector("title");
+      if (!existingTitle) {
+        const title = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "title"
+        );
+        title.textContent = e.target.getAttribute("name");
+        e.target.appendChild(title);
+      }
+      e.target.style.cursor = "pointer";
+    }
+  }, []);
+
   // 대륙별 국가 ID
-  const asiaCountries = [/* 생략: 아시아 국가 코드 배열 */"CN","CN1", // China
+  const asiaCountries = useMemo(
+    () => [/* 생략: 아시아 국가 코드 배열 */"CN","CN1", // China
       "JP", "JP1", "JP2", // Japan
       "KR", // South Korea
       "IN", // India
@@ -63,8 +81,11 @@ export default function WorldMap() {
       "UZ", // Uzbekistan
       "YE",  // Yemen
       "LK" // Sri Lanka
-];
-  const europeCountries = [/* 생략: 유럽 국가 코드 배열 */"AL", // Albania
+    ],
+    []
+  );
+  const europeCountries = useMemo(
+    () => [/* 생략: 유럽 국가 코드 배열 */"AL", // Albania
       "AD", // Andorra
       "AM", // Armenia (유럽/아시아 혼합이지만 유럽으로도 포함됨)
       "AT", // Austria
@@ -113,8 +134,11 @@ export default function WorldMap() {
       "GB", "GB1",// United Kingdom
       "VA",  // Vatican City
       "FEI", "FEI1", "FEI2", "FEI3", "FEI4", "FEI5", "FEI6" //Faeroe Islands
-];
-  const northAmericaCountries = [/* 생략: 북미 국가 코드 배열 */
+    ],
+    []
+  );
+  const northAmericaCountries = useMemo(
+    () => [/* 생략: 북미 국가 코드 배열 */
   "US", "US1", "US2", "US3", "US4", "US5", "US6", "US7", "US8", "US9",// United States
   "CA", "CA1", "CA2", "CA3", "CA4", "CA5", "CA6", "CA7", "CA8", "CA9",
   "CA10", "CA11", "CA12", "CA13", "CA14", "CA15", "CA16", "CA17", "CA18",
@@ -161,8 +185,11 @@ export default function WorldMap() {
   "SEN",//St. Eustatius (Netherlands)
   "SBN",//Saba (Netherlands)
   "MQ", //Martinique
-];
-  const africaCountries = [/* 생략: 아프리카 국가 코드 배열 */ "DZ", // Algeria
+    ],
+    []
+  );
+  const africaCountries = useMemo(
+    () => [/* 생략: 아프리카 국가 코드 배열 */ "DZ", // Algeria
   "AO", "AO1", // Angola
   "BJ", // Benin
   "BW", // Botswana
@@ -220,8 +247,11 @@ export default function WorldMap() {
   "EH", // Western Sahara
   "ZM", // Zambia
   "ZW"  // Zimbabwe
-];
-  const oceaniaCountries = [/* 생략: 오세아니아 국가 코드 배열 */"AU", "AU1", // Australia
+    ],
+    []
+  );
+  const oceaniaCountries = useMemo(
+    () => [/* 생략: 오세아니아 국가 코드 배열 */"AU", "AU1", // Australia
   "NZ", "NZ1", // New Zealand
   "FJ", "FHJ1", "FJ2", "FJ3", "FJ4", "FJ5", "FJ6", "FJ7", "FJ8", "FJ9", // Fiji
   "PG", "PG1", "PG2", "PG3",// Papua New Guinea
@@ -244,8 +274,11 @@ export default function WorldMap() {
   "PF", "PF1", "PF2", "PF3", "PF4", "PF5", "PF6", "PF7", "PF8", "PF9", "PF10", "PF11", "PF12", "PF13", "PF14", // French Polynesia
   "AS" ,"AS1",// American Samoa
   "GUM" //GUAM
-];
-  const southAmericaCountries = [/* 생략: 남미 국가 코드 배열 */"AR", "AR1", // Argentina
+    ],
+    []
+  );
+  const southAmericaCountries = useMemo(
+    () => [/* 생략: 남미 국가 코드 배열 */"AR", "AR1", // Argentina
   "BO", // Bolivia
   "BR", // Brazil
   "CL", "CL1", // Chile
@@ -259,55 +292,79 @@ export default function WorldMap() {
   "VE", // Venezuela
   "GF",  // French Guiana (France overseas)
   "FKI" //Falkland Islands
-];
+    ],
+    []
+  );
 
-  useEffect(() => {
-    // 마우스 오버시 국가 이름 툴팁 표시
-    const handleMouseOver = (e) => {
-  if (e.target.tagName === "path" && e.target.getAttribute("name")) {
-    const existingTitle = e.target.querySelector("title");
-    if (!existingTitle) {
-      const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
-      title.textContent = e.target.getAttribute("name");
-      e.target.appendChild(title);
-    }
-    e.target.style.cursor = "pointer";
-  }
-};
+  const applyContinentColors = useCallback(() => {
+    if (typeof document === "undefined") return;
 
-    // 색상 적용 함수
     const applyFill = (ids, color) => {
       ids.forEach((id) => {
         const el = document.getElementById(id);
-        if (el) {
-          el.style.fill = color;
+        if (!el) return;
+
+        el.style.fill = color;
+        el.style.cursor = "pointer";
+
+        if (!el.dataset.tooltipBound) {
           el.addEventListener("mouseover", handleMouseOver);
-          el.addEventListener("click", () => {
-            navigate(`/country/${id}`);
-          });
-          el.style.cursor = "pointer";
+          el.dataset.tooltipBound = "true";
         }
       });
     };
-    
-    // SVG 렌더링 이후 실행 보장
-    setTimeout(() => {
-      applyFill(asiaCountries, "#FFD700");         // 아시아: 금색
-      applyFill(europeCountries, "#87CEEB");       // 유럽: 하늘색
-      applyFill(northAmericaCountries, "#8B4513"); // 북미: 갈색
-      applyFill(africaCountries, "#32CD32");       // 아프리카: 연두
-      applyFill(oceaniaCountries, "#9370DB");      // 오세아니아: 보라
-      applyFill(southAmericaCountries, "#FFA07A"); // 남미: 살몬
-    }, 0);
+
+    applyFill(asiaCountries, "#FFD700"); // 아시아: 금색
+    applyFill(europeCountries, "#87CEEB"); // 유럽: 하늘색
+    applyFill(northAmericaCountries, "#8B4513"); // 북미: 갈색
+    applyFill(africaCountries, "#32CD32"); // 아프리카: 연두
+    applyFill(oceaniaCountries, "#9370DB"); // 오세아니아: 보라
+    applyFill(southAmericaCountries, "#FFA07A"); // 남미: 살몬
+  }, [
+    handleMouseOver,
+    africaCountries,
+    asiaCountries,
+    europeCountries,
+    northAmericaCountries,
+    oceaniaCountries,
+    southAmericaCountries,
+  ]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    const useRaf = typeof window.requestAnimationFrame === "function";
+    const handleId = useRaf
+      ? window.requestAnimationFrame(applyContinentColors)
+      : window.setTimeout(applyContinentColors, 0);
 
     return () => {
-      // 이벤트 제거
-      const allPaths = document.querySelectorAll("path");
+      if (useRaf && typeof window.cancelAnimationFrame === "function") {
+        window.cancelAnimationFrame(handleId);
+      } else {
+        clearTimeout(handleId);
+      }
+      if (typeof document === "undefined") return;
+      const allPaths = document.querySelectorAll("path[data-tooltip-bound]");
       allPaths.forEach((path) => {
         path.removeEventListener("mouseover", handleMouseOver);
+        delete path.dataset.tooltipBound;
       });
     };
-  }, []);
+  }, [applyContinentColors, handleMouseOver]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+    const unsub = onAuthStateChanged(auth, () => {
+      if (typeof window.requestAnimationFrame === "function") {
+        window.requestAnimationFrame(applyContinentColors);
+      } else {
+        window.setTimeout(applyContinentColors, 0);
+      }
+    });
+
+    return () => unsub();
+  }, [applyContinentColors]);
 
   return (
     <div
