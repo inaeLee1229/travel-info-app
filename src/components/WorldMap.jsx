@@ -317,7 +317,7 @@ export default function WorldMap() {
         maxWidth: "1400px",
         margin: "0 auto",
         backgroundColor: "white",
-        paddingTop: "5rem",
+        padding: "5rem 16px 0",
         position: "relative",
       }}
       dangerouslySetInnerHTML={{ __html: worldMap }}

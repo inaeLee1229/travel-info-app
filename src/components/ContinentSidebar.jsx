@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { FiChevronDown } from "react-icons/fi";
 import continents from "../data/continents";
 
-export default function ContinentSidebar({ headerHeight = 80 }) {
+export default function ContinentSidebar({ headerHeight = 80, isDesktop = true }) {
+  if (!isDesktop) {
+    return null;
+  }
   const [open, setOpen] = useState(() => {
     // 처음엔 아시아만 열어두기 (원하면 빈 객체 {}로 모두 접기)
     return { };
