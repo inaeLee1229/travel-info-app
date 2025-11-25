@@ -1,6 +1,7 @@
 // src/firebase.js
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore"; // 🔹 Firestore 추가!
 
 const firebaseConfig = {
   apiKey: "AIzaSyAupOiz55KzlUuiS2odb48rDcY-2CGJ_ao",
@@ -13,9 +14,10 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+
+// 🔹 Auth
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 
-
-
-
+// 🔹 Firestore DB (이게 핵심!)
+export const db = getFirestore(app);

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import worldMap from "../assets/world_clickable_with_names.svg?raw";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
@@ -6,6 +6,8 @@ import { auth } from "../firebase";
 
 export default function WorldMap() {
   const navigate = useNavigate();
+  const containerRef = useRef(null);
+  const observerRef = useRef(null);
 
   const handleClick = useCallback(
     (e) => {
@@ -20,10 +22,7 @@ export default function WorldMap() {
     if (e.target.tagName === "path" && e.target.getAttribute("name")) {
       const existingTitle = e.target.querySelector("title");
       if (!existingTitle) {
-        const title = document.createElementNS(
-          "http://www.w3.org/2000/svg",
-          "title"
-        );
+        const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
         title.textContent = e.target.getAttribute("name");
         e.target.appendChild(title);
       }
@@ -31,280 +30,50 @@ export default function WorldMap() {
     }
   }, []);
 
-  // 대륙별 국가 ID
+  // === 대륙별 국가 ID (네 배열 그대로) ===
   const asiaCountries = useMemo(
-    () => [/* 생략: 아시아 국가 코드 배열 */"CN","CN1", // China
-      "JP", "JP1", "JP2", // Japan
-      "KR", // South Korea
-      "IN", // India
-      "TH", // Thailand
-      "VN", // Vietnam
-      "MY", "MY1", // Malaysia
-      "ID", "ID1","ID2","ID3","ID4","ID5","ID6","ID7","ID8","ID9","ID10","ID11","ID12", // Indonesia
-      "PH", "PH1", "PH2", "PH3", "PH4", "PH5", "PH6",// Philippines
-      "PK", // Pakistan
-      "BD", // Bangladesh
-      "SA", // Saudi Arabia
-      "IR", // Iran
-      "IQ", // Iraq
-      "DRK", //Dem. Rep. Korea
-      "MM", //Myanmar
-      "LP", //Lao PDR
-      "CB", //Cambodia
-      "NP", //Nepal
-      "OM", "OM1", // Oman
-      "AF", // Afghanistan
-      "AM", // Armenia
-      "AZ", "AZ2", // Azerbaijan
-      "BH", // Bahrain
-      "BT", // Bhutan
-      "BN", // Brunei
-      "GE", // Georgia
-      "IL", // Israel
-      "JO", // Jordan
-      "KZ", // Kazakhstan
-      "KW", // Kuwait
-      "KG", // Kyrgyzstan
-      "LB", // Lebanon
-      "MV", // Maldives
-      "MN", // Mongolia
-      "PS", // Palestine
-      "QA", // Qatar
-      "SG", // Singapore
-      "SY", // Syria
-      "TW", // Taiwan
-      "TJ", // Tajikistan
-      "TL", // Timor-Leste
-      "TR", "TR1", // Turkey (보통 유럽+아시아 혼합으로 보지만 포함 가능)
-      "TM", // Turkmenistan
-      "AE", // United Arab Emirates
-      "UZ", // Uzbekistan
-      "YE",  // Yemen
-      "LK" // Sri Lanka
-    ],
+    () => ["CN","CN1","JP","JP1","JP2","KR","IN","TH","VN","MY","MY1","ID","ID1","ID2","ID3","ID4","ID5","ID6","ID7","ID8","ID9","ID10","ID11","ID12","PH","PH1","PH2","PH3","PH4","PH5","PH6","PK","BD","SA","IR","IQ","DRK","MM","LP","CB","NP","OM","OM1","AF","AM","AZ","AZ2","BH","BT","BN","GE","IL","JO","KZ","KW","KG","LB","MV","MN","PS","QA","SG","SY","TW","TJ","TL","TR","TR1","TM","AE","UZ","YE","LK"],
     []
   );
   const europeCountries = useMemo(
-    () => [/* 생략: 유럽 국가 코드 배열 */"AL", // Albania
-      "AD", // Andorra
-      "AM", // Armenia (유럽/아시아 혼합이지만 유럽으로도 포함됨)
-      "AT", // Austria
-      "BY", // Belarus
-      "BE", // Belgium
-      "BA", // Bosnia and Herzegovina
-      "BG", // Bulgaria
-      "HR", // Croatia
-      "CY", "CY1", // Cyprus (지리상 아시아지만 정치적으로 유럽 연합)
-      "CZ", // Czech Republic
-      "DK", "DK1",// Denmark
-      "EE", // Estonia
-      "FI", // Finland
-      "FR", "FR1", // France
-      "DE", // Germany
-      "GR", "GR1", // Greece
-      "HU", // Hungary
-      "IS", // Iceland
-      "IE", // Ireland
-      "IT", "IT1", "IT2", // Italy
-      "XK", // Kosovo
-      "LV", // Latvia
-      "LI", // Liechtenstein
-      "LT", // Lithuania
-      "LU", // Luxembourg
-      "MT", "MT1", // Malta
-      "MD", // Moldova
-      "MC", // Monaco
-      "ME", // Montenegro
-      "Mk", // Macedonia
-      "NL", // Netherlands
-      "MK", // North Macedonia
-      "NO", "NO1", "NO2", "NO3", // Norway
-      "PL", // Poland
-      "PT", // Portugal
-      "RO", // Romania
-      "RU", "RU1", "RU2","RU3","RU4","RU5","RU6","RU7","RU8","RU9", // Russia
-      "SM", // San Marino
-      "RS", // Serbia
-      "SK", // Slovakia
-      "SI", // Slovenia
-      "ES", // Spain
-      "SE", // Sweden
-      "CH", // Switzerland
-      "UA", // Ukraine
-      "GB", "GB1",// United Kingdom
-      "VA",  // Vatican City
-      "FEI", "FEI1", "FEI2", "FEI3", "FEI4", "FEI5", "FEI6" //Faeroe Islands
-    ],
+    () => ["AL","AD","AM","AT","BY","BE","BA","BG","HR","CY","CY1","CZ","DK","DK1","EE","FI","FR","FR1","DE","GR","GR1","HU","IS","IE","IT","IT1","IT2","XK","LV","LI","LT","LU","MT","MT1","MD","MC","ME","Mk","NL","MK","NO","NO1","NO2","NO3","PL","PT","RO","RU","RU1","RU2","RU3","RU4","RU5","RU6","RU7","RU8","RU9","SM","RS","SK","SI","ES","SE","CH","UA","GB","GB1","VA","FEI","FEI1","FEI2","FEI3","FEI4","FEI5","FEI6"],
     []
   );
   const northAmericaCountries = useMemo(
-    () => [/* 생략: 북미 국가 코드 배열 */
-  "US", "US1", "US2", "US3", "US4", "US5", "US6", "US7", "US8", "US9",// United States
-  "CA", "CA1", "CA2", "CA3", "CA4", "CA5", "CA6", "CA7", "CA8", "CA9",
-  "CA10", "CA11", "CA12", "CA13", "CA14", "CA15", "CA16", "CA17", "CA18",
-  "CA19", "CA20", "CA21", "CA22", "CA23", "CA24", "CA25", "CA26", "CA27",
-  "CA28", "CA29", // Canada
-  "MX", // Mexico
-  "GL", // Greenland
-  "GT", // Guatemala
-  "CU", // Cuba
-  "HT", // Haiti
-  "DO", // Dominican Republic
-  "HN", // Honduras
-  "NI", // Nicaragua
-  "SV", // El Salvador
-  "CR", // Costa Rica
-  "PA", // Panama
-  "BS", "BS1", "BS2", "BS3", "BS4", "BS5", "BS6", "BS7", "BS8", "BS9", "BS10",
-  "BS11", "BS12", "BS13", "BS14", "BS15", "BS16", "BS17",// Bahamas
-  "JM", // Jamaica
-  "BZ", // Belize
-  "BB", // Barbados
-  "BRM", //Bermuda
-  //"BUD", //Barbados
-  "TT", "TT1",// Trinidad and Tobago
-  "TCI", "TCI1", "TCI2",//Turks and Caicos Islands
-  "GD", // Grenada
-  "GLP", "GLP1", "GLP2",// Guadeloupe
-  "LC", // Saint Lucia
-  "KN", "KN1",// Saint Kitts and Nevis
-  "VC", // Saint Vincent and the Grenadines
-  "SBH", // Saint-Barthélemy
-  "SMN", //Saint-Martin
-  "SMA",//Saint Maarten
-  "DM", // Dominica
-  "AG", "AG1",// Antigua and Barbuda
-  "AW", //Aruba
-  "AGA", //Anguilla
-  "CAC", //Curaçao
-  "CYL", "CYL1", "CYL2",//Cayman ISlands
-  "MON", //Montserrat
-  "PR", "PR1", "PR2",//Puerto Rico
-  "BVI", //British Virgin Islands
-  "USV", "USV1", "USV2", //United States Virgin Islands
-  "SEN",//St. Eustatius (Netherlands)
-  "SBN",//Saba (Netherlands)
-  "MQ", //Martinique
-    ],
+    () => ["US","US1","US2","US3","US4","US5","US6","US7","US8","US9","CA","CA1","CA2","CA3","CA4","CA5","CA6","CA7","CA8","CA9","CA10","CA11","CA12","CA13","CA14","CA15","CA16","CA17","CA18","CA19","CA20","CA21","CA22","CA23","CA24","CA25","CA26","CA27","CA28","CA29","MX","GL","GT","CU","HT","DO","HN","NI","SV","CR","PA","BS","BS1","BS2","BS3","BS4","BS5","BS6","BS7","BS8","BS9","BS10","BS11","BS12","BS13","BS14","BS15","BS16","BS17","JM","BZ","BB","BRM","TT","TT1","TCI","TCI1","TCI2","GD","GLP","GLP1","GLP2","LC","KN","KN1","VC","SBH","SMN","SMA","DM","AG","AG1","AW","AGA","CAC","CYL","CYL1","CYL2","MON","PR","PR1","PR2","BVI","USV","USV1","USV2","SEN","SBN","MQ"],
     []
   );
   const africaCountries = useMemo(
-    () => [/* 생략: 아프리카 국가 코드 배열 */ "DZ", // Algeria
-  "AO", "AO1", // Angola
-  "BJ", // Benin
-  "BW", // Botswana
-  "BF", // Burkina Faso
-  "BI", // Burundi
-  "CM", // Cameroon
-  "CV", "CV1", "CV2", "CV3", "CV4", "CV5", "CV6", "CV7", "CV8", // Cape Verde
-  "CF", // Central African Republic
-  "CIS", "CIS1", "CIS2", "CIS3", "CIS4", "CIS5", "CIS6",//Canary Islands (Spain)
-  "TD", // Chad
-  "KM", "KM1", "KM2", // Comoros
-  "CD", // Congo (Democratic Republic)
-  "CG", // Congo (Republic)
-  "CI", // Côte d'Ivoire
-  "DJ", // Djibouti
-  "EG", // Egypt
-  "GQ", // Equatorial Guinea
-  "ER", // Eritrea
-  "ET", // Ethiopia
-  "GA", // Gabon
-  "GM", // Gambia
-  "GH", // Ghana
-  "GN", // Guinea
-  "GW", // Guinea-Bissau
-  "KE", // Kenya
-  "LS", // Lesotho
-  "LR", // Liberia
-  "LY", // Libya
-  "MG", // Madagascar
-  "MW", // Malawi
-  "ML", // Mali
-  "MR", // Mauritania
-  "MU", "MU1", // Mauritius
-  "MYT",//Mayotte
-  "MA", // Morocco
-  "MZ", // Mozambique
-  "NA", // Namibia
-  "NE", // Niger
-  "NG", // Nigeria
-  "RNN",//Reunion
-  "RW", // Rwanda
-  "ST", "ST1",// São Tomé and Príncipe
-  "SN", // Senegal
-  "SC", "SC1", "SC2", // Seychelles
-  "SL", // Sierra Leone
-  "SO", // Somalia
-  "ZA", // South Africa
-  "SS", // South Sudan
-  "SD", // Sudan
-  "SZ", // Eswatini (Swaziland)
-  "TZ", // Tanzania
-  "TG", // Togo
-  "TN", // Tunisia
-  "UG", // Uganda
-  "EH", // Western Sahara
-  "ZM", // Zambia
-  "ZW"  // Zimbabwe
-    ],
+    () => ["DZ","AO","AO1","BJ","BW","BF","BI","CM","CV","CV1","CV2","CV3","CV4","CV5","CV6","CV7","CV8","CF","CIS","CIS1","CIS2","CIS3","CIS4","CIS5","CIS6","TD","KM","KM1","KM2","CD","CG","CI","DJ","EG","GQ","ER","ET","GA","GM","GH","GN","GW","KE","LS","LR","LY","MG","MW","ML","MR","MU","MU1","MYT","MA","MZ","NA","NE","NG","RNN","RW","ST","ST1","SN","SC","SC1","SC2","SL","SO","ZA","SS","SD","SZ","TZ","TG","TN","UG","EH","ZM","ZW"],
     []
   );
   const oceaniaCountries = useMemo(
-    () => [/* 생략: 오세아니아 국가 코드 배열 */"AU", "AU1", // Australia
-  "NZ", "NZ1", // New Zealand
-  "FJ", "FHJ1", "FJ2", "FJ3", "FJ4", "FJ5", "FJ6", "FJ7", "FJ8", "FJ9", // Fiji
-  "PG", "PG1", "PG2", "PG3",// Papua New Guinea
-  "SB", "SB1", "SB2", "SB3", "SB4", "SB5", "SB6", "SB7", "SB8", "SB9", "SB10", "SB11", "SB12",
-  "SB13", "SB14", "SB15", "SB16", "SB17", "SB18", "SB19", "SB20",
-  "SB21", "SB22", "SB23", "SB24", "SB25", "SB26", "SB27", "SB28", "SB29", "SB30",
-  "SB31", "SB32", // Solomon Islands
-  "VU", "VU1", "VU2", "VU3", "VU4", "VU5", "VU6", "VU7", "VU8", "VU9", "VU10",
-  "VU11", "VU12", "VU13", "VU14", "VU15", "VU16", "VU17", // Vanuatu
-  "WS", "WS1", "WS2", // Samoa
-  "TO", "TO1", "TO2", "TO3", "TO4",// Tonga
-  "TV", // Tuvalu
-  "KI", // Kiribati
-  "FM", "FM1", "FM2", // Micronesia (Federated States of)
-  "MH", // Marshall Islands
-  "NMH", "NMH1", "NMH2", "NMH3", "NMH4", "NMH5", //Northern Mariana Islands
-  "PW", // Palau
-  "NR", // Nauru
-  "NC", "NC1", "NC2", "NC3", "NC4", "NC5", "NC6", "NC7", // New Caledonia (French territory)
-  "PF", "PF1", "PF2", "PF3", "PF4", "PF5", "PF6", "PF7", "PF8", "PF9", "PF10", "PF11", "PF12", "PF13", "PF14", // French Polynesia
-  "AS" ,"AS1",// American Samoa
-  "GUM" //GUAM
-    ],
+    () => ["AU","AU1","NZ","NZ1","FJ","FHJ1","FJ2","FJ3","FJ4","FJ5","FJ6","FJ7","FJ8","FJ9","PG","PG1","PG2","PG3","SB","SB1","SB2","SB3","SB4","SB5","SB6","SB7","SB8","SB9","SB10","SB11","SB12","SB13","SB14","SB15","SB16","SB17","SB18","SB19","SB20","SB21","SB22","SB23","SB24","SB25","SB26","SB27","SB28","SB29","SB30","SB31","SB32","VU","VU1","VU2","VU3","VU4","VU5","VU6","VU7","VU8","VU9","VU10","VU11","VU12","VU13","VU14","VU15","VU16","VU17","WS","WS1","WS2","TO","TO1","TO2","TO3","TO4","TV","KI","FM","FM1","FM2","MH","NMH","NMH1","NMH2","NMH3","NMH4","NMH5","PW","NR","NC","NC1","NC2","NC3","NC4","NC5","NC6","NC7","PF","PF1","PF2","PF3","PF4","PF5","PF6","PF7","PF8","PF9","PF10","PF11","PF12","PF13","PF14","AS","AS1","GUM"],
     []
   );
   const southAmericaCountries = useMemo(
-    () => [/* 생략: 남미 국가 코드 배열 */"AR", "AR1", // Argentina
-  "BO", // Bolivia
-  "BR", // Brazil
-  "CL", "CL1", // Chile
-  "CO", // Colombia
-  "EC", // Ecuador
-  "GY", // Guyana
-  "PY", // Paraguay
-  "PE", // Peru
-  "SR", // Suriname
-  "UY", // Uruguay
-  "VE", // Venezuela
-  "GF",  // French Guiana (France overseas)
-  "FKI" //Falkland Islands
-    ],
+    () => ["AR","AR1","BO","BR","CL","CL1","CO","EC","GY","PY","PE","SR","UY","VE","GF","FKI"],
     []
   );
+  // =====================================================================
 
-  const applyContinentColors = useCallback(() => {
-    if (typeof document === "undefined") return;
-
-    const applyFill = (ids, color) => {
+  // 부모 svg 필터 해제 + fill 강제(important)
+  const applyFill = useCallback(
+    (ids, color) => {
       ids.forEach((id) => {
         const el = document.getElementById(id);
         if (!el) return;
 
-        el.style.fill = color;
+        const svg = el.closest("svg");
+        if (svg) {
+          svg.style.removeProperty("filter");
+          if (getComputedStyle(svg).filter !== "none") {
+            svg.style.setProperty("filter", "none", "important");
+          }
+        }
+
+        el.setAttribute("fill", color);
+        el.style.setProperty("fill", color, "important");
         el.style.cursor = "pointer";
 
         if (!el.dataset.tooltipBound) {
@@ -312,16 +81,20 @@ export default function WorldMap() {
           el.dataset.tooltipBound = "true";
         }
       });
-    };
+    },
+    [handleMouseOver]
+  );
 
-    applyFill(asiaCountries, "#FFD700"); // 아시아: 금색
-    applyFill(europeCountries, "#87CEEB"); // 유럽: 하늘색
-    applyFill(northAmericaCountries, "#8B4513"); // 북미: 갈색
-    applyFill(africaCountries, "#32CD32"); // 아프리카: 연두
-    applyFill(oceaniaCountries, "#9370DB"); // 오세아니아: 보라
-    applyFill(southAmericaCountries, "#FFA07A"); // 남미: 살몬
+  const applyContinentColors = useCallback(() => {
+    if (typeof document === "undefined") return;
+    applyFill(asiaCountries, "#FFD700");
+    applyFill(europeCountries, "#87CEEB");
+    applyFill(northAmericaCountries, "#8B4513");
+    applyFill(africaCountries, "#32CD32");
+    applyFill(oceaniaCountries, "#9370DB");
+    applyFill(southAmericaCountries, "#FFA07A");
   }, [
-    handleMouseOver,
+    applyFill,
     africaCountries,
     asiaCountries,
     europeCountries,
@@ -330,44 +103,79 @@ export default function WorldMap() {
     southAmericaCountries,
   ]);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return undefined;
+  // 여러 프레임/타이밍에서 재도색
+  const scheduleRepaint = useCallback(() => {
+    // 즉시
+    applyContinentColors();
 
-    const useRaf = typeof window.requestAnimationFrame === "function";
-    const handleId = useRaf
-      ? window.requestAnimationFrame(applyContinentColors)
-      : window.setTimeout(applyContinentColors, 0);
+    // 다음 프레임들
+    let rafCount = 0;
+    const maxRaf = 6;
+    const rafLoop = () => {
+      applyContinentColors();
+      if (++rafCount < maxRaf) requestAnimationFrame(rafLoop);
+    };
+    requestAnimationFrame(rafLoop);
+
+    // 타임아웃 보정
+    setTimeout(applyContinentColors, 200);
+    setTimeout(applyContinentColors, 400);
+    setTimeout(applyContinentColors, 700);
+  }, [applyContinentColors]);
+
+  // SVG 준비/교체 시 채색
+  const paintWhenReady = useCallback(() => {
+    let tries = 0;
+    const maxTries = 10;
+    const tick = () => {
+      tries += 1;
+      const probe = document.getElementById("KR");
+      if (probe) {
+        scheduleRepaint();
+        return;
+      }
+      if (tries < maxTries) requestAnimationFrame(tick);
+      else setTimeout(scheduleRepaint, 0);
+    };
+    requestAnimationFrame(tick);
+  }, [scheduleRepaint]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    // 최초 마운트
+    paintWhenReady();
+
+    // 로그인/로그아웃 모두 커버 (약간 지연 후)
+    const unsub = onAuthStateChanged(auth, () => {
+      setTimeout(paintWhenReady, 120);
+    });
+
+    // SVG가 교체되면 재도색
+    if (containerRef.current && "MutationObserver" in window) {
+      observerRef.current = new MutationObserver(() => paintWhenReady());
+      observerRef.current.observe(containerRef.current, { childList: true, subtree: true });
+    }
+
+    // 탭이 다시 보일 때도 보정
+    const onVis = () => document.visibilityState === "visible" && scheduleRepaint();
+    document.addEventListener("visibilitychange", onVis);
 
     return () => {
-      if (useRaf && typeof window.cancelAnimationFrame === "function") {
-        window.cancelAnimationFrame(handleId);
-      } else {
-        clearTimeout(handleId);
-      }
-      if (typeof document === "undefined") return;
+      unsub();
+      observerRef.current?.disconnect?.();
+      document.removeEventListener("visibilitychange", onVis);
       const allPaths = document.querySelectorAll("path[data-tooltip-bound]");
       allPaths.forEach((path) => {
         path.removeEventListener("mouseover", handleMouseOver);
         delete path.dataset.tooltipBound;
       });
     };
-  }, [applyContinentColors, handleMouseOver]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return undefined;
-    const unsub = onAuthStateChanged(auth, () => {
-      if (typeof window.requestAnimationFrame === "function") {
-        window.requestAnimationFrame(applyContinentColors);
-      } else {
-        window.setTimeout(applyContinentColors, 0);
-      }
-    });
-
-    return () => unsub();
-  }, [applyContinentColors]);
+  }, [paintWhenReady, scheduleRepaint, handleMouseOver]);
 
   return (
     <div
+      ref={containerRef}
       onClick={handleClick}
       style={{
         width: "100%",
@@ -381,3 +189,4 @@ export default function WorldMap() {
     />
   );
 }
+

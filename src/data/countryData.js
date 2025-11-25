@@ -13,11 +13,11 @@ export default {
     CN: {
     name: "중국",
     capital: "베이징",
-    language: "한국어",
-    currency: "원",
-    currencyCode: "KRW",
-    timezone: "UTC+9",
-    tips: ["교통카드 사용 추천", "팁 문화 없음"],
+    language: "중국어",
+    currency: "위안",
+    currencyCode: "CNY",
+    timezone: "UTC+8",
+    tips: ["알리페이/위챗페이 준비 해놓기", "시간이 많다면 기차도 추천"],
   },
   JP: {
     name: "일본",
@@ -1032,7 +1032,7 @@ export default {
     ],
   },
   SI: {
-    name: "슬로베니다",
+    name: "슬로베니아",
     capital: "류블랴나",
     language: "슬로베니아어",
     currency: "유로",
@@ -1668,6 +1668,7 @@ export default {
       "펠레 산 등반과 북부 열대우림 탐험 추천",
     ],
   },
+  //아프리카
   AO: {
     name: "앙골라",
     capital: "루안다",
@@ -2292,6 +2293,399 @@ export default {
     timezone: "UTC+2",
     tips: [
       "2025년 8월 기준 여행 금지 국가",
+    ],
+  },
+
+  // 남미
+  AR: {
+    name: "아르헨티나",
+    capital: "부에노스아이레스",
+    language: "스페인어",
+    currency: "아르헨티나 페소",
+    currencyCode: "ARS",      // ★ 환율 API에 사용
+    timezone: "UTC-3",
+    tips: [
+      "한국에서 미국 달러 현금 가져가서 현지에서 환전하는 것 추천",
+      "'아사도'라 불리는 아르헨티나식 바비큐 코스 추천",
+      "탱고를 현지인처럼 즐기고 싶다면 미롱가 방문 추천"
+    ],
+  },
+   BO: {
+    name: "볼리비아",
+    capital: "라파스, 수크레",
+    language: "스페인어",
+    currency: "볼리비아노",
+    currencyCode: "BOB",      // ★ 환율 API에 사용
+    timezone: "UTC-4",
+    tips: [
+      "라파스는 행정수도, 수크레는 헌법수도",
+      "고지 적응 기간 가지는 것 추천",
+      "우유니 소금 사막 건기에는 육각형 소금밭, 우기는 얇은 물이 고여 거울처럼 보임",
+    ],
+  },
+   BR: {
+    name: "브라질",
+    capital: "브라질리아",
+    language: "포르투갈어",
+    currency: "브라질 헤알",
+    currencyCode: "BRL",      // ★ 환율 API에 사용
+    timezone: "UTC-2",
+    tips: [
+      "대도시에서도 소매치기, 강도 등 강력 범죄가 빈번 주의",
+      "여행 전 황열병 예방 접종",
+      "이과수 폭포는 아르헨티나, 브리질 쪽 모두 감상 가능하니 추천"
+    ],
+  },
+   CL: {
+    name: "칠레",
+    capital: "산티아고",
+    language: "스페인어",
+    currency: "칠레 페소",
+    currencyCode: "CLP",      // ★ 환율 API에 사용
+    timezone: "UTC-3",
+    tips: [
+      "여행 동선에 따라 기후가 크게 변하기 때문에 동선에 맞춰 옷 준비",
+      "와이너리 투어 추천",
+      "모아이 석상 투어 추천"
+    ],
+  },
+   CO: {
+    name: "콜롬비아",
+    capital: "보고타",
+    language: "스페인어",
+    currency: "콜롬비아 페소",
+    currencyCode: "COP",      // ★ 환율 API에 사용
+    timezone: "UTC-5",
+    tips: [
+      "커피 투어 추천",
+      "해변 도시 카르타헤나 방문 추천",
+      "치안 주의(소지품, 야간 이동 주의)"
+    ],
+  },
+   EC: {
+    name: "에콰도르",
+    capital: "키토",
+    language: "스페인어",
+    currency: "미국 달러",
+    currencyCode: "USD",      // ★ 환율 API에 사용
+    timezone: "UTC-5",
+    tips: [
+      "갈라파고스 방문 추천(크루즈 여행 시 몇 달 전 미리 예약 필수!!)",
+      "키토 구시가지 유네스코 세계유산 등재되어 있음 방문 추천(고산병 주의)",
+    ],
+  },
+   GY: {
+    name: "가이아나",
+    capital: "조지타운",
+    language: "영어, 가이아나 크레올어",
+    currency: "가이아나 달러",
+    currencyCode: "*",      // ★ 환율 API에 사용
+    timezone: "UTC-4",
+    tips: [
+      "남미에서 유일하게 영어를 공용어로 쓰는 나라",
+      "인도계, 흑인, 인디오 등으로 이루어져 있어 음식이나 문화도 다양함",
+      "카이에투어 폭포 방문 추천",
+    ],
+  },
+   PY: {
+    name: "파라과이",
+    capital: "아순시온",
+    language: "스페인어, 과라니어",
+    currency: "과라니",
+    currencyCode: "GS",      // ★ 환율 API에 사용
+    timezone: "UTC-3",
+    tips: [
+      "여러 남미 국가와의 교류로 다양한 분위기 느낄 수 있음",
+      "물가가 저렴",
+      "현지 식당가면 미니오카(우리나라에서 감자튀김같은 존재) 필수",
+    ],
+  },
+   PE: {
+    name: "페루",
+    capital: "리마",
+    language: "스페인어",
+    currency: "누에보 솔",
+    currencyCode: "Nuevo Sol",      // ★ 환율 API에 사용
+    timezone: "UTC-5",
+    tips: [
+      "마추픽추 방문 추천(입장권/기차표 미리 예약 필수!!)",
+      "쿠스코에서 고산병 주의 미리 대비"
+    ],
+  },
+   SR: {
+    name: "수리남",
+    capital: "파라마리보",
+    language: "네덜란드어, 스라난통고어",
+    currency: "수리남 달러",
+    currencyCode: "SRD",      // ★ 환율 API에 사용
+    timezone: "UTC-3",
+    tips: [
+      "파라마리보 역사 지구는 유네스코 세계유산 등재되어 있음",
+      "수리남은 다양한 문화권 사람들이 어우러져 음식도 다양",
+      "아마존 체험 추천",
+    ],
+  },
+   UY: {
+    name: "우루과이",
+    capital: "몬테비데오",
+    language: "스페인어",
+    currency: "우르과이 페소",
+    currencyCode: "UYU",      // ★ 환율 API에 사용
+    timezone: "UTC-3",
+    tips: [
+      "우루과이 남동부에 위치한 푼타 델 에스테 방문 추천",
+      "와이너리 투어 추천"
+    ],
+  },
+   VE: {
+    name: "베네수엘라",
+    capital: "카라카스",
+    language: "스페인어",
+    currency: "볼리바르",
+    currencyCode: "VES",      // ★ 환율 API에 사용
+    timezone: "UTC-4",
+    tips: [
+      "!!치안 주의!!",
+    ],
+  },
+   GF: {
+    name: "기아나(프랑스령)",
+    capital: "카옌",
+    language: "프랑스어",
+    currency: "유로",
+    currencyCode: "EUR",      // ★ 환율 API에 사용
+    timezone: "UTC-3",
+    tips: [
+      "기아나 우주 센터 투어 추천",
+      "카옌 근처 살루 제도 방문 추천",
+      "프랑스+크레올 퓨전 요리 먹어보는 것 추천"
+    ],
+  },
+   FKI: {
+    name: "포클랜드 제도",
+    capital: "스탠리",
+    language: "영어",
+    currency: "포클랜드 파운드",
+    currencyCode: "FKP",      // ★ 환율 API에 사용
+    timezone: "UTC-3",
+    tips: [
+      "영국 파운드도 통용됨",
+      "다양한 종류의 펭귄이 살고 있음",
+      "고래 관찰로 유명",
+      "아르헨티나와 영토 분쟁 역사 돌아보는 것 추천",
+    ],
+  },
+  
+  //오세아니아
+   AU: {
+    name: "호주",
+    capital: "캔버라",
+    language: "영어",
+    currency: "호주 달러",
+    currencyCode: "AUD",      // ★ 환율 API에 사용
+    timezone: "UTC+8",
+    tips: [
+      "자외선이 강하기 때문에 선크림, 모자, 선글라스 필수",
+      "도시 간 이동은 비행기 추천",
+      "시드니에서 대중교통 이동할 때 오팔 카드 발급 추천",
+    ],
+  },
+   NZ: {
+    name: "뉴질랜드",
+    capital: "웰링턴",
+    language: "영어, 마오리어",
+    currency: "뉴질랜드 달러",
+    currencyCode: "NZD",      // ★ 환율 API에 사용
+    timezone: "UTC+12",
+    tips: [
+      "반지의 제왕 호비튼 마을 방문 추천",
+      "아이토모 반딧불 동굴 방문 추천",
+      "도시 간 이동은 렌터카 추천",
+    ],
+  },
+   PG: {
+    name: "파푸아뉴기니",
+    capital: "포트 모르즈비",
+    language: "토크 피신, 히리 모투, 영어",
+    currency: "파푸아뉴기니 키나",
+    currencyCode: "PGK",      // ★ 환율 API에 사용
+    timezone: "UTC+10",
+    tips: [
+      "!!치안 주의!!",
+    ],
+  },
+   SB: {
+    name: "솔로몬 제도",
+    capital: "호니아라",
+    language: "영어, 피진 영어, 다양한 토착어",
+    currency: "솔로몬 달러",
+    currencyCode: "SBD",      // ★ 환율 API에 사용
+    timezone: "UTC+11",
+    tips: [
+      "말라리아, 결핵 주의",
+      "리브어보드 요트로 섬 투어 추천",
+      "쿼주리바 섬과 기쉬마 섬 방문 추천",
+    ],
+  },
+   VU: {
+    name: "바누아투",
+    capital: "포트 빌라",
+    language: "비슬라마어, 영어, 프랑스",
+    currency: "바누아투 바투",
+    currencyCode: "VUV",      // ★ 환율 API에 사용
+    timezone: "UTC+11",
+    tips: [
+      "여행경비를 아끼고 싶다면 로컬 버스 추천",
+      "바누아투 국립공원&피헬리움 화산 방문 추천",
+    ],
+  },
+   WS: {
+    name: "사모아",
+    capital: "아피아",
+    language: "사모아어, 영어",
+    currency: "사모아 탈라",
+    currencyCode: "WST",      // ★ 환율 API에 사용
+    timezone: "UTC+13",
+    tips: [
+      "사모아 바닷속은 바위가 많기 때문에 신발 필수",
+      "국제 운전 면허증 필수"
+    ],
+  },
+   TO: {
+    name: "통가",
+    capital: "누쿠알로파",
+    language: "통가어, 영어",
+    currency: "파앙가",
+    currencyCode: "TOP",      // ★ 환율 API에 사용
+    timezone: "UTC+13",
+    tips: [
+      "혹등고래 7-10월",
+      "블로우홀 방문 추천(타이밍 잘 맞춰 가야함)",
+      "일요일은 거의 모든 상점, 식당, 카페 문을 닫음",
+    ],
+  },
+   TV: {
+    name: "투발루",
+    capital: "푸나푸티",
+    language: "투발루어, 영어",
+    currency: "투발루 달러",
+    currencyCode: "*",      // ★ 환율 API에 사용
+    timezone: "UTC+12",
+    tips: [
+      "푸나푸티 보호구역 방문 추천",
+      "카누 타고 라군 탐험 추천",
+    ],
+  },
+   KI: {
+    name: "키리바시",
+    capital: "타라와",
+    language: "길버트어, 영어",
+    currency: "키리바시 달러",
+    currencyCode: "*",      // ★ 환율 API에 사용
+    timezone: "UTC+12",
+    tips: [
+      "비행기 편도 적고 관광 인프라 부족",
+      "타라와 섬 '제2차 세계대전 격전지' 방문 추천",
+    ],
+  },
+   FM: {
+    name: "미크로네시아 연방",
+    capital: "팔리키르",
+    language: "영어",
+    currency: "미국 달러",
+    currencyCode: "USD",      // ★ 환율 API에 사용
+    timezone: "UTC+10~11",
+    tips: [
+      "세계적인 다이빙 명소",
+      "4개의 큰 섬으로 이루어져 있음 각 섬마다 메력이 다름 취향에 따라 선택",
+      "가벼운 옷차림&햇볕 차단템 필수"
+    ],
+  },
+   MH: {
+    name: "마셜 제도",
+    capital: "마주로",
+    language: "마셜어, 영어",
+    currency: "미국 달러",
+    currencyCode: "USD",      // ★ 환율 API에 사용
+    timezone: "UTC+12",
+    tips: [
+      "방문객이 적은 나라로 자연 그대로의 모습 가지고 있음",
+      "아레레 박물관 방문 추천",
+      "렌터카로 섬을 둘러보는 것 추천",
+    ],
+  },
+   PW: {
+    name: "팔라우",
+    capital: "응게룰무드",
+    language: "팔라우어, 영어",
+    currency: "미국 달러",
+    currencyCode: "USD",      // ★ 환율 API에 사용
+    timezone: "UTC+9",
+    tips: [
+      "환전은 여행 전 미리해서 가는 것 추천",
+      "따뜻하고 습한 날씨&스콜 대비한 옷차림 필수",
+    ],
+  },
+   NR: {
+    name: "나우루",
+    capital: "공식적으로 없음",
+    language: "나우루어, 영어",
+    currency: "호주 달러",
+    currencyCode: "AUD",      // ★ 환율 API에 사용
+    timezone: "UTC+12",
+    tips: [
+      "실질적 행정 중심지는 야렌",
+      "관광 보다는 오지 체험 느낌",
+      "다양한 문화 섞여있어 현지 음식도 다채로움",
+      "열대 질병 주의"
+    ],
+  },
+   NC: {
+    name: "뉴칼레도니아(프랑스령)",
+    capital: "누메아",
+    language: "프랑스어, 카나크어",
+    currency: "CFP 프랑",
+    currencyCode: "XPF",      // ★ 환율 API에 사용
+    timezone: "UTC+11",
+    tips: [
+      "연평균 27도의 온화한 날씨&자외선 대비 필수",
+      "백사장부터 붉은 사막, 열대 우림까지 다양한 지형이 있음",
+    ],
+  },
+   PF: {
+    name: "폴리네시아(프랑스령)",
+    capital: "파페테",
+    language: "프랑스어, 타히티어",
+    currency: "CPF 프랑",
+    currencyCode: "XPF",      // ★ 환율 API에 사용
+    timezone: "UTC-10",
+    tips: [
+      "5-10월 건기 이때 방문 추천",
+      "7월 헤이바 축제 기간",
+    ],
+  },
+   AS: {
+    name: "사모아(미국령)",
+    capital: "팡고 팡고",
+    language: "사모아어, 영어",
+    currency: "미국 달러",
+    currencyCode: "USD",      // ★ 환율 API에 사용
+    timezone: "UTC-11",
+    tips: [
+      "사모아 국립공원 방문 추천",
+      "코코넛 밀크 요리 먹어보는 것 추천",
+    ],
+  },
+   GU: {
+    name: "괌",
+    capital: "하갓냐",
+    language: "영어, 차모로어",
+    currency: "미국 달러",
+    currencyCode: "USD",      // ★ 환율 API에 사용
+    timezone: "UTC+10",
+    tips: [
+      "대중교통 거의 없어 렌터카 필수",
+      "타미 및 마이크로네시아 몰 쿠폰 챙겨가기",
     ],
   },
 };

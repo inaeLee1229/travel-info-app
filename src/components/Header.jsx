@@ -28,7 +28,9 @@ export default function Header() {
     <header
       style={{
         position: "fixed",
-        top: 0, left: 0, right: 0,
+        top: 0,
+        left: 0,
+        right: 0,
         height: 56,
         display: "flex",
         alignItems: "center",
@@ -40,8 +42,12 @@ export default function Header() {
         zIndex: 1000,
       }}
     >
-      <Link to="/" style={{ textDecoration: "none", color: "#333", fontWeight: 700 }}>
-        Travel Info
+      {/* 로고 / 홈 링크 */}
+      <Link
+        to="/"
+        style={{ textDecoration: "none", color: "#333", fontWeight: 700, fontSize: 18 }}
+      >
+        TripMate
       </Link>
 
       <nav style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -77,6 +83,20 @@ export default function Header() {
           )
         ) : (
           <>
+            {/* ✅ 정보공유방 링크 */}
+            <Link
+              to="/community"
+              style={{
+                textDecoration: "underline",
+                color: "#111",
+                fontSize: 14,
+                padding: "4px 6px",
+              }}
+            >
+              정보공유방
+            </Link>
+
+            {/* ✅ 마이페이지 */}
             <Link
               to="/me"
               style={{
@@ -90,6 +110,8 @@ export default function Header() {
             >
               마이페이지
             </Link>
+
+            {/* ✅ 로그아웃 버튼 */}
             <button
               onClick={logout}
               style={{
