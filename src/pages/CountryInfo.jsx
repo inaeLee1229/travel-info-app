@@ -2,12 +2,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
-import countryData from "../data/countryData"; // 폴백용
+import countryData from "../data/countryData"; 
 import { normalizeCountryCode } from "../utils/countryCodeMapper";
 import ContinentSidebar from "../components/ContinentSidebar";
 import "./CountryInfo.css";
 
-// 🔹 Firestore에서 읽기
+// Firestore에서 읽기
 import { db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 
@@ -24,7 +24,7 @@ export default function CountryInfo() {
       : true;
   const [isDesktop, setIsDesktop] = useState(getIsDesktop);
 
-  // 🔹 Firestore에서 가져온 데이터 (없으면 countryData 폴백)
+  // Firestore에서 가져온 데이터가 없으면 countryData 폴백
   const [info, setInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(null);
@@ -65,7 +65,6 @@ export default function CountryInfo() {
           if (snap.exists()) {
             setInfo(snap.data());
           } else {
-            // 폴백: 로컬 데이터
             setInfo(countryData[countryCode] ?? null);
           }
         }
@@ -95,7 +94,7 @@ export default function CountryInfo() {
     localStorage.setItem(FAV_KEY, JSON.stringify(next));
   };
 
-  // 표기 보정: language가 배열/문자열 모두 대응
+  // 표기 보정
   const languageText = Array.isArray(info?.language)
     ? info.language.join(", ")
     : info?.language || "";
@@ -105,7 +104,7 @@ export default function CountryInfo() {
       className="country-info"
       style={{ paddingTop: PAGE_TOP_PADDING }}
     >
-      {/* 상단바: ← 홈, 검색창, 환율 변환기 */}
+      {/* 상단바 */}
       <div className="country-info__toolbar" role="navigation" aria-label="국가 정보 툴바">
         <Link className="country-info__home" to="/">← 홈</Link>
 
@@ -128,7 +127,7 @@ export default function CountryInfo() {
         className="country-info__main"
         style={{ paddingLeft: isDesktop ? 24 + SIDEBAR_WIDTH : 24 }}
       >
-        {/* 제목 + 즐겨찾기 */}
+        {/* 제목, 즐겨찾기 */}
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
           <h1 style={{ margin: 0 }}>
             {info?.nameKo || info?.name || countryCode}

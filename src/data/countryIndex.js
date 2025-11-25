@@ -1,6 +1,4 @@
 // src/data/countryIndex.js
-// 국가명(한글/영문/별칭/ISO) -> 대표 ISO 코드 매핑
-// 필요할수록 계속 확장해 주세요.
 const countryIndex = [
   { code: "KR", keywords: ["한국", "대한민국", "South Korea", "Korea", "KR"] },
   { code: "JP", keywords: ["일본", "Japan", "JP", "JP1", "JP2"] },
@@ -12,7 +10,6 @@ const countryIndex = [
   { code: "ES", keywords: ["스페인", "Spain", "ES"] },
   { code: "IT", keywords: ["이탈리아", "Italy", "IT", "IT1", "IT2"] },
   { code: "KZ", keywords: ["카자흐스탄", "Kazakhstan", "KZ"] },
-  // … 원하시는 만큼 추가
 ];
 
 export default countryIndex;

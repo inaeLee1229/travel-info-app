@@ -1,5 +1,4 @@
 // 여러 path로 나뉜 나라들의 코드들을 하나로 묶어주는 매핑
-// src/utils/countryCodeMapper.js
 const countryCodeMap = {
   AO1: "AO",
   AR1: "AR",
@@ -59,7 +58,6 @@ const countryCodeMap = {
   CIS1: "CIS", CIS2: "CIS", CIS3: "CIS", CIS4: "CIS", CIS5: "CIS", CIS6: "CIS",
   GLP1: "GLP", GLP2: "GLP",
   FJ1: "FJ", FJ2: "FJ", FJ3: "FJ", FJ4: "FJ", FJ5: "FJ", FJ6: "FJ", FJ7: "FJ", FJ8: "FJ", FJ9: "FJ"
-  // 더 필요한 항목 추가
 };
 
 export function normalizeCountryCode(rawCode) {

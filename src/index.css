@@ -3,7 +3,6 @@
   line-height: 1.5;
   font-weight: 400;
 
-  /* 다크모드/라이트모드 강제 X → 내가 지정한 색 우선 */
   color-scheme: light;
   color: #111;
   background-color: #fff;
@@ -36,7 +35,6 @@ h1 {
   line-height: 1.1;
 }
 
-/* 버튼 기본 스타일 통일 */
 button {
   border-radius: 8px;
   border: 1px solid #ddd;
@@ -57,7 +55,6 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-/* 라이트 모드/다크 모드 강제 분리 제거 → 필요시 따로 추가 가능 */
 @media (prefers-color-scheme: light) {
   :root {
     color: #111;
@@ -68,7 +65,6 @@ button:focus-visible {
   }
 }
 
-/* ===== 공통 폼 리셋 (드롭다운 깨짐 방지) ===== */
 input, select, button {
   font: inherit;
   color: inherit;
@@ -86,14 +82,12 @@ select {
   padding: 0 8px;
 }
 
-/* 사이드바 버튼 색 고정 */
 .sidebar-button, .continent-button {
   color: #111 !important;
   background: #f7f7f7 !important;
   border: 1px solid #e5e5e5 !important;
 }
 
-/* 툴팁 (SVG Hover) */
 svg path:hover::after {
   content: attr(data-tooltip);
   position: absolute;

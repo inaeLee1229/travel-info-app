@@ -5,11 +5,6 @@ import { FiSearch } from "react-icons/fi";
 import countryIndex from "../data/countryIndex";
 import { normalizeCountryCode } from "../utils/countryCodeMapper";
 
-/**
- * variant:
- *  - "inline"  : 부모가 자리를 잡아줌(기본). 일반적인 레이아웃에서 사용
- *  - "header"  : 헤더 안에서 가운데 고정(헤더 전용)
- */
 export default function SearchBar({ variant = "inline", width = 520 }) {
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
@@ -30,14 +25,14 @@ export default function SearchBar({ variant = "inline", width = 520 }) {
     setQ("");
   };
 
-  // 위치 스타일: 헤더 전용/일반
+  //헤더
   const computedWidth = width;
   const isHeader = variant === "header";
   const wrapperStyle = isHeader
     ? {
         position: "absolute",
         left: "50%",
-        top: 16, // 헤더 안에서 살짝 아래
+        top: 16, 
         transform: "translateX(-50%)",
         zIndex: 10,
         width: computedWidth,
@@ -95,7 +90,7 @@ export default function SearchBar({ variant = "inline", width = 520 }) {
             overflow: "hidden",
             width: "100%",
           }}
-          onMouseDown={(e) => e.preventDefault()} // 클릭 시 input blur 방지
+          onMouseDown={(e) => e.preventDefault()} 
         >
           {results.map((r, i) => (
             <button

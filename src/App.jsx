@@ -36,7 +36,7 @@ function App() {
         <Route path="/community/:postId" element={<PostDetail />} />
       </Routes>
 
-      {/* 🔥 개발 환경(로컬)에서만 보이는 버튼 */}
+      {/*개발 환경(로컬)에서만 보이는 버튼 */}
       {import.meta.env.DEV && (
         <button
           onClick={runSeed}

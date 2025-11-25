@@ -21,7 +21,7 @@ const MAX_VISIBLE = 4;
 const fmt = (ts) => (ts?.toDate ? ts.toDate().toISOString().slice(0, 10) : "");
 
 export default function MyPage() {
-  // ===== 즐겨찾기 =====
+  // 즐겨찾기 
   const [favorites, setFavorites] = useState([]);
   const [expanded, setExpanded] = useState(false);
 
@@ -46,14 +46,14 @@ export default function MyPage() {
     setFavorites(next);
   };
 
-  // ===== 로그인 사용자 =====
+  // 로그인 사용자 
   const [user, setUser] = useState(null);
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, setUser);
     return () => unsub();
   }, []);
 
-  // ===== 내가 쓴 글(실시간) =====
+  // 내가 쓴 글 
   const [myPosts, setMyPosts] = useState([]);
   const [myPostsLoading, setMyPostsLoading] = useState(false);
   const [myPostsError, setMyPostsError] = useState("");
@@ -124,7 +124,7 @@ export default function MyPage() {
       (snap) => {
         const list = snap.docs.map((d) => {
           const data = d.data();
-          // 🔥 부모 컬렉션(posts/{postId}/comments/{commentId}) 에서 postId 추출
+          // 부모 컬렉션(posts/{postId}/comments/{commentId}) 에서 postId 추출
           const parentPostId = d.ref.parent?.parent?.id || data.postId || null;
           return {
             id: d.id,
@@ -158,7 +158,7 @@ export default function MyPage() {
       <div style={{ maxWidth: 1000, margin: "0 auto", padding: "24px" }}>
         <h1 style={{ marginTop: 0 }}>마이페이지</h1>
 
-        {/* ===== 즐겨찾기 ===== */}
+        {/* 즐겨찾기*/}
         <h2 style={{ marginTop: 24 }}>내 즐겨찾기</h2>
 
         {favorites.length === 0 ? (
@@ -249,7 +249,7 @@ export default function MyPage() {
           </>
         )}
 
-        {/* ===== 내가 쓴 글 ===== */}
+        {/* 내가 쓴 글 */}
         <h2 style={{ marginTop: 36 }}>내가 쓴 글</h2>
 
         {!user ? (
@@ -284,7 +284,7 @@ export default function MyPage() {
                   overflow: "hidden",
                 }}
               >
-                {/* 카드 전체 클릭 → PostDetail */}
+                {/* 카드 전체 클릭해서 PostDetail로 이동 */}
                 <Link
                   to={`/community/${post.id}`}
                   style={{
@@ -330,7 +330,7 @@ export default function MyPage() {
           </ul>
         )}
 
-        {/* ===== 내가 쓴 댓글 ===== */}
+        {/* 내가 쓴 댓글 */}
         <h2 style={{ marginTop: 36 }}>내가 쓴 댓글</h2>
 
         {!user ? (
@@ -363,7 +363,7 @@ export default function MyPage() {
                 }}
               >
                 {c.postId ? (
-                  // 🔥 postId가 있으면 카드 전체를 링크로
+                  // postId가 있으면 카드 전체를 링크로
                   <Link
                     to={`/community/${c.postId}`}
                     style={{

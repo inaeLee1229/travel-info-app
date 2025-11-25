@@ -24,7 +24,7 @@ export default {
     capital: "도쿄",
     language: "일본어",
     currency: "엔화",
-    currencyCode: "JPY",      // ★ 환율 API에 사용
+    currencyCode: "JPY",      
     timezone: "UTC+9",
     tips: [
       "일본어가 공용어예요.",
@@ -38,7 +38,7 @@ export default {
     capital: "뉴델리",
     language: "힌디어, 영어",
     currency: "루피",
-    currencyCode: "INR",      // ★ 환율 API에 사용
+    currencyCode: "INR",      
     timezone: "UTC+5:30",
     tips: [
       "기차나 버스 시간 연착 주의",
@@ -50,7 +50,7 @@ export default {
     capital: "방콕",
     language: "태국어",
     currency: "바트",
-    currencyCode: "THB",      // ★ 환율 API에 사용
+    currencyCode: "THB",      
     timezone: "UTC+7",
     tips: [
       "더위, 습기 대비(물, 선크립, 모자)",
@@ -63,7 +63,7 @@ export default {
     capital: "하노이",
     language: "베트남어",
     currency: "동",
-    currencyCode: "VND",      // ★ 환율 API에 사용
+    currencyCode: "VND",      
     timezone: "UTC+9",
     tips: [
       "전압 220V, 플러그 타입 A,C",
@@ -76,7 +76,7 @@ export default {
     capital: "쿠알라룸푸르",
     language: "말레이어, 영어, 중국어",
     currency: "링깃",
-    currencyCode: "MYR",      // ★ 환율 API에 사용
+    currencyCode: "MYR",      
     timezone: "UTC+8",
     tips: [
       "1년 내내 더움. 더위, 습기 대비(물, 선크립, 모자)",
@@ -89,7 +89,7 @@ export default {
     capital: "자카르타",
     language: "인도네시아어",
     currency: "루피아",
-    currencyCode: "IDR",      // ★ 환율 API에 사용
+    currencyCode: "IDR",      
     timezone: "UTC+7",
     tips: [
       "시간대가 여러 개. 시간대별 구글 맵 체크(특히 국내선 이동 시)",
@@ -102,7 +102,7 @@ export default {
     capital: "마닐라",
     language: "타갈로그어, 영어",
     currency: "페소",
-    currencyCode: "PHP",      // ★ 환율 API에 사용
+    currencyCode: "PHP",      
     timezone: "UTC+8",
     tips: [
       "팁 문화 일반적. 잔돈 필수",
@@ -115,7 +115,7 @@ export default {
     capital: "이슬라마바드",
     language: "우르두어, 영어",
     currency: "파키스탄 루피",
-    currencyCode: "PKR",      // ★ 환율 API에 사용
+    currencyCode: "PKR",      
     timezone: "UTC+5",
     tips: [
       "2008년부터 '여행제한 지역'으로 지정",
@@ -128,7 +128,7 @@ export default {
     capital: "다카",
     language: "뱅골어",
     currency: "타카",
-    currencyCode: "BDT",      // ★ 환율 API에 사용
+    currencyCode: "BDT",      
     timezone: "UTC+6",
     tips: [
       "마스크 챙기기",
@@ -141,7 +141,7 @@ export default {
     capital: "리야드",
     language: "아랍어",
     currency: "사우디 리얄",
-    currencyCode: "SAR",      // ★ 환율 API에 사용
+    currencyCode: "SAR",      
     timezone: "UTC+3",
     tips: [
       "기도 시간 확인 필수.",
@@ -154,7 +154,7 @@ export default {
     capital: "테헤란",
     language: "페르시아어",
     currency: "리알",
-    currencyCode: "IRR",      // ★ 환율 API에 사용
+    currencyCode: "IRR",      
     timezone: "UTC+3:30",
     tips: [
       "화폐단위 토만 사용.(1토만=10리알)",
@@ -167,7 +167,7 @@ export default {
     capital: "바그다드",
     language: "아랍어",
     currency: "이라크 디나르",
-    currencyCode: "IQD",      // ★ 환율 API에 사용
+    currencyCode: "IQD",      
     timezone: "UTC+3",
     tips: [
       "외교부 여행경보 확인 필수.",
@@ -180,7 +180,7 @@ export default {
     capital: "크메르어",
     language: "태국어",
     currency: "캄보디아 리엘",
-    currencyCode: "KHR",      // ★ 환율 API에 사용
+    currencyCode: "KHR",      
     timezone: "UTC+7",
     tips: [
       "USD 통용 국가",
@@ -192,7 +192,7 @@ export default {
     capital: "카트만두",
     language: "네팔어",
     currency: "네팔 루피",
-    currencyCode: "NPR",      // ★ 환율 API에 사용
+    currencyCode: "NPR",      
     timezone: "UTC+5:45",
     tips: [
       "트래킹 시 고산병 대비 필수.",
@@ -204,7 +204,7 @@ export default {
     capital: "무스카트",
     language: "아랍어",
     currency: "오만 리알",
-    currencyCode: "OMR",      // ★ 환율 API에 사용
+    currencyCode: "OMR",      
     timezone: "UTC+4",
     tips: [
       "와디 체험(물때 주의)",
@@ -216,7 +216,7 @@ export default {
     capital: "카불",
     language: "다리어, 파슈토어",
     currency: "아프가니스탄 아프가니",
-    currencyCode: "AFN",      // ★ 환율 API에 사용
+    currencyCode: "AFN",      
     timezone: "UTC+4:30",
     tips: [
       "외교부 여행금지 국가",
@@ -229,7 +229,7 @@ export default {
     capital: "예레반",
     language: "아르메니아어",
     currency: "아르메니아 드람",
-    currencyCode: "AMD",      // ★ 환율 API에 사용
+    currencyCode: "AMD",      
     timezone: "UTC+9",
     tips: [
       "'마트나쉬'빵, 고대와인 투어 필수",
@@ -241,7 +241,7 @@ export default {
     capital: "바쿠",
     language: "아제르바이잔어, 러시아어",
     currency: "아제르바이잔 마나트",
-    currencyCode: "AZN",      // ★ 환율 API에 사용
+    currencyCode: "AZN",      
     timezone: "UTC+4",
     tips: [
       "진흙 화산, 불타는 산 추천",
@@ -253,7 +253,7 @@ export default {
     capital: "마나마",
     language: "아랍어, 영어",
     currency: "바레인 디나르",
-    currencyCode: "BHD",      // ★ 환율 API에 사용
+    currencyCode: "BHD",      
     timezone: "UTC+3",
     tips: [
       "모래 바람 대비(스카프, 선글라스)",
@@ -266,7 +266,7 @@ export default {
     capital: "팀푸",
     language: "종카어",
     currency: "부탄 눌트럼",
-    currencyCode: "BTN",      // ★ 환율 API에 사용
+    currencyCode: "BTN",      
     timezone: "UTC+6",
     tips: [
       "최소 지출 규정",
@@ -278,7 +278,7 @@ export default {
     capital: "트빌리시",
     language: "조지아어, 러시아",
     currency: "조지아 라리",
-    currencyCode: "GEL",      // ★ 환율 API에 사용
+    currencyCode: "GEL",      
     timezone: "UTC+4",
     tips: [
       "현지 양조장 투어",
@@ -291,7 +291,7 @@ export default {
     capital: "예루살렘",
     language: "히브리아어, 아랍어",
     currency: "이스라엘 세켈",
-    currencyCode: "ILS",      // ★ 환율 API에 사용
+    currencyCode: "ILS",      
     timezone: "UTC+3",
     tips: [
       "안식일(금요일 해 질 녘~토요일 해 질 녘)",
@@ -304,7 +304,7 @@ export default {
     capital: "암만",
     language: "아랍어",
     currency: "요르단 디나르",
-    currencyCode: "JOD",      // ★ 환율 API에 사용
+    currencyCode: "JOD",      
     timezone: "UTC+3",
     tips: [
       "조던 패스 활용",
@@ -317,7 +317,7 @@ export default {
     capital: "아스타나",
     language: "카자흐어, 러시아어",
     currency: "카자흐스탄 텡게",
-    currencyCode: "KZT",      // ★ 환율 API에 사용
+    currencyCode: "KZT",      
     timezone: "UTC+6",
     tips: [
       "러시아어 기반 정보가 많음.",
@@ -328,7 +328,7 @@ export default {
     capital: "쿠웨이트시티",
     language: "아랍어, 영어",
     currency: "쿠웨이트 디나르",
-    currencyCode: "KWD",      // ★ 환율 API에 사용
+    currencyCode: "KWD",      
     timezone: "UTC+3",
     tips: [
       "초여름~폭염 시즌 오후부터 이동 추천",
@@ -341,7 +341,7 @@ export default {
     capital: "비슈케크",
     language: "키르기스어, 러시아어",
     currency: "소름",
-    currencyCode: "KGS",      // ★ 환율 API에 사용
+    currencyCode: "KGS",      
     timezone: "UTC+6",
     tips: [
       "고산병, 방한 장비 준비",
@@ -354,7 +354,7 @@ export default {
     capital: "베이루트",
     language: "프랑스어, 영어",
     currency: "레바논 파운드",
-    currencyCode: "LBP",      // ★ 환율 API에 사용
+    currencyCode: "LBP",      
     timezone: "UTC+2",
     tips: [
       "마국 달러 광범위 사용",
@@ -367,7 +367,7 @@ export default {
     capital: "말레",
     language: "디베히어, 영어",
     currency: "몰디브 루피야",
-    currencyCode: "MVR",      // ★ 환율 API에 사용
+    currencyCode: "MVR",      
     timezone: "UTC+5",
     tips: [
       "리조트 이동 수단/비용/시간 확인 필수",
@@ -379,7 +379,7 @@ export default {
     capital: "울란바토르",
     language: "몽골어, 러시아어",
     currency: "투그릭",
-    currencyCode: "MNT",      // ★ 환율 API에 사용
+    currencyCode: "MNT",      
     timezone: "UTC+8(서부 일부+7)",
     tips: [
       "일교차 대비",
@@ -391,7 +391,7 @@ export default {
     capital: "라말라, 동예루살렘",
     language: "아랍어",
     currency: "이스라엘 셰켈",
-    currencyCode: "ILS",      // ★ 환율 API에 사용
+    currencyCode: "ILS",     
     timezone: "UTC+2",
     tips: [
       "여행 경보 확인 필수",
@@ -404,7 +404,7 @@ export default {
     capital: "도하",
     language: "아랍어, 영어",
     currency: "카타르 리알",
-    currencyCode: "QAR",      // ★ 환율 API에 사용
+    currencyCode: "QAR",      
     timezone: "UTC+3",
     tips: [
       "더위, 야외 활동 시간 조절",
@@ -417,7 +417,7 @@ export default {
     capital: "싱가포르",
     language: "영어, 말레이어, 표준중국어 등",
     currency: "싱가포르 달러",
-    currencyCode: "SGD",      // ★ 환율 API에 사용
+    currencyCode: "SGD",      
     timezone: "UTC+8",
     tips: [
       "쓰레기, 담배 규제 엄격 주의",
@@ -429,7 +429,7 @@ export default {
     capital: "다마스쿠스",
     language: "아랍어",
     currency: "시리아 파운드",
-    currencyCode: "SYP",      // ★ 환율 API에 사용
+    currencyCode: "SYP",      
     timezone: "UTC+2",
     tips: [
       "여행 위험.",
@@ -441,7 +441,7 @@ export default {
     capital: "타이페이",
     language: "표준 중걱어, 대만어",
     currency: "신 대만 달러",
-    currencyCode: "TWD",      // ★ 환율 API에 사용
+    currencyCode: "TWD",     
     timezone: "UTC+8",
     tips: [
       "전압 110V",
@@ -454,7 +454,7 @@ export default {
     capital: "딜리",
     language: "테툼, 포르투칼어, 인도네시아어, 영어",
     currency: "달러 사실상 통용",
-    currencyCode: "USD",      // ★ 환율 API에 사용
+    currencyCode: "USD",      
     timezone: "UTC+9",
     tips: [
       "현금 필수, ATM 거의 없음(공항, 수도에서 미리 준비)",
@@ -466,7 +466,7 @@ export default {
     capital: "앙카라",
     language: "터키어",
     currency: "터키 리아",
-    currencyCode: "TRY",      // ★ 환율 API에 사용
+    currencyCode: "TRY",      
     timezone: "UTC+3",
     tips: [
       "주소은 Turkish 표기(거리명+번호) 준비",
@@ -478,7 +478,7 @@ export default {
     capital: "아시가바트",
     language: "투르크멘어, 러시아어",
     currency: "투르크멘 마나트",
-    currencyCode: "TMT",      // ★ 환율 API에 사용
+    currencyCode: "TMT",      
     timezone: "UTC+5",
     tips: [
       "비자, 사전 허가 필요, 일부 지역 가이드 동행 필수.",
@@ -491,7 +491,7 @@ export default {
     capital: "아부다비",
     language: "아랍어, 영어",
     currency: "디르함",
-    currencyCode: "AED",      // ★ 환율 API에 사용
+    currencyCode: "AED",      
     timezone: "UTC+4",
     tips: [
       "고가 제품(금, 보석)구입 시 세금 영수증 확인 후 구입",
@@ -503,7 +503,7 @@ export default {
     capital: "타슈켄트",
     language: "우즈베크어, 러시아어",
     currency: "숨",
-    currencyCode: "UZS",      // ★ 환율 API에 사용
+    currencyCode: "UZS",      
     timezone: "UTC+5",
     tips: [
       "주소, 지도는 키릴/현지 철자 준비",
@@ -515,7 +515,7 @@ export default {
     capital: "사나아",
     language: "아랍어",
     currency: "예멘 리알",
-    currencyCode: "YER",      // ★ 환율 API에 사용
+    currencyCode: "YER",     
     timezone: "UTC+3",
     tips: [
       "예멘 현재 다수 국가 여행금지/권고 대상",
@@ -528,7 +528,7 @@ export default {
     capital: "스리자야와르데네푸라코테",
     language: "싱할라어, 타밀어, 영어",
     currency: "스리랑카 루피",
-    currencyCode: "LKR",      // ★ 환율 API에 사용
+    currencyCode: "LKR",     
     timezone: "UTC+5:30",
     tips: [
       "야생/코끼리 보호구역 방문 매너.",
@@ -541,7 +541,7 @@ export default {
     capital: "안도라라베야",
     language: "카탈루냐어, 스페인어, 프랑스어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+1",
     tips: [
       "교통이 버스와 도보 중심",
@@ -553,7 +553,7 @@ export default {
     capital: "예레반",
     language: "아르메니아어, 러시아어",
     currency: "아ㄹ메니아 드람",
-    currencyCode: "AMD",      // ★ 환율 API에 사용
+    currencyCode: "AMD",      
     timezone: "UTC+4",
     tips: [
       "소규모 와이너리 투어 추천",
@@ -565,7 +565,7 @@ export default {
     capital: "빈",
     language: "독일어, 영어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",     
     timezone: "UTC+1",
     tips: [
       "계절별 교통패스 활용",
@@ -576,7 +576,7 @@ export default {
     capital: "민스크",
     language: "벨라루스어, 러시아어",
     currency: "벨라루스 루블",
-    currencyCode: "BYN",      // ★ 환율 API에 사용
+    currencyCode: "BYN",     
     timezone: "UTC+3",
     tips: [
       "시위, 정세 변화 수시로 확인",
@@ -588,7 +588,7 @@ export default {
     capital: "브뤼셀",
     language: "네덜란드어(플라망), 프랑스어, 독일어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+1",
     tips: [
       "프랑스어권, 플라망권 구분해서 일정 준비 추천(주소,메뉴 등)",
@@ -601,7 +601,7 @@ export default {
     capital: "사라예보",
     language: "보스니아어, 세르비아어, 크로아티아어",
     currency: "보스니아-헤르체고비나 마르카",
-    currencyCode: "BAM",      // ★ 환율 API에 사용
+    currencyCode: "BAM",      
     timezone: "UTC+1",
     tips: [
       "전쟁 관련 장소 방문 시 가이드 안내에 따라 행동",
@@ -614,7 +614,7 @@ export default {
     capital: "소피아",
     language: "불가리아어(키릴문자)",
     currency: "불가리아 레프",
-    currencyCode: "BGN",      // ★ 환율 API에 사용
+    currencyCode: "BGN",      
     timezone: "UTC+2",
     tips: [
       "주소를 키릴문자 표기까지 준비해가는 것 추천",
@@ -627,7 +627,7 @@ export default {
     capital: "자그레브",
     language: "크로아티아어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",     
     timezone: "UTC+1",
     tips: [
       "성수기 방문 시 페리, 카타마란, 차량 좌석 사전 예약 필수",
@@ -640,7 +640,7 @@ export default {
     capital: "니코시아",
     language: "그리스어, 터키어, 영어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+2",
     tips: [
       "국토 분단 상황 유의",
@@ -652,7 +652,7 @@ export default {
     capital: "프라하",
     language: "체코어",
     currency: "체코 코루나",
-    currencyCode: "CZK",      // ★ 환율 API에 사용
+    currencyCode: "CZK",     
     timezone: "UTC+1",
     tips: [
       "프라하 성,구지가지 관광객 오기 전 오전 7-8시 추천",
@@ -665,7 +665,7 @@ export default {
     capital: "코펜하겐",
     language: "덴마크어, 영어",
     currency: "덴마크 크로네",
-    currencyCode: "DKK",      // ★ 환율 API에 사용
+    currencyCode: "DKK",      
     timezone: "UTC+1",
     tips: [
       "여름에는 DST로 UTC+2",
@@ -678,7 +678,7 @@ export default {
     capital: "탈린",
     language: "에스토니아어, 영어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+2",
     tips: [
       "여름에는 DST로 UTC+3",
@@ -691,7 +691,7 @@ export default {
     capital: "헬싱키",
     language: "핀란드어, 스웨덴어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+2",
     tips: [
       "여름에는 UTC+3",
@@ -705,7 +705,7 @@ export default {
     capital: "파리",
     language: "프랑스어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",     
     timezone: "UTC+1",
     tips: [
       "주중/주말 시간대별 '프릭스 픽스 노리기'",
@@ -718,7 +718,7 @@ export default {
     capital: "베를린",
     language: "독일어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+1",
     tips: [
       "장거리 기차 할인, 도이체반 조기예약 Sparpreis 요금 저렴",
@@ -731,7 +731,7 @@ export default {
     capital: "아테네",
     language: "그리스어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+2",
     tips: [
       "섬간 이용 출발 항수에서 체크인 복잡할 수 있음. 모바일 티켓, 프린트본 전부 준비",
@@ -743,7 +743,7 @@ export default {
     capital: "부다페스트",
     language: "헝가리어",
     currency: "포린트",
-    currencyCode: "HUF",      // ★ 환율 API에 사용
+    currencyCode: "HUF",      
     timezone: "UTC+1",
     tips: [
       "온천 이용 시 락커와 샤워 룰 지역마다 다름. 입장 전 락커,타월 유무, 샤워비용 확인 필수",
@@ -755,7 +755,7 @@ export default {
     capital: "레이캬비크",
     language: "아이슬란드어, 영어",
     currency: "크로나",
-    currencyCode: "ISK",      // ★ 환율 API에 사용
+    currencyCode: "ISK",      
     timezone: "UTC+0",
     tips: [
       "오프로드 절대 무단 진입 금지",
@@ -768,7 +768,7 @@ export default {
     capital: "더블린",
     language: "영어, 아일랜드어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+0",
     tips: [
       "시골 운전 시 양떼, 농촌 구간선속 제한, 동물 돌발출현 주의",
@@ -781,7 +781,7 @@ export default {
     capital: "로마",
     language: "이탈리아어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+1",
     tips: [
       "식당에서 테이블 차지(coperto), 서비스료(servizio)청구함. 영수증 확인.",
@@ -794,7 +794,7 @@ export default {
     capital: "프리슈티나",
     language: "알바니아어, 세르비아어, 영어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+1",
     tips: [
       "프리슈티나 중심가, 골목에 벽화나 그래피티 많음",
@@ -806,7 +806,7 @@ export default {
     capital: "리가",
     language: "라트비아어, 러시아어, 영어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+2",
     tips: [
       "리가 중앙시장 방문 추천",
@@ -819,7 +819,7 @@ export default {
     capital: "파두츠",
     language: "독일어",
     currency: "스위스 프랑",
-    currencyCode: "CHF",      // ★ 환율 API에 사용
+    currencyCode: "CHF",      
     timezone: "UTC+1",
     tips: [
       "플러그 타입 J",
@@ -832,7 +832,7 @@ export default {
     capital: "빌뉴스",
     language: "리투아니아어, 러시아어, 영어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+2",
     tips: [
       "우주피스 공화국에서 여권에 도장 받기",
@@ -844,7 +844,7 @@ export default {
     capital: "룩셈부르크 시티",
     language: "룩셈부르크어, 프랑스어, 독일어, 영어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+1",
     tips: [
       "룩셈부르크는 세계 최초 전국 대중교통 무료",
@@ -856,7 +856,7 @@ export default {
     capital: "발레타",
     language: "몰타어, 영어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+1",
     tips: [
       "하가르 임, 타르신 신전 같은 곳 방문 추천",
@@ -869,7 +869,7 @@ export default {
     capital: "키시너우",
     language: "루마니아어, 러시아어",
     currency: "몰도바 레우",
-    currencyCode: "MDL",      // ★ 환율 API에 사용
+    currencyCode: "MDL",      
     timezone: "UTC+2",
     tips: [
       "와인 시티 탐험(세상에서 가장 큰 와인 저장소)",
@@ -882,7 +882,7 @@ export default {
     capital: "모나코(도시국가)",
     language: "프랑스어, 영어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+1",
     tips: [
       "경기 시즌 아닐 때 F1 도로 걸어볼 수 있음. 방문 추천",
@@ -894,7 +894,7 @@ export default {
     capital: "포드고리차",
     language: "몬테그로어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+1",
     tips: [
       "보카 코토르만 방문 추천, 주변 마을 방문도 함께",
@@ -908,7 +908,7 @@ export default {
     capital: "암스테르담",
     language: "네덜란드어, 영어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+1",
     tips: [
       "자전거 도로가 많음. 자전거 도로 사용 규칙 숙지",
@@ -921,7 +921,7 @@ export default {
     capital: "슼코페",
     language: "마케도니아어, 영어",
     currency: "마케도니아 데나르",
-    currencyCode: "MKD",      // ★ 환율 API에 사용
+    currencyCode: "MKD",      
     timezone: "UTC+1",
     tips: [
       "오흐리드 호수 방문 추천",
@@ -934,7 +934,7 @@ export default {
     capital: "오슬로",
     language: "노르웨이어, 영어",
     currency: "노르웨이 크로네",
-    currencyCode: "NOK",      // ★ 환율 API에 사용
+    currencyCode: "NOK",      
     timezone: "UTC+1",
     tips: [
       "피오르드 탐방, 유람선 말고 자전거와 카약 추천",
@@ -947,7 +947,7 @@ export default {
     capital: "바르샤바",
     language: "폴란드어",
     currency: "폴란드 즐로티",
-    currencyCode: "PLN",      // ★ 환율 API에 사용
+    currencyCode: "PLN",      
     timezone: "UTC+1",
     tips: [
       "피에로기, 주렉, 로스우 먹어보는 것 추천",
@@ -959,7 +959,7 @@ export default {
     capital: "리스본",
     language: "포르투갈어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+0",
     tips: [
       "타베르나에서 파두 감상",
@@ -971,7 +971,7 @@ export default {
     capital: "부쿠레슈티",
     language: "루마니아어",
     currency: "루마니아 레우",
-    currencyCode: "RON",      // ★ 환율 API에 사용
+    currencyCode: "RON",      
     timezone: "UTC+2",
     tips: [
       "드라큘라성 대신 펠레슈 성이나 라스노브 요새 방문 추천",
@@ -984,7 +984,7 @@ export default {
     capital: "모스크바",
     language: "러시아어",
     currency: "러시아 루블",
-    currencyCode: "RUB",      // ★ 환율 API에 사용
+    currencyCode: "RUB",      
     timezone: "UTC+3",
     tips: [
       "비자 철저하게 준비",
@@ -997,7 +997,7 @@ export default {
     capital: "산마리노 시티",
     language: "이탈리아어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+1",
     tips: [
       "면세 쇼핑 유명. 유럽 내 이동 시 관세 규정 있음. 텍스피리 구매 조건 확인 필수",
@@ -1010,7 +1010,7 @@ export default {
     capital: "베오그라드",
     language: "세르비아어-키릴문자, 라틴문자",
     currency: "세르비아 디나르",
-    currencyCode: "RSD",      // ★ 환율 API에 사용
+    currencyCode: "RSD",      
     timezone: "UTC+1",
     tips: [
       "키릴 문자, 로마자 병행 사용, 미리 폰트 설치 추천",
@@ -1023,7 +1023,7 @@ export default {
     capital: "브라티슬라바",
     language: "슬로바키아어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+1",
     tips: [
       "브라티슬라바 야경 보는 것 추천",
@@ -1036,7 +1036,7 @@ export default {
     capital: "류블랴나",
     language: "슬로베니아어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+1",
     tips: [
       "수도 근교 소도시 당일치기 추천(블레드 호수, 포스토이, 피란)",
@@ -1048,7 +1048,7 @@ export default {
     capital: "마드리드",
     language: "스페인어, 카탈루냐어, 바스크어, 갈리시아어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+1",
     tips: [
       "오후 2-5시 스에스타로 작은 상점이나 식당 문 닫는 경우 많다",
@@ -1061,7 +1061,7 @@ export default {
     capital: "스톡홀름",
     language: "스웨덴어, 영어",
     currency: "스웨덴 크로나",
-    currencyCode: "SEK",      // ★ 환율 API에 사용
+    currencyCode: "SEK",      
     timezone: "UTC+1",
     tips: [
       "현금보다 카드를 많이 사용함",
@@ -1073,7 +1073,7 @@ export default {
     capital: "베른",
     language: "독일어, 프랑스어, 이탈리아어, 영어",
     currency: "스위스 프랑",
-    currencyCode: "CHF",      // ★ 환율 API에 사용
+    currencyCode: "CHF",      
     timezone: "UTC+1",
     tips: [
       "스위스 트래블 패스 추천(기차, 버스, 유람선 무제한 이용, 500개 이상 박물관 무료 입장)",
@@ -1086,7 +1086,7 @@ export default {
     capital: "키이우",
     language: "우크라이나어",
     currency: "우크라이나 흐리브냐",
-    currencyCode: "UAH",      // ★ 환율 API에 사용
+    currencyCode: "UAH",      
     timezone: "UTC+2",
     tips: [
       "우크라이나 2025년 8월 기준 여행 금지 국가",
@@ -1097,7 +1097,7 @@ export default {
     capital: "런던",
     language: "영어",
     currency: "파운드 스털링",
-    currencyCode: "GBP",      // ★ 환율 API에 사용
+    currencyCode: "GBP",      
     timezone: "UTC+0",
     tips: [
       "콘센트 타입 G(영국식 3핀)",
@@ -1110,7 +1110,7 @@ export default {
     capital: "바티칸 시국",
     language: "라틴어, 이탈리아어, 영어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+1",
     tips: [
       "이탈리아 유로 동전 사용",
@@ -1123,7 +1123,7 @@ export default {
     capital: "토르스하운",
     language: "페로어, 덴마크어",
     currency: "페로 크로네",
-    currencyCode: "Faroese Krone",      // ★ 환율 API에 사용
+    currencyCode: "Faroese Krone",      
     timezone: "UTC+1",
     tips: [
       "날씨 변화 심함. 얇은 옷 여러 개 입는 것 추천",
@@ -1137,7 +1137,7 @@ export default {
     capital: "워싱턴 D.C.",
     language: "영어, 스페인어",
     currency: "달러",
-    currencyCode: "USD",      // ★ 환율 API에 사용
+    currencyCode: "USD",      
     timezone: "동부 UTC-4, 서부 UTC-8",
     tips: [
       "물건값+세금, 팁 이것까지 고려해 예산 계획",
@@ -1150,7 +1150,7 @@ export default {
     capital: "오타와",
     language: "영어, 프랑스어",
     currency: "캐나다 달러",
-    currencyCode: "CAD",      // ★ 환율 API에 사용
+    currencyCode: "CAD",      
     timezone: "동부 UTC-4, 서부 UTC-8",
     tips: [
       "국립공원 캠핑/트레일 예약 또는 추첨제 운영. 미리 캐나다 국립공원 공식 웹사이트에서 예약 규정 확인 필수",
@@ -1163,7 +1163,7 @@ export default {
     capital: "멕시코시티",
     language: "스페인어",
     currency: "멕시코 페소",
-    currencyCode: "MXN",      // ★ 환율 API에 사용
+    currencyCode: "MXN",      
     timezone: "멕시코시티 UTC-6, 칸쿤 UTC-5",
     tips: [
       "현지인 동행 또는 주요 관광지 위주 이동",
@@ -1176,7 +1176,7 @@ export default {
     capital: "누크",
     language: "그린란드어, 덴마크어, 영어",
     currency: "덴마크 크로네",
-    currencyCode: "DKK",      // ★ 환율 API에 사용
+    currencyCode: "DKK",      
     timezone: "누크 UTC-3",
     tips: [
       "그린란드에서 도시 간 이동은 비행기 또는 배로 이동.",
@@ -1189,7 +1189,7 @@ export default {
     capital: "과테말라시티",
     language: "스페인어, 마야어",
     currency: "케찰",
-    currencyCode: "GTQ",      // ★ 환율 API에 사용
+    currencyCode: "GTQ",      
     timezone: "UTC-6",
     tips: [
       "이동할 때 일반 버스보다 셔틀 밴이나 우버 추천",
@@ -1202,7 +1202,7 @@ export default {
     capital: "아바나",
     language: "스페인어",
     currency: "쿠바 페소",
-    currencyCode: "CUP",      // ★ 환율 API에 사용
+    currencyCode: "CUP",      
     timezone: "UTC-5",
     tips: [
       "오프라인 지도, 정보 미리 다운로드 받아놓기",
@@ -1214,7 +1214,7 @@ export default {
     capital: "포르토프랭스",
     language: "아이티 크레올어, 프랑스어",
     currency: "아이티 구르드",
-    currencyCode: "HTG",      // ★ 환율 API에 사용
+    currencyCode: "HTG",      
     timezone: "UTC-5",
     tips: [
       "현재 여행 금지 국가",
@@ -1225,7 +1225,7 @@ export default {
     capital: "산토도밍고",
     language: "스페인어",
     currency: "도미니카 페소",
-    currencyCode: "DOP",      // ★ 환율 API에 사용
+    currencyCode: "DOP",      
     timezone: "UTC-4",
     tips: [
       "산토도밍고의 식민지 구역 유네스코 등재됨",
@@ -1237,7 +1237,7 @@ export default {
     capital: "테구시갈파",
     language: "스페인어",
     currency: "온두라스 렘피라",
-    currencyCode: "HNL",      // ★ 환율 API에 사용
+    currencyCode: "HNL",      
     timezone: "UTC-6",
     tips: [
       "로아탄 섬은 관광 인프라 좋음.",
@@ -1250,7 +1250,7 @@ export default {
     capital: "마나과",
     language: "스페인어",
     currency: "니키라과 코르도바",
-    currencyCode: "NIO",      // ★ 환율 API에 사용
+    currencyCode: "NIO",      
     timezone: "UTC-6",
     tips: [
       "니키라과 치안 및 정치 상황 항상 확인",
@@ -1263,7 +1263,7 @@ export default {
     capital: "산살바도르",
     language: "스페인어",
     currency: "미국 달러",
-    currencyCode: "USD",      // ★ 환율 API에 사용
+    currencyCode: "USD",      
     timezone: "UTC+1",
     tips: [
       "이탈리아 유로 동전 사용",
@@ -1276,7 +1276,7 @@ export default {
     capital: "산호세",
     language: "스페인어",
     currency: "코스타리카 콜론",
-    currencyCode: "CRC",      // ★ 환율 API에 사용
+    currencyCode: "CRC",      
     timezone: "UTC-6",
     tips: [
       "야생동물 찾아보기(전문가 동행 필수)",
@@ -1289,7 +1289,7 @@ export default {
     capital: "파나마 시티",
     language: "스페인어",
     currency: "미국 달러",
-    currencyCode: "USD",      // ★ 환율 API에 사용
+    currencyCode: "USD",      
     timezone: "UTC-5",
     tips: [
       "파나마 운하 작동 모습 미라플로레스 전망대에서 볼 수 있음(운하 스케줄 확인)",
@@ -1302,7 +1302,7 @@ export default {
     capital: "나사우",
     language: "영어",
     currency: "바하마 달러",
-    currencyCode: "BSD",      // ★ 환율 API에 사용
+    currencyCode: "BSD",      
     timezone: "UTC-5",
     tips: [
       "미국 달러와 1:1 고정, 미국 달러도 광범위하게 통용",
@@ -1316,7 +1316,7 @@ export default {
     capital: "킹스턴",
     language: "영어, 자메이카 파투아",
     currency: "자메이카 달러",
-    currencyCode: "JMD",      // ★ 환율 API에 사용
+    currencyCode: "JMD",      
     timezone: "UTC-5",
     tips: [
       "공식 노선 택시 활용",
@@ -1329,7 +1329,7 @@ export default {
     capital: "벨모판",
     language: "영어, 벨리즈 클레올러, 스페인어",
     currency: "벨리즈 달러",
-    currencyCode: "BZD",      // ★ 환율 API에 사용
+    currencyCode: "BZD",     
     timezone: "UTC-6",
     tips: [
       "스노클링 계획할 때 경력, 실력 고려해서 장소 선정 필수",
@@ -1341,7 +1341,7 @@ export default {
     capital: "브리지타운",
     language: "영어, 바잔 방어",
     currency: "바베이도스 달러",
-    currencyCode: "BBD",      // ★ 환율 API에 사용
+    currencyCode: "BBD",      
     timezone: "UTC-4",
     tips: [
       "금요일 밤 오이스틴스 방문 필수",
@@ -1355,7 +1355,7 @@ export default {
     capital: "해밀턴",
     language: "영어",
     currency: "버뮤다 달러",
-    currencyCode: "BMD",      // ★ 환율 API에 사용
+    currencyCode: "BMD",      
     timezone: "UTC-4",
     tips: [
       "관광객 자동차 렌탈 안됨. 스쿠터 빌려야됨",
@@ -1368,7 +1368,7 @@ export default {
     capital: "포트 오프 스페인",
     language: "영어, 트리니다드 크레올러, 프랑스어, 스페인어, 힌디어",
     currency: "트리니다드 토바고 달러",
-    currencyCode: "TTD",      // ★ 환율 API에 사용
+    currencyCode: "TTD",      
     timezone: "UTC-4",
     tips: [
       "카니발 축제에 방문하고 싶다면 최소 1년 전 부터 미리 준비하기",
@@ -1381,7 +1381,7 @@ export default {
     capital: "코번 타운",
     language: "영어",
     currency: "미국 달러",
-    currencyCode: "USD",      // ★ 환율 API에 사용
+    currencyCode: "USD",      
     timezone: "UTC-4",
     tips: [
       "프린세스 알렉산드라 국립 공원 탐방 추천",
@@ -1394,7 +1394,7 @@ export default {
     capital: "세인트조지스",
     language: "영어, 그레니다 크레올어",
     currency: "동카리브 달러",
-    currencyCode: "XCD",      // ★ 환율 API에 사용
+    currencyCode: "XCD",      
     timezone: "UTC-4",
     tips: [
       "향신료 농장 투어 추천",
@@ -1407,7 +1407,7 @@ export default {
     capital: "바스테르",
     language: "프랑스어, 안틸레스 크레올어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC-4",
     tips: [
       "나비 모양 두 섬(그랑드 테르, 바스테르) 모두 방문 추천",
@@ -1420,7 +1420,7 @@ export default {
     capital: "캐스트리스",
     language: "영어, 세인트루시아 크레올어",
     currency: "동카리브 달러",
-    currencyCode: "XCD",      // ★ 환율 API에 사용
+    currencyCode: "XCD",      
     timezone: "UTC-4",
     tips: [
       "바다에 있는 화산 봉우리 피톤 방문 추천(가이드와 함께 오를 수 있음)",
@@ -1433,7 +1433,7 @@ export default {
     capital: "바스테르",
     language: "영어",
     currency: "동카리브 달러",
-    currencyCode: "XCD",      // ★ 환율 API에 사용
+    currencyCode: "XCD",     
     timezone: "UTC-4",
     tips: [
       "올드 슈가 트레인 타고 섬 한 바퀴 레인 투어",
@@ -1446,7 +1446,7 @@ export default {
     capital: "킹스타운",
     language: "영어, 그레니다 크레올어",
     currency: "동카리브 달러",
-    currencyCode: "XCD",      // ★ 환율 API에 사용
+    currencyCode: "XCD",      
     timezone: "UTC-4",
     tips: [
       "세인트 빈센트는 트레킹, 그 외 작은 섬에서는 요팅/스노클링",
@@ -1459,7 +1459,7 @@ export default {
     capital: "귀스타비아",
     language: "프랑스어, 영어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC-4",
     tips: [
       "명품을 관세와 부가가치세가 없어 유럽 본토보다 저렴하게 구매 가능",
@@ -1471,7 +1471,7 @@ export default {
     capital: "마리고",
     language: "프랑스어, 영어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC-4",
     tips: [
       "프랑스령",
@@ -1485,7 +1485,7 @@ export default {
     capital: "필립스버그",
     language: "네덜란드어, 영어",
     currency: "네덜란드 안틸레스 길더",
-    currencyCode: "ANG",      // ★ 환율 API에 사용
+    currencyCode: "ANG",      
     timezone: "UTC-4",
     tips: [
       "네덜란드령",
@@ -1500,7 +1500,7 @@ export default {
     capital: "로조",
     language: "영어, 도미니카 크레올 프랑스어",
     currency: "동카리브 길더",
-    currencyCode: "ANG",      // ★ 환율 API에 사용
+    currencyCode: "ANG",      
     timezone: "UTC+4",
     tips: [
       "향고래 투어",
@@ -1513,7 +1513,7 @@ export default {
     capital: "세인트존스",
     language: "영어",
     currency: "동카리브 달러",
-    currencyCode: "XCD",      // ★ 환율 API에 사용
+    currencyCode: "XCD",      
     timezone: "UTC+4",
     tips: [
       "해변이 많음(딕스 베이, 프렌치 맨즈 코브 유명)",
@@ -1527,7 +1527,7 @@ export default {
     capital: "오라네스타트",
     language: "네덜란드어, 파피아멘토어, 영어, 스페인어",
     currency: "아루바 플로린",
-    currencyCode: "AWG",      // ★ 환율 API에 사용
+    currencyCode: "AWG",      
     timezone: "UTC+4",
     tips: [
       "아리콕 국립공원 4륜 구동 ATV나 지프 투어 체험 추천",
@@ -1540,7 +1540,7 @@ export default {
     capital: "더 밸리",
     language: "영어",
     currency: "동카리브 달러",
-    currencyCode: "XCD",      // ★ 환율 API에 사용
+    currencyCode: "XCD",      
     timezone: "UTC+4",
     tips: [
       "프라이빗하고 고급스러운 휴양을 원하는 사람에게 추천",
@@ -1553,7 +1553,7 @@ export default {
     capital: "빌렘스타트",
     language: "네덜란드어, 파피아멘토어, 영어, 스페인어",
     currency: "네덜란드 안틸레스 길더, 미국 달러",
-    currencyCode: "ANG, USD",      // ★ 환율 API에 사용
+    currencyCode: "ANG, USD",      
     timezone: "UTC-4",
     tips: [
       "빌렘스타트의 파스텔톤 건축물들 퐁피 브리지, 다리 건너 오트로반다나 스칼루 지구까지 구경해보는 것 추천",
@@ -1568,7 +1568,7 @@ export default {
     capital: "조지타운",
     language: "영어",
     currency: "케이맨 제도 달러, 미국 달러",
-    currencyCode: "KYD, USD",      // ★ 환율 API에 사용
+    currencyCode: "KYD, USD",      
     timezone: "UTC-5",
     tips: [
       "스팅레이 시티말고 밤에 카약이나 보트타고 바이오루미네선트 베이에 방문 추천",
@@ -1582,7 +1582,7 @@ export default {
     capital: "브레이즈",
     language: "영어",
     currency: "동카리브 달러",
-    currencyCode: "XCD",      // ★ 환율 API에 사용
+    currencyCode: "XCD",      
     timezone: "UTC-4",
     tips: [
       "법적 수도 플리머스(화산재로 매몰됨)",
@@ -1596,7 +1596,7 @@ export default {
     capital: "산후안",
     language: "스페인어, 영어",
     currency: "미국 달러",
-    currencyCode: "USD",      // ★ 환율 API에 사용
+    currencyCode: "USD",      
     timezone: "UTC-4",
     tips: [
       "올드 산후안 방문 추천(아침 일찍이나 해 질 녘 노을 방문)",
@@ -1609,7 +1609,7 @@ export default {
     capital: "로드 타운",
     language: "영어",
     currency: "미국 달러",
-    currencyCode: "USD",      // ★ 환율 API에 사용
+    currencyCode: "USD",      
     timezone: "UTC-4",
     tips: [
       "요팅문화가 세계 최고 중 하나인 곳.",
@@ -1622,7 +1622,7 @@ export default {
     capital: "샬럿 아말리에",
     language: "영어",
     currency: "미국 달러",
-    currencyCode: "USD",      // ★ 환율 API에 사용
+    currencyCode: "USD",      
     timezone: "UTC-4",
     tips: [
       "세인트 토마스, 세인트 존, 세인트 크로이 3개의 섬으로 이루어져 있음.",
@@ -1635,7 +1635,7 @@ export default {
     capital: "오렌지스타트",
     language: "네덜란드어, 영어, 파피아멘토어",
     currency: "미국 달러",
-    currencyCode: "USD",      // ★ 환율 API에 사용
+    currencyCode: "USD",      
     timezone: "UTC-4",
     tips: [
       "골든 락의 역사 탐험 & 다이빙으로 유적, 고대 도자기 탐험 추천",
@@ -1648,7 +1648,7 @@ export default {
     capital: "더 퀸스 가든스",
     language: "네덜란드어, 영어",
     currency: "미국 달러",
-    currencyCode: "USD",      // ★ 환율 API에 사용
+    currencyCode: "USD",      
     timezone: "UTC-4",
     tips: [
       "상업적인 해변이 없음. 자연 그대로 유지되어 있음",
@@ -1661,7 +1661,7 @@ export default {
     capital: "포르드프랑스",
     language: "프랑스어, 마르티니크 크레올어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",     
     timezone: "UTC-4",
     tips: [
       "아드리콜 럼의 성지로 럼 증류소 투어 추천",
@@ -1674,7 +1674,7 @@ export default {
     capital: "루안다",
     language: "포루투갈어, 음분두어",
     currency: "앙골라 콴자",
-    currencyCode: "AOA",      // ★ 환율 API에 사용
+    currencyCode: "AOA",      
     timezone: "UTC+1",
     tips: [
       "치안이 불안정하므로 외교부의 최신 여행경보 확인 필수",
@@ -1687,7 +1687,7 @@ export default {
     capital: "포르토노보",
     language: "프랑스어",
     currency: "서아프리카 CFA 프랑",
-    currencyCode: "XOF",      // ★ 환율 API에 사용
+    currencyCode: "XOF",      
     timezone: "UTC+1",
     tips: [
       "부두교 발상지로 사원 방문이나 의식 보게될 경우 현지인 안내에 따르기",
@@ -1700,7 +1700,7 @@ export default {
     capital: "가보로네",
     language: "영어, 세츠와나어",
     currency: "보츠와나 풀라",
-    currencyCode: "BWP",      // ★ 환율 API에 사용
+    currencyCode: "BWP",      
     timezone: "UTC+2",
     tips: [
       "오카방고 델타는 전통 카누인 모로코 타고 야생동물 볼 수 있는 사파리 체험",
@@ -1712,7 +1712,7 @@ export default {
     capital: "와가두구",
     language: "프랑스어, 모레어, 디울라어",
     currency: "서아프리카 CFA 프랑",
-    currencyCode: "XOF",      // ★ 환율 API에 사용
+    currencyCode: "XOF",      
     timezone: "UTC+0",
     tips: [
       "2025년 8월 기준 여행 금지 국가",
@@ -1724,7 +1724,7 @@ export default {
     capital: "기테가",
     language: "키룬디어, 프랑스어, 스와히릴어",
     currency: "부룬디 프랑",
-    currencyCode: "BIF",      // ★ 환율 API에 사용
+    currencyCode: "BIF",     
     timezone: "UTC+2",
     tips: [
       "2025년 8월 기준 여행 금지 국가",
@@ -1735,7 +1735,7 @@ export default {
     capital: "야운데",
     language: "프랑스어, 영어",
     currency: "중아프리카 CFA 프랑",
-    currencyCode: "XAF",      // ★ 환율 API에 사용
+    currencyCode: "XAF",      
     timezone: "UTC+1",
     tips: [
       "일부 지역이 치안이 좋지 않음",
@@ -1748,7 +1748,7 @@ export default {
     capital: "프라이아",
     language: "포르투칼어, 카보베르데 크레올어",
     currency: "카보베르데 에스쿠도",
-    currencyCode: "CVE",      // ★ 환율 API에 사용
+    currencyCode: "CVE",      
     timezone: "UTC-1",
     tips: [
       "섬마다 다른 매력 느끼려면 아일랜드 호핑하는 것을 추천",
@@ -1760,7 +1760,7 @@ export default {
     capital: "방기",
     language: "상고어, 프랑스어",
     currency: "중앙아프리카 CFA 프랑",
-    currencyCode: "XAF",      // ★ 환율 API에 사용
+    currencyCode: "XAF",      
     timezone: "UTC+1",
     tips: [
       "2025년 8월 기준 여행 금지 국가",
@@ -1771,7 +1771,7 @@ export default {
     capital: "산타 크루스 데 테네리페",
     language: "스페인어, 영어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+0",
     tips: [
       "섬마다 미세 기후&테마가 달라 호핑 추천",
@@ -1784,7 +1784,7 @@ export default {
     capital: "은자메나",
     language: "아랍어어, 프랑스어",
     currency: "중아프리카 CFA 프랑",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+1",
     tips: [
       "2025년 8월 기준 여행 금지 국가",
@@ -1795,7 +1795,7 @@ export default {
     capital: "모로니",
     language: "코모로어, 아랍어, 프랑스어",
     currency: "코모로 프랑",
-    currencyCode: "KMF",      // ★ 환율 API에 사용
+    currencyCode: "KMF",      
     timezone: "UTC+3",
     tips: [
       "세계 최대 활화산 카르탈라 산 등반 추천",
@@ -1808,7 +1808,7 @@ export default {
     capital: "킨샤사",
     language: "프랑스어, 링갈라어, 콩고어, 스와힐리어, 루바어",
     currency: "콩고 프랑",
-    currencyCode: "CDF",      // ★ 환율 API에 사용
+    currencyCode: "CDF",      
     timezone: "서부 UTC+1, 동부 UTC+2",
     tips: [
       "2025년 8월 기준 여행 금지 국가",
@@ -1819,7 +1819,7 @@ export default {
     capital: "브라자빌",
     language: "프랑스어, 링갈라어, 키투바어",
     currency: "중앙아프리카 CFA 프랑",
-    currencyCode: "XAF",      // ★ 환율 API에 사용
+    currencyCode: "XAF",      
     timezone: "UTC+1",
     tips: [
       "일부 지역 치안 불안정",
@@ -1831,7 +1831,7 @@ export default {
     capital: "야무수크로",
     language: "프랑스어, 아프리카 토착어",
     currency: "서아프리카 CFA 프랑",
-    currencyCode: "XOF",      // ★ 환율 API에 사용
+    currencyCode: "XOF",      
     timezone: "UTC+0",
     tips: [
       "일부 지역 치안 불안정",
@@ -1844,7 +1844,7 @@ export default {
     capital: "지부티시티",
     language: "아랍어, 프랑스어",
     currency: "지부티 프랑",
-    currencyCode: "DJF",      // ★ 환율 API에 사용
+    currencyCode: "DJF",      
     timezone: "UTC+3",
     tips: [
       "아프리카 최저점 아살 호수는 이색적인 모습을 볼수 있음",
@@ -1857,7 +1857,7 @@ export default {
     capital: "카이로",
     language: "아랍어, 영어",
     currency: "이집트 파운드",
-    currencyCode: "EGP",      // ★ 환율 API에 사용
+    currencyCode: "EGP",      
     timezone: "UTC+2",
     tips: [
       "호객꾼이 많음(단호하게 거절한 것이 필수!!)",
@@ -1871,7 +1871,7 @@ export default {
     capital: "말라보",
     language: "스페인어, 프랑스어, 포루투칼어",
     currency: "중앙아프리카 CFA 프랑",
-    currencyCode: "XAF",      // ★ 환율 API에 사용
+    currencyCode: "XAF",     
     timezone: "UTC+1",
     tips: [
       "입국 절차가 까다롭고, 치안이 불안정한 나라(신뢰할 수 있는 현지 기업이나 기관 초청장 있는 것이 제일 좋음)",
@@ -1884,7 +1884,7 @@ export default {
     capital: "아스마라",
     language: "티그리냐어, 아랍어, 디그레어, 영어",
     currency: "에리트레아 나크파",
-    currencyCode: "ERN",      // ★ 환율 API에 사용
+    currencyCode: "ERN",      
     timezone: "UTC+3",
     tips: [
       "입국 및 이동이 매우 엄격히 통제되는 국가",
@@ -1898,7 +1898,7 @@ export default {
     capital: "아디스아바바",
     language: "암하라어, 오로모어, 영어",
     currency: "에티오피아 비르",
-    currencyCode: "ETB",      // ★ 환율 API에 사용
+    currencyCode: "ETB",      
     timezone: "UTC+3",
     tips: [
       "일부 지역 치안 불안정",
@@ -1911,7 +1911,7 @@ export default {
     capital: "리브르빌",
     language: "프랑스어, 토착 부족어",
     currency: "중앙아프리카 CFA 프랑",
-    currencyCode: "XAF",      // ★ 환율 API에 사용
+    currencyCode: "XAF",      
     timezone: "UTC+1",
     tips: [
       "일부 지역 치안 불안정",
@@ -1924,7 +1924,7 @@ export default {
     capital: "반줄",
     language: "영어 만딩카어, 울프로어",
     currency: "감비아 달라시",
-    currencyCode: "GMD",      // ★ 환율 API에 사용
+    currencyCode: "GMD",      
     timezone: "UTC+0",
     tips: [
       "일부 지역 치안 불안정",
@@ -1937,7 +1937,7 @@ export default {
     capital: "아크라",
     language: "영어, 트위어, 아칸어",
     currency: "가나 세디",
-    currencyCode: "GHS",      // ★ 환율 API에 사용
+    currencyCode: "GHS",      
     timezone: "UTC+0",
     tips: [
       "일부 지역 치안 불안정",
@@ -1950,7 +1950,7 @@ export default {
     capital: "코나크리",
     language: "프랑스어, 풀라어, 수수어",
     currency: "기니 프랑",
-    currencyCode: "GNF",      // ★ 환율 API에 사용
+    currencyCode: "GNF",      
     timezone: "UTC+0",
     tips: [
       "일부 지역 치안 불안정",
@@ -1963,7 +1963,7 @@ export default {
     capital: "비사우",
     language: "포루투칼어, 기니비사우 크레올어",
     currency: "서아프리카 CFA 프랑",
-    currencyCode: "XOF",      // ★ 환율 API에 사용
+    currencyCode: "XOF",      
     timezone: "UTC+0",
     tips: [
       "일부 지역 치안 불안정",
@@ -1976,7 +1976,7 @@ export default {
     capital: "나이로비",
     language: "스와힐리어, 영어",
     currency: "케냐 실링",
-    currencyCode: "KES",      // ★ 환율 API에 사용
+    currencyCode: "KES",     
     timezone: "UTC+3",
     tips: [
       "일부 지역 치안 불안정",
@@ -1990,7 +1990,7 @@ export default {
     capital: "마세루",
     language: "세소토어, 영어",
     currency: "레소토 로티",
-    currencyCode: "LSL",      // ★ 환율 API에 사용
+    currencyCode: "LSL",      
     timezone: "UTC+2",
     tips: [
       "남아프리카 랜드도 1:1 통용",
@@ -2003,7 +2003,7 @@ export default {
     capital: "몬로비아",
     language: "영어, 토착 부속어",
     currency: "라이베리아 달러",
-    currencyCode: "LRD",      // ★ 환율 API에 사용
+    currencyCode: "LRD",      
     timezone: "UTC+0",
     tips: [
       "치안이 많이 불안정한 국가",
@@ -2016,7 +2016,7 @@ export default {
   capital: "트리폴리",
   language: "아랍어",
   currency: "리비아 디나르",
-  currencyCode: "LYD",      // ★ 환율 API에 사용
+  currencyCode: "LYD",      
   timezone: "UTC+2",
   tips: [
     "2025년 8월 기준 여행 금지 국가",
@@ -2027,7 +2027,7 @@ export default {
     capital: "안타나나리보",
     language: "말라가시어, 프랑스어",
     currency: "마다가스카르 아리아리",
-    currencyCode: "MGA",      // ★ 환율 API에 사용
+    currencyCode: "MGA",     
     timezone: "UTC+3",
     tips: [
       "치안이 많이 불안정한 국가",
@@ -2041,7 +2041,7 @@ export default {
     capital: "릴롱궤",
     language: "치체와어, 영어",
     currency: "말라위 콰차",
-    currencyCode: "MWK",      // ★ 환율 API에 사용
+    currencyCode: "MWK",      
     timezone: "UTC+2",
     tips: [
       "말라위 호수에는 시클리드라는 민물고기 서식 중. 스노쿨링이나 스쿠버 다이빙 체험 추천",
@@ -2052,7 +2052,7 @@ export default {
     capital: "바마코",
     language: "프랑스어어, 밤바라어 등 토착어",
     currency: "서아프리카 CFA 프랑",
-    currencyCode: "XOF",      // ★ 환율 API에 사용
+    currencyCode: "XOF",      
     timezone: "UTC+0",
     tips: [
       "2025년 8월 기준 여행 금지 국가",
@@ -2063,7 +2063,7 @@ export default {
     capital: "누악쇼트",
     language: "아랍어, 프랑스어, 하사니아 아랍어 등",
     currency: "모리타니 우기야",
-    currencyCode: "LRD",      // ★ 환율 API에 사용
+    currencyCode: "LRD",      
     timezone: "UTC+0",
     tips: [
       "2025년 8월 기준 여행 금지 국가",
@@ -2074,7 +2074,7 @@ export default {
     capital: "포트루이스",
     language: "영어, 모리셔스, 크레올어, 프랑스어",
     currency: "모리셔스 루피",
-    currencyCode: "MUR",      // ★ 환율 API에 사용
+    currencyCode: "MUR",      
     timezone: "UTC+4",
     tips: [
       "수중 워킹 & 해양 스포츠  체험 추천",
@@ -2086,7 +2086,7 @@ export default {
     capital: "마무주",
     language: "프랑스어, 스마오레어, 키부시어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+3",
     tips: [
       "세계 최대 라군에서 스노클링/다이빙",
@@ -2098,7 +2098,7 @@ export default {
     capital: "라바트",
     language: "아랍어, 베르베르어, 프랑스어",
     currency: "모로코 디르함",
-    currencyCode: "MAD",      // ★ 환율 API에 사용
+    currencyCode: "MAD",      
     timezone: "UTC+1",
     tips: [
       "메디나에서 접근하는 가이드나 호객꾼 주의",
@@ -2110,7 +2110,7 @@ export default {
     capital: "마푸토",
     language: "포루투칼어, 상가어, 은자냐어",
     currency: "모잠비크 메티칼",
-    currencyCode: "MZN",      // ★ 환율 API에 사용
+    currencyCode: "MZN",      
     timezone: "UTC+2",
     tips: [
       "치안이 많이 불안정한 국가",
@@ -2123,7 +2123,7 @@ export default {
     capital: "빈트후크",
     language: "영어, 아프리칸스어, 독일어",
     currency: "나미비아 달러",
-    currencyCode: "NAD",      // ★ 환율 API에 사용
+    currencyCode: "NAD",      
     timezone: "UTC+2",
     tips: [
       "남아프리카 랜드와 1:1 통용",
@@ -2137,7 +2137,7 @@ export default {
     capital: "몬로비아",
     language: "영어, 토착 부속어",
     currency: "라이베리아 달러",
-    currencyCode: "LRD",      // ★ 환율 API에 사용
+    currencyCode: "LRD",      
     timezone: "UTC+0",
     tips: [
       "치안이 많이 불안정한 국가",
@@ -2150,7 +2150,7 @@ export default {
     capital: "니아메",
     language: "프랑스어, 하우사어, 제르마어",
     currency: "서아프리카 CFA 프랑",
-    currencyCode: "XOF",      // ★ 환율 API에 사용
+    currencyCode: "XOF",      
     timezone: "UTC+1",
     tips: [
       "2025년 8월 기준 여행 금지 국가",
@@ -2161,7 +2161,7 @@ export default {
     capital: "아부자",
     language: "영어, 하우사어, 이보어, 요루바어",
     currency: "나이지리아 나이라",
-    currencyCode: "NGN",      // ★ 환율 API에 사용
+    currencyCode: "NGN",      
     timezone: "UTC+1",
     tips: [
       "2025년 8월 기준 여행 금지 국가",
@@ -2172,7 +2172,7 @@ export default {
     capital: "생드니",
     language: "프랑스어, 레위니옹 크레올어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC+4",
     tips: [
       "쓰리 서커스 하이킹 추천, 체력, 시간 안된다면 경비행기 투어도 추천",
@@ -2185,7 +2185,7 @@ export default {
     capital: "키갈리",
     language: "르완다어, 영어, 프랑스어, 스와힐리어",
     currency: "르완다 프랑",
-    currencyCode: "RWF",      // ★ 환율 API에 사용
+    currencyCode: "RWF",      
     timezone: "UTC+2",
     tips: [
       "콩고민주공화국 및 부룬디 접경 지역은 테러 및 무장세력 활동 위험 있음 방문 자제",
@@ -2198,7 +2198,7 @@ export default {
     capital: "상투메",
     language: "포루투갈어, 상투메 크레올어",
     currency: "상투메 프린시페 도브라",
-    currencyCode: "STN",      // ★ 환율 API에 사용
+    currencyCode: "STN",     
     timezone: "UTC+0",
     tips: [
       "상투메 프린시페는 한때 세계 최대 코코아 생산국이 였음. 신선한 초콜릿 맛볼 수 있는 투어 추천",
@@ -2211,7 +2211,7 @@ export default {
     capital: "다카르",
     language: "프랑스어, 월로프어 등 토착어",
     currency: "서아프리카 CFA 프랑",
-    currencyCode: "XOF",      // ★ 환율 API에 사용
+    currencyCode: "XOF",      
     timezone: "UTC+0",
     tips: [
       "일부 지역 치안이 많이 불안정한 국가",
@@ -2225,7 +2225,7 @@ export default {
     capital: "빅토리아",
     language: "크레올어, 영어, 프랑스어",
     currency: "세이셸 루피",
-    currencyCode: "SCR",      // ★ 환율 API에 사용
+    currencyCode: "SCR",     
     timezone: "UTC+4",
     tips: [
       "프라스린 섬의 발레 드 메이 방문 추천(유네스코 세계유산)",
@@ -2239,7 +2239,7 @@ export default {
     capital: "프리타운",
     language: "영어, 크리오어",
     currency: "시에라리온 리오네",
-    currencyCode: "SLL",      // ★ 환율 API에 사용
+    currencyCode: "SLL",      
     timezone: "UTC+0",
     tips: [
       "일부 지역 치안이 많이 불안정한 국가",
@@ -2253,7 +2253,7 @@ export default {
     capital: "모가디슈",
     language: "소말리어, 아랍어",
     currency: "소말리아 실링",
-    currencyCode: "SOS",      // ★ 환율 API에 사용
+    currencyCode: "SOS",      
     timezone: "UTC+3",
     tips: [
       "2025년 8월 기준 여행 금지 국가",
@@ -2264,7 +2264,7 @@ export default {
     capital: "프리토리아",
     language: "영어, 아프리칸스어, 줄루어 등 11개 공용어",
     currency: "남아프리카 랜드",
-    currencyCode: "ZAR",      // ★ 환율 API에 사용
+    currencyCode: "ZAR",      
     timezone: "UTC+2",
     tips: [
       "일부 지역 치안이 많이 불안정한 국가",
@@ -2278,7 +2278,7 @@ export default {
     capital: "주바",
     language: "영어, 주바 알어, 다양한 토착어",
     currency: "남수단 파운드",
-    currencyCode: "SSP",      // ★ 환율 API에 사용
+    currencyCode: "SSP",      
     timezone: "UTC+2",
     tips: [
       "2025년 8월 기준 여행 금지 국가",
@@ -2289,7 +2289,7 @@ export default {
     capital: "하르툼",
     language: "아랍어, 영어",
     currency: "수단 파운드",
-    currencyCode: "SDG",      // ★ 환율 API에 사용
+    currencyCode: "SDG",      
     timezone: "UTC+2",
     tips: [
       "2025년 8월 기준 여행 금지 국가",
@@ -2302,7 +2302,7 @@ export default {
     capital: "부에노스아이레스",
     language: "스페인어",
     currency: "아르헨티나 페소",
-    currencyCode: "ARS",      // ★ 환율 API에 사용
+    currencyCode: "ARS",      
     timezone: "UTC-3",
     tips: [
       "한국에서 미국 달러 현금 가져가서 현지에서 환전하는 것 추천",
@@ -2315,7 +2315,7 @@ export default {
     capital: "라파스, 수크레",
     language: "스페인어",
     currency: "볼리비아노",
-    currencyCode: "BOB",      // ★ 환율 API에 사용
+    currencyCode: "BOB",      
     timezone: "UTC-4",
     tips: [
       "라파스는 행정수도, 수크레는 헌법수도",
@@ -2328,7 +2328,7 @@ export default {
     capital: "브라질리아",
     language: "포르투갈어",
     currency: "브라질 헤알",
-    currencyCode: "BRL",      // ★ 환율 API에 사용
+    currencyCode: "BRL",      
     timezone: "UTC-2",
     tips: [
       "대도시에서도 소매치기, 강도 등 강력 범죄가 빈번 주의",
@@ -2341,7 +2341,7 @@ export default {
     capital: "산티아고",
     language: "스페인어",
     currency: "칠레 페소",
-    currencyCode: "CLP",      // ★ 환율 API에 사용
+    currencyCode: "CLP",      
     timezone: "UTC-3",
     tips: [
       "여행 동선에 따라 기후가 크게 변하기 때문에 동선에 맞춰 옷 준비",
@@ -2354,7 +2354,7 @@ export default {
     capital: "보고타",
     language: "스페인어",
     currency: "콜롬비아 페소",
-    currencyCode: "COP",      // ★ 환율 API에 사용
+    currencyCode: "COP",      
     timezone: "UTC-5",
     tips: [
       "커피 투어 추천",
@@ -2367,7 +2367,7 @@ export default {
     capital: "키토",
     language: "스페인어",
     currency: "미국 달러",
-    currencyCode: "USD",      // ★ 환율 API에 사용
+    currencyCode: "USD",      
     timezone: "UTC-5",
     tips: [
       "갈라파고스 방문 추천(크루즈 여행 시 몇 달 전 미리 예약 필수!!)",
@@ -2379,7 +2379,7 @@ export default {
     capital: "조지타운",
     language: "영어, 가이아나 크레올어",
     currency: "가이아나 달러",
-    currencyCode: "*",      // ★ 환율 API에 사용
+    currencyCode: "*",      
     timezone: "UTC-4",
     tips: [
       "남미에서 유일하게 영어를 공용어로 쓰는 나라",
@@ -2392,7 +2392,7 @@ export default {
     capital: "아순시온",
     language: "스페인어, 과라니어",
     currency: "과라니",
-    currencyCode: "GS",      // ★ 환율 API에 사용
+    currencyCode: "GS",    
     timezone: "UTC-3",
     tips: [
       "여러 남미 국가와의 교류로 다양한 분위기 느낄 수 있음",
@@ -2405,7 +2405,7 @@ export default {
     capital: "리마",
     language: "스페인어",
     currency: "누에보 솔",
-    currencyCode: "Nuevo Sol",      // ★ 환율 API에 사용
+    currencyCode: "Nuevo Sol",      
     timezone: "UTC-5",
     tips: [
       "마추픽추 방문 추천(입장권/기차표 미리 예약 필수!!)",
@@ -2417,7 +2417,7 @@ export default {
     capital: "파라마리보",
     language: "네덜란드어, 스라난통고어",
     currency: "수리남 달러",
-    currencyCode: "SRD",      // ★ 환율 API에 사용
+    currencyCode: "SRD",      
     timezone: "UTC-3",
     tips: [
       "파라마리보 역사 지구는 유네스코 세계유산 등재되어 있음",
@@ -2430,7 +2430,7 @@ export default {
     capital: "몬테비데오",
     language: "스페인어",
     currency: "우르과이 페소",
-    currencyCode: "UYU",      // ★ 환율 API에 사용
+    currencyCode: "UYU",      
     timezone: "UTC-3",
     tips: [
       "우루과이 남동부에 위치한 푼타 델 에스테 방문 추천",
@@ -2442,7 +2442,7 @@ export default {
     capital: "카라카스",
     language: "스페인어",
     currency: "볼리바르",
-    currencyCode: "VES",      // ★ 환율 API에 사용
+    currencyCode: "VES",      
     timezone: "UTC-4",
     tips: [
       "!!치안 주의!!",
@@ -2453,7 +2453,7 @@ export default {
     capital: "카옌",
     language: "프랑스어",
     currency: "유로",
-    currencyCode: "EUR",      // ★ 환율 API에 사용
+    currencyCode: "EUR",      
     timezone: "UTC-3",
     tips: [
       "기아나 우주 센터 투어 추천",
@@ -2466,7 +2466,7 @@ export default {
     capital: "스탠리",
     language: "영어",
     currency: "포클랜드 파운드",
-    currencyCode: "FKP",      // ★ 환율 API에 사용
+    currencyCode: "FKP",      
     timezone: "UTC-3",
     tips: [
       "영국 파운드도 통용됨",
@@ -2482,7 +2482,7 @@ export default {
     capital: "캔버라",
     language: "영어",
     currency: "호주 달러",
-    currencyCode: "AUD",      // ★ 환율 API에 사용
+    currencyCode: "AUD",      
     timezone: "UTC+8",
     tips: [
       "자외선이 강하기 때문에 선크림, 모자, 선글라스 필수",
@@ -2495,7 +2495,7 @@ export default {
     capital: "웰링턴",
     language: "영어, 마오리어",
     currency: "뉴질랜드 달러",
-    currencyCode: "NZD",      // ★ 환율 API에 사용
+    currencyCode: "NZD",     
     timezone: "UTC+12",
     tips: [
       "반지의 제왕 호비튼 마을 방문 추천",
@@ -2508,7 +2508,7 @@ export default {
     capital: "포트 모르즈비",
     language: "토크 피신, 히리 모투, 영어",
     currency: "파푸아뉴기니 키나",
-    currencyCode: "PGK",      // ★ 환율 API에 사용
+    currencyCode: "PGK",      
     timezone: "UTC+10",
     tips: [
       "!!치안 주의!!",
@@ -2519,7 +2519,7 @@ export default {
     capital: "호니아라",
     language: "영어, 피진 영어, 다양한 토착어",
     currency: "솔로몬 달러",
-    currencyCode: "SBD",      // ★ 환율 API에 사용
+    currencyCode: "SBD",      
     timezone: "UTC+11",
     tips: [
       "말라리아, 결핵 주의",
@@ -2532,7 +2532,7 @@ export default {
     capital: "포트 빌라",
     language: "비슬라마어, 영어, 프랑스",
     currency: "바누아투 바투",
-    currencyCode: "VUV",      // ★ 환율 API에 사용
+    currencyCode: "VUV",      
     timezone: "UTC+11",
     tips: [
       "여행경비를 아끼고 싶다면 로컬 버스 추천",
@@ -2544,7 +2544,7 @@ export default {
     capital: "아피아",
     language: "사모아어, 영어",
     currency: "사모아 탈라",
-    currencyCode: "WST",      // ★ 환율 API에 사용
+    currencyCode: "WST",      
     timezone: "UTC+13",
     tips: [
       "사모아 바닷속은 바위가 많기 때문에 신발 필수",
@@ -2556,7 +2556,7 @@ export default {
     capital: "누쿠알로파",
     language: "통가어, 영어",
     currency: "파앙가",
-    currencyCode: "TOP",      // ★ 환율 API에 사용
+    currencyCode: "TOP",      
     timezone: "UTC+13",
     tips: [
       "혹등고래 7-10월",
@@ -2569,7 +2569,7 @@ export default {
     capital: "푸나푸티",
     language: "투발루어, 영어",
     currency: "투발루 달러",
-    currencyCode: "*",      // ★ 환율 API에 사용
+    currencyCode: "*",      
     timezone: "UTC+12",
     tips: [
       "푸나푸티 보호구역 방문 추천",
@@ -2581,7 +2581,7 @@ export default {
     capital: "타라와",
     language: "길버트어, 영어",
     currency: "키리바시 달러",
-    currencyCode: "*",      // ★ 환율 API에 사용
+    currencyCode: "*",      
     timezone: "UTC+12",
     tips: [
       "비행기 편도 적고 관광 인프라 부족",
@@ -2593,7 +2593,7 @@ export default {
     capital: "팔리키르",
     language: "영어",
     currency: "미국 달러",
-    currencyCode: "USD",      // ★ 환율 API에 사용
+    currencyCode: "USD",      
     timezone: "UTC+10~11",
     tips: [
       "세계적인 다이빙 명소",
@@ -2606,7 +2606,7 @@ export default {
     capital: "마주로",
     language: "마셜어, 영어",
     currency: "미국 달러",
-    currencyCode: "USD",      // ★ 환율 API에 사용
+    currencyCode: "USD",      
     timezone: "UTC+12",
     tips: [
       "방문객이 적은 나라로 자연 그대로의 모습 가지고 있음",
@@ -2619,7 +2619,7 @@ export default {
     capital: "응게룰무드",
     language: "팔라우어, 영어",
     currency: "미국 달러",
-    currencyCode: "USD",      // ★ 환율 API에 사용
+    currencyCode: "USD",      
     timezone: "UTC+9",
     tips: [
       "환전은 여행 전 미리해서 가는 것 추천",
@@ -2631,7 +2631,7 @@ export default {
     capital: "공식적으로 없음",
     language: "나우루어, 영어",
     currency: "호주 달러",
-    currencyCode: "AUD",      // ★ 환율 API에 사용
+    currencyCode: "AUD",      
     timezone: "UTC+12",
     tips: [
       "실질적 행정 중심지는 야렌",
@@ -2645,7 +2645,7 @@ export default {
     capital: "누메아",
     language: "프랑스어, 카나크어",
     currency: "CFP 프랑",
-    currencyCode: "XPF",      // ★ 환율 API에 사용
+    currencyCode: "XPF",      
     timezone: "UTC+11",
     tips: [
       "연평균 27도의 온화한 날씨&자외선 대비 필수",
@@ -2657,7 +2657,7 @@ export default {
     capital: "파페테",
     language: "프랑스어, 타히티어",
     currency: "CPF 프랑",
-    currencyCode: "XPF",      // ★ 환율 API에 사용
+    currencyCode: "XPF",      
     timezone: "UTC-10",
     tips: [
       "5-10월 건기 이때 방문 추천",
@@ -2669,7 +2669,7 @@ export default {
     capital: "팡고 팡고",
     language: "사모아어, 영어",
     currency: "미국 달러",
-    currencyCode: "USD",      // ★ 환율 API에 사용
+    currencyCode: "USD",      
     timezone: "UTC-11",
     tips: [
       "사모아 국립공원 방문 추천",
@@ -2681,7 +2681,7 @@ export default {
     capital: "하갓냐",
     language: "영어, 차모로어",
     currency: "미국 달러",
-    currencyCode: "USD",      // ★ 환율 API에 사용
+    currencyCode: "USD",      
     timezone: "UTC+10",
     tips: [
       "대중교통 거의 없어 렌터카 필수",

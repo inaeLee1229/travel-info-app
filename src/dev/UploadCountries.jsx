@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { doc, writeBatch } from "firebase/firestore";
-import { db } from "../firebase"; // 인애 프로젝트 경로에 맞춰 변경!
-import countryInfo from "../data/countryInfo"; // 인애 나라 파일 경로에 맞춰 변경!
+import { db } from "../firebase"; 
+import countryInfo from "../data/countryInfo"; 
 
 const UploadCountries = () => {
   const [status, setStatus] = useState("대기 중");
@@ -14,14 +14,14 @@ const UploadCountries = () => {
 
       Object.entries(countryInfo).forEach(([code, data]) => {
         const ref = doc(db, "countries", code);  
-        batch.set(ref, data, { merge: true });   // ★ 핵심!
+        batch.set(ref, data, { merge: true });   
       });
 
       await batch.commit();
-      setStatus("완료! Firestore에서 확인해봐 😎");
+      setStatus("완료! Firestore에서 확인");
     } catch (err) {
       console.error(err);
-      setStatus("에러 발생…");
+      setStatus("에러 발생");
     }
   };
 

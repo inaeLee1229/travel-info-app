@@ -1,5 +1,3 @@
-// 간단 샘플 — 필요한 만큼 계속 늘리면 됩니다.
-// label은 화면에 보이는 이름, code는 ISO(정규화된) 국가코드
 const continents = [
   {
     key: "AS",
@@ -167,7 +165,6 @@ const continents = [
       { code: "VE", label: "베네수엘라" },
       { code: "GF", label: "기아나(프랑스령)" },
       { code: "FKI", label: "포클랜드 제도" },
-      // { code: "BR", label: "브라질" }, … 추가
     ],
   },
   {
@@ -250,7 +247,7 @@ const continents = [
   },
 ];
 
-// ✅ 대륙별 기본 색상 추가
+// 대륙별 색상
 export const CONTINENT_COLORS = {
   AS: "#FFD93D", // 아시아
   EU: "#82CFFD", // 유럽

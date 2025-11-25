@@ -3,7 +3,6 @@ import { db } from "../firebase";
 import { writeBatch, doc, serverTimestamp } from "firebase/firestore";
 import countryData from "../data/countryData"; // countryData.js가 default export일 때
 
-// ✅ export function으로 내보내야 App.jsx에서 { seedCountries }로 불러올 수 있음
 export async function seedCountries() {
   const batch = writeBatch(db);
   let count = 0;

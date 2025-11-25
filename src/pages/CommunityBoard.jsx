@@ -15,10 +15,7 @@ import { useNavigate } from "react-router-dom";
 const CATEGORIES = ["전체", "아시아", "유럽", "북미", "남미", "아프리카", "오세아니아"];
 const POST_TYPES = ["정보", "질문", "자유"];
 
-// ✅ (옵션) 공지 작성 권한을 줄 관리자 UID (필요 없으면 null)
-const ADMIN_UID = "YOUR_ADMIN_UID"; // ← 관리자 UID로 바꿔도 되고, 권한 없이 콘솔로만 쓸거면 그냥 냅둬도 됨.
-
-// ✅ 이메일 마스킹 함수 (앞 4글자만 보이게)
+// 이메일 마스킹
 const maskEmail = (email) => {
   if (!email) return "익명";
   const s = String(email);
@@ -30,14 +27,14 @@ const maskEmail = (email) => {
 export default function CommunityBoard() {
   const navigate = useNavigate();
 
-  // 로그인 상태
+  // 로그인 상태 
   const [user, setUser] = useState(null);
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, setUser);
     return () => unsub();
   }, []);
 
-  // ===== 공지사항(notices) =====
+  // 공지사항(notices) 
   const [notices, setNotices] = useState([]);
   useEffect(() => {
     const q = query(collection(db, "notices"), orderBy("updatedAt", "desc"));
@@ -48,36 +45,7 @@ export default function CommunityBoard() {
     return () => unsub();
   }, []);
 
-  // (옵션) 공지 작성 폼 — 관리자에게만 보임
-  const [noticeForm, setNoticeForm] = useState({ title: "", content: "", link: "" });
-  const isAdmin = !!user && user.uid === ADMIN_UID;
-  const onChangeNotice = (e) => {
-    const { name, value } = e.target;
-    setNoticeForm((f) => ({ ...f, [name]: value }));
-  };
-  const onSubmitNotice = async (e) => {
-    e.preventDefault();
-    if (!isAdmin) return;
-    if (!noticeForm.title.trim() || !noticeForm.content.trim()) {
-      alert("제목과 내용을 입력해주세요.");
-      return;
-    }
-    try {
-      await addDoc(collection(db, "notices"), {
-        title: noticeForm.title.trim(),
-        content: noticeForm.content.trim(),
-        link: noticeForm.link.trim(),
-        updatedAt: serverTimestamp(),
-      });
-      setNoticeForm({ title: "", content: "", link: "" });
-      alert("공지 등록 완료!");
-    } catch (err) {
-      console.error(err);
-      alert("공지 등록 중 오류가 발생했습니다.");
-    }
-  };
-
-  // ===== 일반 게시글(posts) =====
+  //일반 게시글
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
@@ -88,7 +56,6 @@ export default function CommunityBoard() {
     return () => unsub();
   }, []);
 
-  // 폼/필터 상태
   const [form, setForm] = useState({
     title: "",
     content: "",
@@ -100,7 +67,7 @@ export default function CommunityBoard() {
 
   const [queryText, setQueryText] = useState("");
   const [selectedCat, setSelectedCat] = useState("전체");
-  const [typeFilter, setTypeFilter] = useState("전체"); // "전체" | "정보" | "질문" | "자유"
+  const [typeFilter, setTypeFilter] = useState("전체");
 
   const currentAuthor = user?.email || user?.displayName || "익명";
   const currentUid = user?.uid || null;
@@ -110,31 +77,20 @@ export default function CommunityBoard() {
     setForm((f) => ({ ...f, [name]: value }));
   };
 
-  // 글쓰기 버튼: 비로그인 → /auth로 안내
+  // 로그인 확인 없이 그냥 폼 열기
   const onClickWrite = () => {
-    if (!user) {
-      if (confirm("로그인이 필요합니다. 로그인 화면으로 이동할까요?")) {
-        navigate("/auth");
-      }
-      return;
-    }
     setShowForm((v) => !v);
     setTimeout(() => formRef.current?.scrollIntoView({ behavior: "smooth" }), 0);
   };
 
-  // 저장: 로그인 필수 + authorUid 저장
+  // 로그인 confirm 제거
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!form.title.trim() || !form.content.trim()) {
       alert("제목/내용을 모두 입력해주세요.");
       return;
     }
-    if (!user) {
-      if (confirm("로그인이 필요합니다. 로그인 화면으로 이동할까요?")) {
-        navigate("/auth");
-      }
-      return;
-    }
+
     try {
       await addDoc(collection(db, "posts"), {
         title: form.title.trim(),
@@ -154,7 +110,7 @@ export default function CommunityBoard() {
     }
   };
 
-  // 필터링 (유형 + 카테고리 + 검색)
+  // 유형, 카테고리, 검색
   const filtered = useMemo(() => {
     const q = queryText.trim().toLowerCase();
     return posts.filter((p) => {
@@ -179,7 +135,6 @@ export default function CommunityBoard() {
   return (
     <div style={{ background: "#fff", minHeight: "100vh", paddingTop: 80 }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: 24 }}>
-        {/* 상단 */}
         <div style={{ display: "flex", justifyContent: "space-between", gap: 16, marginBottom: 16 }}>
           <div>
             <h1 style={{ margin: 0, fontSize: 36, fontWeight: 800 }}>여행 커뮤니티</h1>
@@ -188,7 +143,6 @@ export default function CommunityBoard() {
             </p>
           </div>
           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            {/* 유형 필터 토글 */}
             <div style={{ display: "flex", gap: 6 }}>
               {["전체", "정보", "질문", "자유"].map((t) => (
                 <button
@@ -209,7 +163,7 @@ export default function CommunityBoard() {
               ))}
             </div>
 
-            {/* 검색 + 글쓰기 */}
+            {/* 검색, 글쓰기 */}
             <input
               value={queryText}
               onChange={(e) => setQueryText(e.target.value)}
@@ -241,7 +195,7 @@ export default function CommunityBoard() {
           </div>
         </div>
 
-        {/* ====== 공지사항 섹션 ====== */}
+        {/* 공지사항 */}
         <section
           style={{
             border: "1px solid #eee",
@@ -289,67 +243,16 @@ export default function CommunityBoard() {
               ))}
             </ul>
           )}
-
-          {/* 관리자 전용 공지 작성 폼 (선택 기능) */}
-          {isAdmin && (
-            <form onSubmit={onSubmitNotice} style={{ marginTop: 12, display: "grid", gap: 8 }}>
-              <input
-                name="title"
-                placeholder="공지 제목"
-                value={noticeForm.title}
-                onChange={onChangeNotice}
-                style={{ border: "1px solid #ddd", borderRadius: 8, padding: "10px 12px", fontSize: 14 }}
-              />
-              <textarea
-                name="content"
-                placeholder="공지 내용"
-                rows={3}
-                value={noticeForm.content}
-                onChange={onChangeNotice}
-                style={{
-                  border: "1px solid #ddd",
-                  borderRadius: 8,
-                  padding: "10px 12px",
-                  fontSize: 14,
-                  resize: "vertical",
-                }}
-              />
-              <input
-                name="link"
-                placeholder="링크 (선택)"
-                value={noticeForm.link}
-                onChange={onChangeNotice}
-                style={{ border: "1px solid #ddd", borderRadius: 8, padding: "10px 12px", fontSize: 14 }}
-              />
-              <button
-                type="submit"
-                style={{
-                  alignSelf: "start",
-                  border: "none",
-                  borderRadius: 10,
-                  padding: "10px 14px",
-                  background: "#111",
-                  color: "#fff",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                }}
-              >
-                공지 등록
-              </button>
-            </form>
-          )}
         </section>
-        {/* ====== /공지사항 섹션 ====== */}
 
-        {/* 본문 레이아웃 */}
+        {/* 카테고리 + 글쓰기/목록 */}
         <div style={{ display: "grid", gridTemplateColumns: "220px 1fr", gap: 20 }}>
-          {/* 좌측 카테고리 */}
           <aside
             style={{
-  border: "1px solid #eee",
-  borderRadius: 12,
-  padding: 16,
-}}
+              border: "1px solid #eee",
+              borderRadius: 12,
+              padding: 16,
+            }}
           >
             <div style={{ fontWeight: 800, marginBottom: 10 }}>📍 카테고리</div>
             <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
@@ -376,7 +279,7 @@ export default function CommunityBoard() {
             </ul>
           </aside>
 
-          {/* 우측: 글쓰기 폼 + 목록 */}
+          {/* 글쓰기 폼, 목록 */}
           <main>
             <div ref={formRef} />
             {showForm && (
@@ -509,7 +412,7 @@ export default function CommunityBoard() {
                 {filtered.map((post) => (
                   <li
                     key={post.id}
-                    onClick={() => navigate(`/community/${post.id}`)} // 🔥 카드 클릭 시 상세 페이지로 이동
+                    onClick={() => navigate(`/community/${post.id}`)} // 상세 페이지로 이동
                     style={{
                       border: "1px solid #eee",
                       borderRadius: 12,
@@ -571,7 +474,6 @@ export default function CommunityBoard() {
                         fontSize: 12,
                       }}
                     >
-                      {/* ✅ 작성자 이메일 마스킹 적용 */}
                       <span>✍️ {maskEmail(post.author)}</span>
                       <span>{fmt(post.createdAt)}</span>
                     </div>

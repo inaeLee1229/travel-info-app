@@ -116,8 +116,6 @@ export default function Exchange() {
   return (
     <div style={{ background: "#fff", minHeight: "100vh", padding: "96px 24px 48px" }}>
       <div style={{ maxWidth: 900, margin: "0 auto" }}>
-        
-        {/* 중앙정렬 + 홈 제거 */}
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
           <h1 style={{ margin: 0 }}>환율 변환기</h1>
         </div>
@@ -197,7 +195,7 @@ export default function Exchange() {
 
           </div>
 
-          {/* 상태 영역 */}
+          {/* 상태 */}
           <div style={{ marginTop: 12, color: "#555", display: "flex", gap: 12, alignItems: "center" }}>
             {loading ? (
               "환율 불러오는 중…"

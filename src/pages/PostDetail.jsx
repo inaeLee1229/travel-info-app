@@ -19,7 +19,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 
-// 이메일 마스킹 (앞 4글자만 보이고 나머지는 전부 *)
+// 이메일 앞에 4글자만 보이도록
 const maskEmail = (email) => {
   if (!email) return "익명";
   const s = String(email);
@@ -28,13 +28,10 @@ const maskEmail = (email) => {
   return s.slice(0, keep) + "*".repeat(s.length - keep);
 };
 
-// 날짜 포맷
 const fmt = (ts) => (ts?.toDate ? ts.toDate().toISOString().slice(0, 10) : "");
 
-// 댓글 리스트를 트리 구조로 변환 (모든 댓글이 children 가질 수 있게)
 const buildCommentTree = (list) => {
   const map = {};
-  // 복사 + children 배열 만들기
   list.forEach((c) => {
     map[c.id] = { ...c, children: [] };
   });
@@ -45,7 +42,6 @@ const buildCommentTree = (list) => {
     if (c.parentId && map[c.parentId]) {
       map[c.parentId].children.push(node);
     } else {
-      // parentId가 없거나(parentId === null) 부모를 못 찾으면 루트 취급
       roots.push(node);
     }
   });
@@ -64,7 +60,7 @@ export default function PostDetail() {
     return () => unsub();
   }, []);
 
-  // 🔹 글 데이터 불러오기
+  // 글 데이터 불러오기
   const [post, setPost] = useState(null);
   const [loadingPost, setLoadingPost] = useState(true);
 
@@ -80,7 +76,7 @@ export default function PostDetail() {
   // 내가 쓴 글인지 여부
   const isPostOwner = user && post && user.uid === post.authorUid;
 
-  // 🔹 글 수정 상태
+  // 글 수정 상태
   const [editingPost, setEditingPost] = useState(false);
   const [editTitle, setEditTitle] = useState("");
   const [editContent, setEditContent] = useState("");
@@ -126,7 +122,7 @@ export default function PostDetail() {
     }
   };
 
-  // 🔹 좋아요
+  //좋아요
   const [liked, setLiked] = useState(false);
   useEffect(() => {
     if (!user?.uid || !postId) {
@@ -160,7 +156,7 @@ export default function PostDetail() {
     }
   };
 
-  // 🔹 댓글 목록
+  //댓글 목록
   const [comments, setComments] = useState([]);
   useEffect(() => {
     if (!postId) return;
@@ -177,7 +173,7 @@ export default function PostDetail() {
 
   const commentTree = buildCommentTree(comments);
 
-  // 🔹 최상위 댓글 작성
+  // 최상위 댓글 작성
   const [commentText, setCommentText] = useState("");
   const submitComment = async (e) => {
     e.preventDefault();
@@ -192,12 +188,12 @@ export default function PostDetail() {
       author: user.email || user.displayName || "익명",
       authorUid: user.uid,
       createdAt: serverTimestamp(),
-      parentId: null, // 루트 댓글
+      parentId: null, 
     });
     setCommentText("");
   };
 
-  // 🔹 댓글 수정/삭제 상태 (모든 댓글 공통)
+  // 🔹 댓글 수정/삭제 상태 
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingCommentText, setEditingCommentText] = useState("");
 
@@ -233,8 +229,6 @@ export default function PostDetail() {
   const deleteComment = async (commentId) => {
     if (!window.confirm("이 댓글을 삭제할까요?")) return;
     try {
-      // (간단 버전) 해당 댓글만 삭제. 대댓글까지 한 번에 지우고 싶으면
-      // comments.filter(...) 로 children 찾아서 같이 deleteDoc 해도 됨.
       await deleteDoc(doc(db, "posts", postId, "comments", commentId));
     } catch (e) {
       console.error(e);
@@ -242,7 +236,7 @@ export default function PostDetail() {
     }
   };
 
-  // 🔹 대댓글 상태 (모든 댓글 공통) – 어떤 댓글에 폼이 열렸는지만 관리
+  // 🔹 대댓글 상태 
   const [replyTargetId, setReplyTargetId] = useState(null);
 
   const handleReplySubmit = async (parentCommentId, e) => {
@@ -263,9 +257,9 @@ export default function PostDetail() {
         author: user.email || user.displayName || "익명",
         authorUid: user.uid,
         createdAt: serverTimestamp(),
-        parentId: parentCommentId, // 어떤 댓글 밑에 달렸는지
+        parentId: parentCommentId, 
       });
-      form.reply.value = ""; // 입력창 비우기
+      form.reply.value = ""; 
       setReplyTargetId(null);
     } catch (e2) {
       console.error(e2);
@@ -275,13 +269,12 @@ export default function PostDetail() {
 
   const likesCount = post?.likesCount || 0;
 
-  // ───────────────── 댓글 하나 렌더링 (재귀) ─────────────────
   const CommentItem = ({ comment, level = 0 }) => {
     const isMyComment = user && comment.authorUid === user.uid;
     const isEditing = editingCommentId === comment.id;
     const hasChildren = comment.children && comment.children.length > 0;
 
-    const indent = level * 16; // 레벨별 들여쓰기
+    const indent = level * 16; 
 
     return (
       <li
@@ -294,7 +287,7 @@ export default function PostDetail() {
           background: level === 0 ? "#fff" : "#fafafa",
         }}
       >
-        {/* 헤더: 작성자 / 날짜 / 버튼들 */}
+        {/* 헤더*/}
         <div
           style={{
             display: "flex",
@@ -324,7 +317,7 @@ export default function PostDetail() {
               alignItems: "center",
             }}
           >
-            {/* 답글 달기 버튼 (누구나) */}
+            {/* 답글 달기 */}
             <button
               type="button"
               onClick={() =>
@@ -343,7 +336,7 @@ export default function PostDetail() {
               답글 달기
             </button>
 
-            {/* 수정/삭제 (내 댓글일 때만) */}
+            {/* 수정/삭제 */}
             {isMyComment && !isEditing && (
               <>
                 <button
@@ -408,7 +401,6 @@ export default function PostDetail() {
           </div>
         </div>
 
-        {/* 내용 or 수정 textarea */}
         {isEditing ? (
           <textarea
             value={editingCommentText}
@@ -435,7 +427,7 @@ export default function PostDetail() {
           </div>
         )}
 
-        {/* 이 댓글에 대한 답글 입력창 (한 번에 하나만 열리게) */}
+        {/* 이 댓글에 대한 답글 입력창 */}
         {replyTargetId === comment.id && (
           <form
             onSubmit={(e) => handleReplySubmit(comment.id, e)}
@@ -447,7 +439,7 @@ export default function PostDetail() {
                 rows={2}
                 placeholder="답글을 입력하세요"
                 style={{
-                  width: "95%", // 카드 안에서만 차지하도록 살짝 줄임 (튀어나오는 거 방지)
+                  width: "95%", 
                   borderRadius: 6,
                   border: "1px solid #ddd",
                   padding: "8px 10px",

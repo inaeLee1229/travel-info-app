@@ -8,7 +8,6 @@ export default function ContinentSidebar({ headerHeight = 80, isDesktop = true }
     return null;
   }
   const [open, setOpen] = useState(() => {
-    // 처음엔 아시아만 열어두기 (원하면 빈 객체 {}로 모두 접기)
     return { };
   });
   const navigate = useNavigate();
@@ -19,7 +18,7 @@ export default function ContinentSidebar({ headerHeight = 80, isDesktop = true }
     <aside
       style={{
         position: "fixed",
-        top: headerHeight,          // 헤더 높이만큼 아래에서 시작
+        top: headerHeight,          
         left: 0,
         width: 240,
         height: `calc(100vh - ${headerHeight}px)`,

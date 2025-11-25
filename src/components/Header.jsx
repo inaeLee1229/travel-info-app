@@ -83,7 +83,7 @@ export default function Header() {
           )
         ) : (
           <>
-            {/* ✅ 정보공유방 링크 */}
+            {/* 정보공유방 링크 */}
             <Link
               to="/community"
               style={{
@@ -96,7 +96,7 @@ export default function Header() {
               정보공유방
             </Link>
 
-            {/* ✅ 마이페이지 */}
+            {/* 마이페이지 */}
             <Link
               to="/me"
               style={{
@@ -111,7 +111,7 @@ export default function Header() {
               마이페이지
             </Link>
 
-            {/* ✅ 로그아웃 버튼 */}
+            {/* 로그아웃 버튼 */}
             <button
               onClick={logout}
               style={{
