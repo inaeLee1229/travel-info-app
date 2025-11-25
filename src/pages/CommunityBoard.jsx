@@ -18,6 +18,15 @@ const POST_TYPES = ["정보", "질문", "자유"];
 // ✅ (옵션) 공지 작성 권한을 줄 관리자 UID (필요 없으면 null)
 const ADMIN_UID = "YOUR_ADMIN_UID"; // ← 관리자 UID로 바꿔도 되고, 권한 없이 콘솔로만 쓸거면 그냥 냅둬도 됨.
 
+// ✅ 이메일 마스킹 함수 (앞 4글자만 보이게)
+const maskEmail = (email) => {
+  if (!email) return "익명";
+  const s = String(email);
+  const keep = 4;
+  if (s.length <= keep) return "*".repeat(s.length);
+  return s.slice(0, keep) + "*".repeat(s.length - keep);
+};
+
 export default function CommunityBoard() {
   const navigate = useNavigate();
 
@@ -206,15 +215,25 @@ export default function CommunityBoard() {
               onChange={(e) => setQueryText(e.target.value)}
               placeholder="검색(제목/내용/작성자)"
               style={{
-                width: 320, border: "1px solid #ddd", borderRadius: 999,
-                padding: "10px 14px", fontSize: 14, outline: "none",
+                width: 320,
+                border: "1px solid #ddd",
+                borderRadius: 999,
+                padding: "10px 14px",
+                fontSize: 14,
+                outline: "none",
               }}
             />
             <button
               onClick={onClickWrite}
               style={{
-                whiteSpace: "nowrap", border: "1px solid #111", background: "#111",
-                color: "#fff", padding: "10px 14px", borderRadius: 999, fontSize: 14, cursor: "pointer",
+                whiteSpace: "nowrap",
+                border: "1px solid #111",
+                background: "#111",
+                color: "#fff",
+                padding: "10px 14px",
+                borderRadius: 999,
+                fontSize: 14,
+                cursor: "pointer",
               }}
             >
               {showForm ? "닫기" : "글쓰기"}
@@ -241,12 +260,13 @@ export default function CommunityBoard() {
           ) : (
             <ul style={{ listStyle: "none", padding: 0, margin: "10px 0 0", display: "grid", gap: 8 }}>
               {notices.map((n) => (
-                <li key={n.id}
+                <li
+                  key={n.id}
                   style={{
                     border: "1px solid #eee",
                     borderRadius: 10,
                     padding: 12,
-                    background: "#fff"
+                    background: "#fff",
                   }}
                 >
                   <div style={{ display: "flex", justifyContent: "space-between", gap: 10 }}>
@@ -286,7 +306,13 @@ export default function CommunityBoard() {
                 rows={3}
                 value={noticeForm.content}
                 onChange={onChangeNotice}
-                style={{ border: "1px solid #ddd", borderRadius: 8, padding: "10px 12px", fontSize: 14, resize: "vertical" }}
+                style={{
+                  border: "1px solid #ddd",
+                  borderRadius: 8,
+                  padding: "10px 12px",
+                  fontSize: 14,
+                  resize: "vertical",
+                }}
               />
               <input
                 name="link"
@@ -299,8 +325,13 @@ export default function CommunityBoard() {
                 type="submit"
                 style={{
                   alignSelf: "start",
-                  border: "none", borderRadius: 10, padding: "10px 14px",
-                  background: "#111", color: "#fff", fontWeight: 700, cursor: "pointer",
+                  border: "none",
+                  borderRadius: 10,
+                  padding: "10px 14px",
+                  background: "#111",
+                  color: "#fff",
+                  fontWeight: 700,
+                  cursor: "pointer",
                 }}
               >
                 공지 등록
@@ -315,13 +346,10 @@ export default function CommunityBoard() {
           {/* 좌측 카테고리 */}
           <aside
             style={{
-              border: "1px solid #eee",
-              borderRadius: 12,
-              padding: 16,
-              height: "fit-content",
-              position: "sticky",
-              top: 84,
-            }}
+  border: "1px solid #eee",
+  borderRadius: 12,
+  padding: 16,
+}}
           >
             <div style={{ fontWeight: 800, marginBottom: 10 }}>📍 카테고리</div>
             <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
@@ -363,7 +391,14 @@ export default function CommunityBoard() {
                   background: "#fff",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    marginBottom: 12,
+                  }}
+                >
                   <h2 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>✍️ 새 글 작성하기</h2>
                   <div style={{ display: "flex", gap: 8 }}>
                     <select
@@ -374,7 +409,9 @@ export default function CommunityBoard() {
                       style={{ border: "1px solid #ddd", borderRadius: 8, padding: "8px 10px", fontSize: 13 }}
                     >
                       {POST_TYPES.map((t) => (
-                        <option key={t} value={t}>{t}</option>
+                        <option key={t} value={t}>
+                          {t}
+                        </option>
                       ))}
                     </select>
                     <select
@@ -385,7 +422,9 @@ export default function CommunityBoard() {
                       style={{ border: "1px solid #ddd", borderRadius: 8, padding: "8px 10px", fontSize: 13 }}
                     >
                       {CATEGORIES.map((c) => (
-                        <option key={c} value={c}>{c}</option>
+                        <option key={c} value={c}>
+                          {c}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -404,8 +443,12 @@ export default function CommunityBoard() {
                     readOnly
                     title="작성자(로그인 계정)"
                     style={{
-                      border: "1px solid #ddd", borderRadius: 8, padding: "10px 12px",
-                      fontSize: 14, background: "#f7f7f7", color: "#555",
+                      border: "1px solid #ddd",
+                      borderRadius: 8,
+                      padding: "10px 12px",
+                      fontSize: 14,
+                      background: "#f7f7f7",
+                      color: "#555",
                     }}
                   />
                   <textarea
@@ -414,13 +457,24 @@ export default function CommunityBoard() {
                     rows={4}
                     value={form.content}
                     onChange={onChange}
-                    style={{ border: "1px solid #ddd", borderRadius: 8, padding: "10px 12px", fontSize: 14, resize: "vertical" }}
+                    style={{
+                      border: "1px solid #ddd",
+                      borderRadius: 8,
+                      padding: "10px 12px",
+                      fontSize: 14,
+                      resize: "vertical",
+                    }}
                   />
                   <button
                     type="submit"
                     style={{
-                      border: "none", borderRadius: 10, padding: "10px 14px",
-                      background: "#111", color: "#fff", fontWeight: 700, cursor: "pointer",
+                      border: "none",
+                      borderRadius: 10,
+                      padding: "10px 14px",
+                      background: "#111",
+                      color: "#fff",
+                      fontWeight: 700,
+                      cursor: "pointer",
                     }}
                   >
                     등록하기
@@ -431,7 +485,14 @@ export default function CommunityBoard() {
 
             {/* 글 목록 */}
             {filtered.length === 0 ? (
-              <div style={{ border: "1px dashed #ddd", borderRadius: 12, padding: 20, color: "#666" }}>
+              <div
+                style={{
+                  border: "1px dashed #ddd",
+                  borderRadius: 12,
+                  padding: 20,
+                  color: "#666",
+                }}
+              >
                 표시할 글이 없습니다. 첫 글을 작성해 보세요!
               </div>
             ) : (
@@ -446,23 +507,72 @@ export default function CommunityBoard() {
                 }}
               >
                 {filtered.map((post) => (
-                  <li key={post.id} style={{ border: "1px solid #eee", borderRadius: 12, padding: 16, background: "#fff" }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+                  <li
+                    key={post.id}
+                    onClick={() => navigate(`/community/${post.id}`)} // 🔥 카드 클릭 시 상세 페이지로 이동
+                    style={{
+                      border: "1px solid #eee",
+                      borderRadius: 12,
+                      padding: 16,
+                      background: "#fff",
+                      cursor: "pointer",
+                      transition: "box-shadow 0.15s ease, transform 0.15s ease",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        marginBottom: 8,
+                      }}
+                    >
                       <div style={{ fontSize: 16, fontWeight: 800 }}>{post.title}</div>
                       <div style={{ display: "flex", gap: 6 }}>
-                        <span style={{ fontSize: 12, border: "1px solid #eee", padding: "2px 8px", borderRadius: 999, background: "#fafafa" }}>
+                        <span
+                          style={{
+                            fontSize: 12,
+                            border: "1px solid #eee",
+                            padding: "2px 8px",
+                            borderRadius: 999,
+                            background: "#fafafa",
+                          }}
+                        >
                           {post.type}
                         </span>
-                        <span style={{ fontSize: 12, border: "1px solid #eee", padding: "2px 8px", borderRadius: 999, background: "#fafafa" }}>
+                        <span
+                          style={{
+                            fontSize: 12,
+                            border: "1px solid #eee",
+                            padding: "2px 8px",
+                            borderRadius: 999,
+                            background: "#fafafa",
+                          }}
+                        >
                           {post.category}
                         </span>
                       </div>
                     </div>
-                    <div style={{ fontSize: 14, color: "#444", whiteSpace: "pre-wrap", marginBottom: 10 }}>
+                    <div
+                      style={{
+                        fontSize: 14,
+                        color: "#444",
+                        whiteSpace: "pre-wrap",
+                        marginBottom: 10,
+                      }}
+                    >
                       {post.content}
                     </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", color: "#666", fontSize: 12 }}>
-                      <span>✍️ {post.author}</span>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        color: "#666",
+                        fontSize: 12,
+                      }}
+                    >
+                      {/* ✅ 작성자 이메일 마스킹 적용 */}
+                      <span>✍️ {maskEmail(post.author)}</span>
                       <span>{fmt(post.createdAt)}</span>
                     </div>
                   </li>

@@ -1,5 +1,6 @@
+// src/pages/PostDetail.jsx
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import {
@@ -30,9 +31,33 @@ const maskEmail = (email) => {
 // 날짜 포맷
 const fmt = (ts) => (ts?.toDate ? ts.toDate().toISOString().slice(0, 10) : "");
 
+// 댓글 리스트를 트리 구조로 변환 (모든 댓글이 children 가질 수 있게)
+const buildCommentTree = (list) => {
+  const map = {};
+  // 복사 + children 배열 만들기
+  list.forEach((c) => {
+    map[c.id] = { ...c, children: [] };
+  });
+
+  const roots = [];
+  list.forEach((c) => {
+    const node = map[c.id];
+    if (c.parentId && map[c.parentId]) {
+      map[c.parentId].children.push(node);
+    } else {
+      // parentId가 없거나(parentId === null) 부모를 못 찾으면 루트 취급
+      roots.push(node);
+    }
+  });
+
+  return roots;
+};
+
 export default function PostDetail() {
   const { postId } = useParams();
+  const navigate = useNavigate();
 
+  // 로그인 유저
   const [user, setUser] = useState(null);
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, setUser);
@@ -51,6 +76,55 @@ export default function PostDetail() {
     });
     return () => unsub();
   }, [postId]);
+
+  // 내가 쓴 글인지 여부
+  const isPostOwner = user && post && user.uid === post.authorUid;
+
+  // 🔹 글 수정 상태
+  const [editingPost, setEditingPost] = useState(false);
+  const [editTitle, setEditTitle] = useState("");
+  const [editContent, setEditContent] = useState("");
+
+  const startEditPost = () => {
+    if (!post) return;
+    setEditTitle(post.title || "");
+    setEditContent(post.content || "");
+    setEditingPost(true);
+  };
+
+  const cancelEditPost = () => setEditingPost(false);
+
+  const saveEditPost = async () => {
+    const title = editTitle.trim();
+    const content = editContent.trim();
+    if (!title || !content) {
+      alert("제목과 내용을 모두 입력해주세요.");
+      return;
+    }
+    try {
+      await updateDoc(doc(db, "posts", postId), {
+        title,
+        content,
+        updatedAt: serverTimestamp(),
+      });
+      setEditingPost(false);
+    } catch (e) {
+      console.error(e);
+      alert("수정 중 오류가 발생했습니다.");
+    }
+  };
+
+  const deletePost = async () => {
+    if (!window.confirm("이 글을 삭제할까요?")) return;
+    try {
+      await deleteDoc(doc(db, "posts", postId));
+      alert("삭제되었습니다.");
+      navigate("/community");
+    } catch (e) {
+      console.error(e);
+      alert("삭제 중 오류가 발생했습니다.");
+    }
+  };
 
   // 🔹 좋아요
   const [liked, setLiked] = useState(false);
@@ -86,7 +160,7 @@ export default function PostDetail() {
     }
   };
 
-  // 🔹 댓글
+  // 🔹 댓글 목록
   const [comments, setComments] = useState([]);
   useEffect(() => {
     if (!postId) return;
@@ -101,6 +175,9 @@ export default function PostDetail() {
     return () => unsub();
   }, [postId]);
 
+  const commentTree = buildCommentTree(comments);
+
+  // 🔹 최상위 댓글 작성
   const [commentText, setCommentText] = useState("");
   const submitComment = async (e) => {
     e.preventDefault();
@@ -115,16 +192,316 @@ export default function PostDetail() {
       author: user.email || user.displayName || "익명",
       authorUid: user.uid,
       createdAt: serverTimestamp(),
+      parentId: null, // 루트 댓글
     });
     setCommentText("");
   };
 
+  // 🔹 댓글 수정/삭제 상태 (모든 댓글 공통)
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editingCommentText, setEditingCommentText] = useState("");
+
+  const startEditComment = (comment) => {
+    setEditingCommentId(comment.id);
+    setEditingCommentText(comment.content || "");
+  };
+
+  const cancelEditComment = () => {
+    setEditingCommentId(null);
+    setEditingCommentText("");
+  };
+
+  const saveEditComment = async (commentId) => {
+    const txt = editingCommentText.trim();
+    if (!txt) {
+      alert("내용을 입력해주세요.");
+      return;
+    }
+    try {
+      await updateDoc(doc(db, "posts", postId, "comments", commentId), {
+        content: txt,
+        updatedAt: serverTimestamp(),
+      });
+      setEditingCommentId(null);
+      setEditingCommentText("");
+    } catch (e) {
+      console.error(e);
+      alert("댓글 수정 중 오류가 발생했습니다.");
+    }
+  };
+
+  const deleteComment = async (commentId) => {
+    if (!window.confirm("이 댓글을 삭제할까요?")) return;
+    try {
+      // (간단 버전) 해당 댓글만 삭제. 대댓글까지 한 번에 지우고 싶으면
+      // comments.filter(...) 로 children 찾아서 같이 deleteDoc 해도 됨.
+      await deleteDoc(doc(db, "posts", postId, "comments", commentId));
+    } catch (e) {
+      console.error(e);
+      alert("댓글 삭제 중 오류가 발생했습니다.");
+    }
+  };
+
+  // 🔹 대댓글 상태 (모든 댓글 공통) – 어떤 댓글에 폼이 열렸는지만 관리
+  const [replyTargetId, setReplyTargetId] = useState(null);
+
+  const handleReplySubmit = async (parentCommentId, e) => {
+    e.preventDefault();
+    if (!user) {
+      alert("로그인 후 댓글을 작성할 수 있습니다.");
+      return;
+    }
+
+    const form = e.target;
+    const txt = form.reply?.value || "";
+    const trimmed = txt.trim();
+    if (!trimmed) return;
+
+    try {
+      await addDoc(collection(db, "posts", postId, "comments"), {
+        content: trimmed,
+        author: user.email || user.displayName || "익명",
+        authorUid: user.uid,
+        createdAt: serverTimestamp(),
+        parentId: parentCommentId, // 어떤 댓글 밑에 달렸는지
+      });
+      form.reply.value = ""; // 입력창 비우기
+      setReplyTargetId(null);
+    } catch (e2) {
+      console.error(e2);
+      alert("답글 작성 중 오류가 발생했습니다.");
+    }
+  };
+
   const likesCount = post?.likesCount || 0;
 
+  // ───────────────── 댓글 하나 렌더링 (재귀) ─────────────────
+  const CommentItem = ({ comment, level = 0 }) => {
+    const isMyComment = user && comment.authorUid === user.uid;
+    const isEditing = editingCommentId === comment.id;
+    const hasChildren = comment.children && comment.children.length > 0;
+
+    const indent = level * 16; // 레벨별 들여쓰기
+
+    return (
+      <li
+        style={{
+          marginTop: level === 0 ? 10 : 6,
+          marginLeft: indent,
+          border: "1px solid #eee",
+          borderRadius: 8,
+          padding: 12,
+          background: level === 0 ? "#fff" : "#fafafa",
+        }}
+      >
+        {/* 헤더: 작성자 / 날짜 / 버튼들 */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: 6,
+            alignItems: "center",
+          }}
+        >
+          <div>
+            <b style={{ fontSize: 13 }}>{maskEmail(comment.author)}</b>
+            <span
+              style={{
+                fontSize: 12,
+                color: "#666",
+                marginLeft: 6,
+              }}
+            >
+              {fmt(comment.createdAt)}
+            </span>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              gap: 8,
+              fontSize: 12,
+              alignItems: "center",
+            }}
+          >
+            {/* 답글 달기 버튼 (누구나) */}
+            <button
+              type="button"
+              onClick={() =>
+                setReplyTargetId((prev) =>
+                  prev === comment.id ? null : comment.id
+                )
+              }
+              style={{
+                border: "none",
+                background: "transparent",
+                color: "#555",
+                cursor: "pointer",
+                padding: 0,
+              }}
+            >
+              답글 달기
+            </button>
+
+            {/* 수정/삭제 (내 댓글일 때만) */}
+            {isMyComment && !isEditing && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => startEditComment(comment)}
+                  style={{
+                    border: "none",
+                    background: "transparent",
+                    color: "#555",
+                    cursor: "pointer",
+                    padding: 0,
+                  }}
+                >
+                  수정
+                </button>
+                <button
+                  type="button"
+                  onClick={() => deleteComment(comment.id)}
+                  style={{
+                    border: "none",
+                    background: "transparent",
+                    color: "#c00",
+                    cursor: "pointer",
+                    padding: 0,
+                  }}
+                >
+                  삭제
+                </button>
+              </>
+            )}
+
+            {isMyComment && isEditing && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => saveEditComment(comment.id)}
+                  style={{
+                    border: "none",
+                    background: "transparent",
+                    color: "#111",
+                    cursor: "pointer",
+                    padding: 0,
+                  }}
+                >
+                  저장
+                </button>
+                <button
+                  type="button"
+                  onClick={cancelEditComment}
+                  style={{
+                    border: "none",
+                    background: "transparent",
+                    color: "#666",
+                    cursor: "pointer",
+                    padding: 0,
+                  }}
+                >
+                  취소
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* 내용 or 수정 textarea */}
+        {isEditing ? (
+          <textarea
+            value={editingCommentText}
+            onChange={(e) => setEditingCommentText(e.target.value)}
+            rows={3}
+            style={{
+              width: "100%",
+              borderRadius: 6,
+              border: "1px solid #ddd",
+              padding: "8px 10px",
+              fontSize: 13,
+              resize: "vertical",
+            }}
+          />
+        ) : (
+          <div
+            style={{
+              whiteSpace: "pre-wrap",
+              fontSize: 14,
+              color: "#333",
+            }}
+          >
+            {comment.content}
+          </div>
+        )}
+
+        {/* 이 댓글에 대한 답글 입력창 (한 번에 하나만 열리게) */}
+        {replyTargetId === comment.id && (
+          <form
+            onSubmit={(e) => handleReplySubmit(comment.id, e)}
+            style={{ marginTop: 8 }}
+          >
+            <div style={{ marginLeft: 16 }}>
+              <textarea
+                name="reply"
+                rows={2}
+                placeholder="답글을 입력하세요"
+                style={{
+                  width: "95%", // 카드 안에서만 차지하도록 살짝 줄임 (튀어나오는 거 방지)
+                  borderRadius: 6,
+                  border: "1px solid #ddd",
+                  padding: "8px 10px",
+                  fontSize: 13,
+                  resize: "vertical",
+                }}
+              />
+              <div style={{ marginTop: 4 }}>
+                <button
+                  type="submit"
+                  disabled={!user}
+                  style={{
+                    border: "none",
+                    borderRadius: 8,
+                    padding: "6px 10px",
+                    background: user ? "#111" : "#999",
+                    color: "#fff",
+                    fontSize: 12,
+                    cursor: user ? "pointer" : "not-allowed",
+                  }}
+                >
+                  답글 등록
+                </button>
+              </div>
+            </div>
+          </form>
+        )}
+
+        {/* 자식 댓글들 (대댓글, 대대댓글...) */}
+        {hasChildren && (
+          <ul
+            style={{
+              listStyle: "none",
+              margin: 0,
+              marginTop: 8,
+              padding: 0,
+            }}
+          >
+            {comment.children.map((child) => (
+              <CommentItem key={child.id} comment={child} level={level + 1} />
+            ))}
+          </ul>
+        )}
+      </li>
+    );
+  };
+
+  // ───────────────── 로딩 / 없는 글 처리 ─────────────────
   if (loadingPost) {
     return (
       <div style={{ background: "#fff", minHeight: "100vh", paddingTop: 80 }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", padding: 24 }}>불러오는 중...</div>
+        <div style={{ maxWidth: 900, margin: "0 auto", padding: 24 }}>
+          불러오는 중...
+        </div>
       </div>
     );
   }
@@ -140,20 +517,125 @@ export default function PostDetail() {
     );
   }
 
+  // ───────────────── 실제 화면 ─────────────────
   return (
     <div style={{ background: "#fff", minHeight: "100vh", paddingTop: 80 }}>
       <div style={{ maxWidth: 900, margin: "0 auto", padding: 24 }}>
         <div style={{ marginBottom: 16 }}>
-          <Link to="/community" style={{ textDecoration: "none", color: "#111" }}>
+          <Link
+            to="/community"
+            style={{ textDecoration: "none", color: "#111" }}
+          >
             ← 목록으로
           </Link>
         </div>
 
-        {/* 글 타이틀 */}
-        <h1 style={{ margin: "0 0 8px 0" }}>{post.title}</h1>
+        {/* 글 타이틀 + 수정/삭제 버튼 */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            gap: 12,
+          }}
+        >
+          {editingPost ? (
+            <input
+              value={editTitle}
+              onChange={(e) => setEditTitle(e.target.value)}
+              style={{
+                flex: 1,
+                fontSize: 24,
+                fontWeight: 700,
+                padding: "8px 10px",
+                borderRadius: 8,
+                border: "1px solid #ddd",
+              }}
+              placeholder="제목을 입력하세요"
+            />
+          ) : (
+            <h1 style={{ margin: "0 0 8px 0", flex: 1 }}>{post.title}</h1>
+          )}
+
+          {isPostOwner && (
+            <div style={{ display: "flex", gap: 6 }}>
+              {editingPost ? (
+                <>
+                  <button
+                    onClick={saveEditPost}
+                    style={{
+                      border: "none",
+                      borderRadius: 8,
+                      padding: "6px 10px",
+                      background: "#111",
+                      color: "#fff",
+                      cursor: "pointer",
+                      fontSize: 13,
+                    }}
+                  >
+                    저장
+                  </button>
+                  <button
+                    onClick={cancelEditPost}
+                    style={{
+                      border: "1px solid #ddd",
+                      borderRadius: 8,
+                      padding: "6px 10px",
+                      background: "#fff",
+                      color: "#333",
+                      cursor: "pointer",
+                      fontSize: 13,
+                    }}
+                  >
+                    취소
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={startEditPost}
+                    style={{
+                      border: "1px solid #ddd",
+                      borderRadius: 8,
+                      padding: "6px 10px",
+                      background: "#fff",
+                      cursor: "pointer",
+                      fontSize: 13,
+                    }}
+                  >
+                    ✏️ 수정
+                  </button>
+                  <button
+                    onClick={deletePost}
+                    style={{
+                      border: "1px solid #f44",
+                      borderRadius: 8,
+                      padding: "6px 10px",
+                      background: "#fff5f5",
+                      color: "#c00",
+                      cursor: "pointer",
+                      fontSize: 13,
+                    }}
+                  >
+                    🗑 삭제
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+        </div>
 
         {/* 작성자/날짜/카테고리 */}
-        <div style={{ display: "flex", gap: 8, alignItems: "center", color: "#666", fontSize: 14, marginBottom: 12 }}>
+        <div
+          style={{
+            display: "flex",
+            gap: 8,
+            alignItems: "center",
+            color: "#666",
+            fontSize: 14,
+            marginBottom: 12,
+          }}
+        >
           <span>✍️ {maskEmail(post.author)}</span>
           <span>·</span>
           <span>{fmt(post.createdAt)}</span>
@@ -164,12 +646,44 @@ export default function PostDetail() {
         </div>
 
         {/* 본문 */}
-        <div style={{ fontSize: 16, color: "#333", whiteSpace: "pre-wrap", lineHeight: 1.6, marginBottom: 16 }}>
-          {post.content}
+        <div
+          style={{
+            fontSize: 16,
+            color: "#333",
+            whiteSpace: "pre-wrap",
+            lineHeight: 1.6,
+            marginBottom: 16,
+          }}
+        >
+          {editingPost ? (
+            <textarea
+              value={editContent}
+              onChange={(e) => setEditContent(e.target.value)}
+              rows={10}
+              style={{
+                width: "100%",
+                borderRadius: 8,
+                border: "1px solid #ddd",
+                padding: "10px 12px",
+                fontSize: 14,
+                resize: "vertical",
+              }}
+              placeholder="내용을 입력하세요"
+            />
+          ) : (
+            post.content
+          )}
         </div>
 
         {/* 좋아요 */}
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            marginBottom: 24,
+          }}
+        >
           <button
             onClick={toggleLike}
             style={{
@@ -187,8 +701,15 @@ export default function PostDetail() {
           <span style={{ color: "#666", fontSize: 14 }}>{likesCount}명</span>
         </div>
 
-        {/* 댓글 입력 */}
-        <form onSubmit={submitComment} style={{ borderTop: "1px solid #eee", paddingTop: 16, marginTop: 16 }}>
+        {/* 최상위 댓글 입력 */}
+        <form
+          onSubmit={submitComment}
+          style={{
+            borderTop: "1px solid #eee",
+            paddingTop: 16,
+            marginTop: 16,
+          }}
+        >
           <div style={{ fontWeight: 800, marginBottom: 10 }}>댓글</div>
           <div style={{ display: "grid", gap: 8 }}>
             <textarea
@@ -216,7 +737,8 @@ export default function PostDetail() {
                   background: user && commentText.trim() ? "#111" : "#999",
                   color: "#fff",
                   fontWeight: 700,
-                  cursor: user && commentText.trim() ? "pointer" : "not-allowed",
+                  cursor:
+                    user && commentText.trim() ? "pointer" : "not-allowed",
                 }}
               >
                 등록
@@ -225,19 +747,19 @@ export default function PostDetail() {
           </div>
         </form>
 
-        {/* 댓글 목록 */}
-        {comments.length === 0 ? (
+        {/* 댓글 트리 렌더링 */}
+        {commentTree.length === 0 ? (
           <p style={{ color: "#666", marginTop: 12 }}>아직 댓글이 없습니다.</p>
         ) : (
-          <ul style={{ listStyle: "none", margin: "12px 0 0 0", padding: 0, display: "grid", gap: 10 }}>
-            {comments.map((c) => (
-              <li key={c.id} style={{ border: "1px solid #eee", padding: 12, borderRadius: 8, background: "#fff" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-                  <b style={{ fontSize: 13 }}>{maskEmail(c.author)}</b>
-                  <span style={{ fontSize: 12, color: "#666" }}>{fmt(c.createdAt)}</span>
-                </div>
-                <div style={{ whiteSpace: "pre-wrap", fontSize: 14, color: "#333" }}>{c.content}</div>
-              </li>
+          <ul
+            style={{
+              listStyle: "none",
+              margin: "12px 0 0 0",
+              padding: 0,
+            }}
+          >
+            {commentTree.map((c) => (
+              <CommentItem key={c.id} comment={c} level={0} />
             ))}
           </ul>
         )}

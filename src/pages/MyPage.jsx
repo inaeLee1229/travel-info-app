@@ -12,6 +12,7 @@ import {
   where,
   orderBy,
   getDocs,
+  collectionGroup,
 } from "firebase/firestore";
 
 const FAV_KEY = "favoriteCountries";
@@ -64,14 +65,12 @@ export default function MyPage() {
     if (!user?.uid) return;
     setMyPostsLoading(true);
 
-    // 우선: createdAt desc 정렬로 실시간 구독
     const q1 = query(
       collection(db, "posts"),
       where("authorUid", "==", user.uid),
       orderBy("createdAt", "desc")
     );
 
-    // onSnapshot은 에러 콜백을 둘째 인자로 받을 수 있음
     const unsub = onSnapshot(
       q1,
       (snap) => {
@@ -80,13 +79,11 @@ export default function MyPage() {
         setMyPostsLoading(false);
       },
       async (err) => {
-        // 인덱스 미구성 등으로 실패하면 폴백: 정렬 없이 가져와서 클라에서 정렬
         console.warn("onSnapshot with orderBy failed. Fallback to client sort.", err);
         try {
           const q2 = query(collection(db, "posts"), where("authorUid", "==", user.uid));
           const snap = await getDocs(q2);
           const list = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-          // createdAt 기준 내림차순 정렬 (없으면 0으로)
           list.sort((a, b) => {
             const ta = a.createdAt?.toMillis?.() ?? 0;
             const tb = b.createdAt?.toMillis?.() ?? 0;
@@ -102,7 +99,57 @@ export default function MyPage() {
       }
     );
 
-    // 로그아웃/언마운트 시 정리
+    return () => unsub();
+  }, [user?.uid]);
+
+  // ===== 내가 쓴 댓글 =====
+  const [myComments, setMyComments] = useState([]);
+  const [myCommentsLoading, setMyCommentsLoading] = useState(false);
+  const [myCommentsError, setMyCommentsError] = useState("");
+
+  useEffect(() => {
+    setMyComments([]);
+    setMyCommentsError("");
+
+    if (!user?.uid) return;
+    setMyCommentsLoading(true);
+
+    const q = query(
+      collectionGroup(db, "comments"),
+      where("authorUid", "==", user.uid)
+    );
+
+    const unsub = onSnapshot(
+      q,
+      (snap) => {
+        const list = snap.docs.map((d) => {
+          const data = d.data();
+          // 🔥 부모 컬렉션(posts/{postId}/comments/{commentId}) 에서 postId 추출
+          const parentPostId = d.ref.parent?.parent?.id || data.postId || null;
+          return {
+            id: d.id,
+            postId: parentPostId,
+            ...data,
+          };
+        });
+
+        // 최신 댓글이 위로 오게 정렬
+        list.sort((a, b) => {
+          const ta = a.createdAt?.toMillis?.() ?? 0;
+          const tb = b.createdAt?.toMillis?.() ?? 0;
+          return tb - ta;
+        });
+
+        setMyComments(list);
+        setMyCommentsLoading(false);
+      },
+      (err) => {
+        console.error(err);
+        setMyCommentsError("내 댓글을 불러오지 못했어요.");
+        setMyCommentsLoading(false);
+      }
+    );
+
     return () => unsub();
   }, [user?.uid]);
 
@@ -232,31 +279,164 @@ export default function MyPage() {
                 style={{
                   border: "1px solid #eee",
                   borderRadius: 12,
-                  padding: 16,
+                  padding: 0,
                   background: "#fff",
+                  overflow: "hidden",
                 }}
               >
-                <div
+                {/* 카드 전체 클릭 → PostDetail */}
+                <Link
+                  to={`/community/${post.id}`}
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginBottom: 6,
+                    display: "block",
+                    padding: 16,
+                    textDecoration: "none",
+                    color: "inherit",
                   }}
                 >
-                  <strong>{post.title}</strong>
-                  <span style={{ fontSize: 12, color: "#666" }}>
-                    {fmt(post.createdAt)}
-                  </span>
-                </div>
-                <div style={{ fontSize: 13, color: "#444", whiteSpace: "pre-wrap" }}>
-                  {post.content}
-                </div>
-                <div style={{ marginTop: 8, fontSize: 12, color: "#666" }}>
-                  {post.type} · {post.category}
-                </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBottom: 6,
+                    }}
+                  >
+                    <strong>{post.title}</strong>
+                    <span style={{ fontSize: 12, color: "#666" }}>
+                      {fmt(post.createdAt)}
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 13,
+                      color: "#444",
+                      whiteSpace: "pre-wrap",
+                    }}
+                  >
+                    {post.content}
+                  </div>
+                  <div
+                    style={{
+                      marginTop: 8,
+                      fontSize: 12,
+                      color: "#666",
+                    }}
+                  >
+                    {post.type} · {post.category}
+                  </div>
+                </Link>
               </li>
             ))}
           </ul>
+        )}
+
+        {/* ===== 내가 쓴 댓글 ===== */}
+        <h2 style={{ marginTop: 36 }}>내가 쓴 댓글</h2>
+
+        {!user ? (
+          <p style={{ color: "#666" }}>로그인하면 내가 작성한 댓글이 여기 표시됩니다.</p>
+        ) : myCommentsLoading ? (
+          <p style={{ color: "#666" }}>불러오는 중…</p>
+        ) : myCommentsError ? (
+          <p style={{ color: "crimson" }}>{myCommentsError}</p>
+        ) : myComments.length === 0 ? (
+          <p style={{ color: "#666" }}>
+            아직 작성한 댓글이 없습니다. <Link to="/community">커뮤니티</Link>에서 댓글을 남겨보세요.
+          </p>
+        ) : (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+              gap: 12,
+            }}
+          >
+            {myComments.map((c) => (
+              <div
+                key={c.id}
+                style={{
+                  border: "1px solid #eee",
+                  borderRadius: 12,
+                  padding: 0,
+                  background: "#fff",
+                  overflow: "hidden",
+                }}
+              >
+                {c.postId ? (
+                  // 🔥 postId가 있으면 카드 전체를 링크로
+                  <Link
+                    to={`/community/${c.postId}`}
+                    style={{
+                      display: "block",
+                      textDecoration: "none",
+                      color: "inherit",
+                      padding: 16,
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        marginBottom: 6,
+                      }}
+                    >
+                      <strong style={{ fontSize: 13 }}>
+                        {c.postTitle || "댓글"}
+                      </strong>
+                      <span style={{ fontSize: 12, color: "#666" }}>
+                        {fmt(c.createdAt)}
+                      </span>
+                    </div>
+                    <div
+                      style={{
+                        fontSize: 13,
+                        color: "#444",
+                        whiteSpace: "pre-wrap",
+                      }}
+                    >
+                      {c.content}
+                    </div>
+                    <div
+                      style={{
+                        marginTop: 6,
+                        fontSize: 12,
+                        color: "#666",
+                      }}
+                    >
+                      원글로 이동 →
+                    </div>
+                  </Link>
+                ) : (
+                  // 혹시라도 postId를 못 찾은 예전 댓글이면 그냥 텍스트만
+                  <div style={{ padding: 16 }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        marginBottom: 6,
+                      }}
+                    >
+                      <strong style={{ fontSize: 13 }}>
+                        {c.postTitle || "댓글"}
+                      </strong>
+                      <span style={{ fontSize: 12, color: "#666" }}>
+                        {fmt(c.createdAt)}
+                      </span>
+                    </div>
+                    <div
+                      style={{
+                        fontSize: 13,
+                        color: "#444",
+                        whiteSpace: "pre-wrap",
+                      }}
+                    >
+                      {c.content}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>
