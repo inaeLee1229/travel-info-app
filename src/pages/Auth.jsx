@@ -6,8 +6,9 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  signInWithPopup, // ✅ 추가
 } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, googleProvider } from "../firebase"; // ✅ provider까지 import
 
 export default function Auth() {
   const [mode, setMode] = useState("login");
@@ -18,6 +19,7 @@ export default function Auth() {
   const [showPw2, setShowPw2] = useState(false);
 
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false); // ✅ Google 버튼 로딩
   const [errMsg, setErrMsg] = useState("");
   const [user, setUser] = useState(null);
 
@@ -56,6 +58,7 @@ export default function Auth() {
         return "비밀번호가 너무 약합니다. 6자 이상으로 설정하세요.";
       case "auth/network-request-failed":
         return "네트워크 오류가 발생했습니다.";
+      // popup 관련 에러는 전부 기본 메세지로 처리
       default:
         return "요청 처리 중 오류가 발생했습니다.";
     }
@@ -94,6 +97,24 @@ export default function Auth() {
       setErrMsg(mapFirebaseError(err.code));
     } finally {
       setLoading(false);
+    }
+  };
+
+  // ✅ Google 로그인 함수
+  const handleGoogleLogin = async () => {
+    if (googleLoading) return;
+    setErrMsg("");
+    setGoogleLoading(true);
+    try {
+      await signInWithPopup(auth, googleProvider);
+      navigate("/"); // 로그인 성공 후 이동 경로
+    } catch (err) {
+      console.error(err);
+      const msg = mapFirebaseError(err.code || "");
+      setErrMsg(msg);
+      alert(msg);
+    } finally {
+      setGoogleLoading(false);
     }
   };
 
@@ -212,8 +233,19 @@ export default function Auth() {
               <div style={styles.hr} />
             </div>
 
-            <button type="button" style={styles.googleBtn} disabled>
-              <span style={{ marginRight: 8 }}>🟡</span> Google로 계속하기 (준비중)
+            {/* ✅ Google 로그인 버튼 활성화 */}
+            <button
+              type="button"
+              style={{
+                ...styles.googleBtn,
+                opacity: googleLoading ? 0.6 : 1,
+                cursor: googleLoading ? "default" : "pointer",
+              }}
+              onClick={handleGoogleLogin}
+              disabled={googleLoading}
+            >
+              <span style={{ marginRight: 8 }}>🟡</span>
+              {googleLoading ? "Google 로그인 중..." : "Google로 계속하기"}
             </button>
           </form>
         )}
@@ -234,15 +266,16 @@ const styles = {
   },
 
   card: {
-    width: "100%",
-    maxWidth: 480,
-    minHeight: 500,
-    background: "#1b1b1b",
-    border: "1px solid #2a2a2a",
-    borderRadius: 14,
-    padding: "32px 28px",
-    boxShadow: "0 12px 40px rgba(0,0,0,0.45)",
-  },
+  width: "100%",
+  maxWidth: 480,
+  minHeight: 500,
+  background: "#1b1b1b",
+  border: "1px solid #2a2a2a",   
+  borderRadius: 14,
+  padding: "32px 28px",
+  boxShadow: "0 12px 40px rgba(0,0,0,0.45)",
+},
+
 
   header: { marginBottom: 10 },
   sub: { marginTop: 6, color: "#bbb", fontSize: 14 },
