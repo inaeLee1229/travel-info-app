@@ -14,14 +14,15 @@ import {
   getDocs,
   collectionGroup,
 } from "firebase/firestore";
-
+// 즐겨찾기 국가 저장
 const FAV_KEY = "favoriteCountries";
+//즐겨찾기 표시 개수
 const MAX_VISIBLE = 4;
 
 const fmt = (ts) => (ts?.toDate ? ts.toDate().toISOString().slice(0, 10) : "");
 
 export default function MyPage() {
-  // 즐겨찾기 
+  // 즐겨찾기 국가 관리
   const [favorites, setFavorites] = useState([]);
   const [expanded, setExpanded] = useState(false);
 
@@ -30,13 +31,14 @@ export default function MyPage() {
     const canon = Array.from(new Set(saved.map((c) => normalizeCountryCode(c))));
     setFavorites(canon);
   }, []);
-
+  //화면 표시용 즐겨찾기 목록
   const visibleFavs = useMemo(
     () => (expanded ? favorites : favorites.slice(0, MAX_VISIBLE)),
     [favorites, expanded]
   );
+  // 숨겨진 즐겨찾기 개수 계산
   const hiddenCount = Math.max(favorites.length - MAX_VISIBLE, 0);
-
+  // 즐겨찾기 삭제 기능
   const removeFav = (code) => {
     const saved = JSON.parse(localStorage.getItem(FAV_KEY) || "[]");
     const next = saved
@@ -64,7 +66,7 @@ export default function MyPage() {
 
     if (!user?.uid) return;
     setMyPostsLoading(true);
-
+    // Firestore에서 authorUid가 자신의 uid와 일치하는 글만 가져오기
     const q1 = query(
       collection(db, "posts"),
       where("authorUid", "==", user.uid),
@@ -102,7 +104,7 @@ export default function MyPage() {
     return () => unsub();
   }, [user?.uid]);
 
-  // ===== 내가 쓴 댓글 =====
+  // 내가 쓴 댓글 불러오기
   const [myComments, setMyComments] = useState([]);
   const [myCommentsLoading, setMyCommentsLoading] = useState(false);
   const [myCommentsError, setMyCommentsError] = useState("");

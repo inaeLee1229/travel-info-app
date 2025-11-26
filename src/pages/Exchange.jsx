@@ -1,34 +1,40 @@
 // src/pages/Exchange.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-
+//지원하는 통화 목록
 const CURRENCIES = [
   "KRW","USD","EUR","JPY","CNY","GBP","AUD","CAD","CHF","HKD","TWD",
   "THB","VND","IDR","PHP","MYR","SGD","INR","RUB","BRL"
 ];
-
+//로컬스토리지 키로 마지막 변환 상태 기억
 const LS_KEY = "exchange:lastState";
 
 export default function Exchange() {
   const [search] = useSearchParams();
-
-  const ls = safeParse(localStorage.getItem(LS_KEY));
+  
+  const ls = safeParse(localStorage.getItem(LS_KEY)); //로컬 스토리지에 저장된 이전 값 불러오기
+  //입력 금액 상태
   const [amount, setAmount] = useState(
     normAmount(search.get("amount")) ?? ls?.amount ?? 10000
   );
+  //변환할 기준 통화(FROM)
   const [from, setFrom] = useState(
     (search.get("from") || ls?.from || "KRW").toUpperCase()
   );
+  //변환 대상 통화(TO)
   const [to, setTo] = useState(
     (search.get("to") || ls?.to || "USD").toUpperCase()
   );
-
+  //환율 정보 상태
   const [rate, setRate] = useState(null);
-  const [provider, setProvider] = useState("");
+  const [provider, setProvider] = useState(""); //환율 제공 API 이름
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
-  const [lastUpdated, setLastUpdated] = useState("");
+  const [lastUpdated, setLastUpdated] = useState(""); //기준 날짜
+  
+  // ----------------환율 API 가져오기----------------//
 
+  //Frankfurter API (ECB기준)
   async function fetchFromFrankfurter(signal, base, quote) {
     const url = `https://api.frankfurter.app/latest?from=${encodeURIComponent(base)}&to=${encodeURIComponent(quote)}`;
     const res = await fetch(url, { cache: "no-store", signal });
@@ -40,7 +46,7 @@ export default function Exchange() {
     setProvider("Frankfurter (ECB)");
     return Number(r);
   }
-
+  //exchangerate.host API (백업용)
   async function fetchFromERH(signal, base, quote) {
     const url = `https://api.exchangerate.host/latest?base=${encodeURIComponent(base)}&symbols=${encodeURIComponent(quote)}`;
     const res = await fetch(url, { cache: "no-store", signal });
@@ -65,7 +71,7 @@ export default function Exchange() {
       return await fetchFromERH(signal, base, quote);
     }
   }
-
+  //------환율 로딩/변환 effect------
   useEffect(() => {
     if (!CURRENCIES.includes(from)) setFrom("KRW");
     if (!CURRENCIES.includes(to)) setTo("USD");
@@ -76,7 +82,7 @@ export default function Exchange() {
     setRate(null);
     setLastUpdated("");
     setProvider("");
-
+    //환율 API 호출
     getRate(ac.signal, from, to)
       .then((r) => setRate(r))
       .catch((e) => {
@@ -96,7 +102,7 @@ export default function Exchange() {
       JSON.stringify({ amount, from, to })
     );
   }, [amount, from, to]);
-
+  // 환율 계산
   const converted = useMemo(() => {
     if (rate == null) return "";
     const v = Number(amount) * rate;

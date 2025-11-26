@@ -50,7 +50,7 @@ export default function CountryInfo() {
     return () => media.removeEventListener("change", handleChange);
   }, []);
 
-  // 🔹 Firestore → 실패/없음이면 countryData로 폴백
+  //Firestore → 실패/없음이면 countryData로 폴백
   useEffect(() => {
     let cancelled = false;
 

@@ -1,7 +1,7 @@
 // src/pages/Home.jsx
 import React from "react";
-import WorldMap from "../components/WorldMap";
-import SearchBar from "../components/SearchBar";
+import WorldMap from "../components/WorldMap"; //세계지도 컴포넌트
+import SearchBar from "../components/SearchBar"; //검색바
 import { Link } from "react-router-dom";
 import "./Home.css";
 
@@ -14,8 +14,8 @@ export default function Home() {
             <SearchBar variant="inline" />
           </div>
         </div>
-
-        <Link className="home__cta" to="/exchange">
+         {/*환율 페이지 이동*/}
+        <Link className="home__cta" to="/exchange"> 
           환율 변환기
         </Link>
       </div>

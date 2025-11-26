@@ -11,11 +11,12 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-
+//대륙 카테고리
 const CATEGORIES = ["전체", "아시아", "유럽", "북미", "남미", "아프리카", "오세아니아"];
+//게시글 유형
 const POST_TYPES = ["정보", "질문", "자유"];
 
-// 이메일 마스킹
+// 이메일 4글자만 공개
 const maskEmail = (email) => {
   if (!email) return "익명";
   const s = String(email);
@@ -27,7 +28,7 @@ const maskEmail = (email) => {
 export default function CommunityBoard() {
   const navigate = useNavigate();
 
-  // 로그인 상태 
+  // 로그인 상태 감지
   const [user, setUser] = useState(null);
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, setUser);
@@ -55,19 +56,19 @@ export default function CommunityBoard() {
     });
     return () => unsub();
   }, []);
-
+  //글쓰기 폼
   const [form, setForm] = useState({
     title: "",
     content: "",
     category: "전체",
     type: "정보",
   });
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(false); //글쓰기 폼 보이기/숨기기
   const formRef = useRef(null);
-
-  const [queryText, setQueryText] = useState("");
-  const [selectedCat, setSelectedCat] = useState("전체");
-  const [typeFilter, setTypeFilter] = useState("전체");
+  //
+  const [queryText, setQueryText] = useState(""); //검색어
+  const [selectedCat, setSelectedCat] = useState("전체"); //선택된 카테고리 기본으로 전체 선택되어 있게 설정
+  const [typeFilter, setTypeFilter] = useState("전체"); //선택된 글 유형
 
   const currentAuthor = user?.email || user?.displayName || "익명";
   const currentUid = user?.uid || null;
@@ -77,13 +78,13 @@ export default function CommunityBoard() {
     setForm((f) => ({ ...f, [name]: value }));
   };
 
-  // 로그인 확인 없이 그냥 폼 열기
+  // 글쓰기 버튼
   const onClickWrite = () => {
     setShowForm((v) => !v);
     setTimeout(() => formRef.current?.scrollIntoView({ behavior: "smooth" }), 0);
   };
 
-  // 로그인 confirm 제거
+  // 글 등록 처리
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!form.title.trim() || !form.content.trim()) {
@@ -101,6 +102,7 @@ export default function CommunityBoard() {
         authorUid: currentUid,
         createdAt: serverTimestamp(),
       });
+      //폼 초기화 및 폼 닫기
       setForm({ title: "", content: "", category: "전체", type: "정보" });
       setShowForm(false);
       alert("등록되었습니다!");
