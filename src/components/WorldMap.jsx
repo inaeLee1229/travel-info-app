@@ -1,14 +1,20 @@
+// src/components/WorldMap.jsx
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import worldMap from "../assets/world_clickable_with_names.svg?raw";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
 
+// 한글 국가 이름 가져오기
+import countryData from "../data/countryData";
+import { normalizeCountryCode } from "../utils/countryCodeMapper";
+
 export default function WorldMap() {
   const navigate = useNavigate();
   const containerRef = useRef(null);
   const observerRef = useRef(null);
 
+  // 클릭 시 해당 국가 상세 페이지로 이동 
   const handleClick = useCallback(
     (e) => {
       const target = e.target.closest("path");
@@ -18,19 +24,31 @@ export default function WorldMap() {
     [navigate]
   );
 
+  //해당 나라에 커서 올리면 나라 이름 표기
   const handleMouseOver = useCallback((e) => {
-    if (e.target.tagName === "path" && e.target.getAttribute("name")) {
-      const existingTitle = e.target.querySelector("title");
-      if (!existingTitle) {
-        const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
-        title.textContent = e.target.getAttribute("name");
-        e.target.appendChild(title);
-      }
-      e.target.style.cursor = "pointer";
+    const path = e.target.closest("path");
+    if (!path) return;
+
+    const rawId = path.id; 
+    const code = normalizeCountryCode(rawId); 
+    const info = countryData[code];
+
+    // 한글 이름이 있으면 사용, 없으면 SVG name이나 코드 사용
+    const label = info?.name || path.getAttribute("name") || code;
+
+    let existingTitle = path.querySelector("title");
+    if (!existingTitle) {
+      const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+      title.textContent = label;
+      path.appendChild(title);
+    } else {
+      existingTitle.textContent = label;
     }
+
+    path.style.cursor = "pointer";
   }, []);
 
-  // 대륙별 국가 ID  
+  // 대륙별 국가 ID들 
   const asiaCountries = useMemo(
     () => ["CN","CN1","JP","JP1","JP2","KR","IN","TH","VN","MY","MY1","ID","ID1","ID2","ID3","ID4","ID5","ID6","ID7","ID8","ID9","ID10","ID11","ID12","PH","PH1","PH2","PH3","PH4","PH5","PH6","PK","BD","SA","IR","IQ","DRK","MM","LP","CB","NP","OM","OM1","AF","AM","AZ","AZ2","BH","BT","BN","GE","IL","JO","KZ","KW","KG","LB","MV","MN","PS","QA","SG","SY","TW","TJ","TL","TR","TR1","TM","AE","UZ","YE","LK"],
     []
@@ -55,7 +73,8 @@ export default function WorldMap() {
     () => ["AR","AR1","BO","BR","CL","CL1","CO","EC","GY","PY","PE","SR","UY","VE","GF","FKI"],
     []
   );
-  
+
+  // path들에 색 입히고, hover 이벤트 연결
   const applyFill = useCallback(
     (ids, color) => {
       ids.forEach((id) => {
@@ -101,12 +120,9 @@ export default function WorldMap() {
     southAmericaCountries,
   ]);
 
-  
   const scheduleRepaint = useCallback(() => {
-    
     applyContinentColors();
 
-    
     let rafCount = 0;
     const maxRaf = 6;
     const rafLoop = () => {
@@ -115,13 +131,11 @@ export default function WorldMap() {
     };
     requestAnimationFrame(rafLoop);
 
-    
     setTimeout(applyContinentColors, 200);
     setTimeout(applyContinentColors, 400);
     setTimeout(applyContinentColors, 700);
   }, [applyContinentColors]);
 
-  
   const paintWhenReady = useCallback(() => {
     let tries = 0;
     const maxTries = 10;
@@ -141,21 +155,17 @@ export default function WorldMap() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    
     paintWhenReady();
 
-    
     const unsub = onAuthStateChanged(auth, () => {
       setTimeout(paintWhenReady, 120);
     });
 
-    
     if (containerRef.current && "MutationObserver" in window) {
       observerRef.current = new MutationObserver(() => paintWhenReady());
       observerRef.current.observe(containerRef.current, { childList: true, subtree: true });
     }
 
-    
     const onVis = () => document.visibilityState === "visible" && scheduleRepaint();
     document.addEventListener("visibilitychange", onVis);
 
@@ -187,4 +197,3 @@ export default function WorldMap() {
     />
   );
 }
-
