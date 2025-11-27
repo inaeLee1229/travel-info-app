@@ -2,22 +2,30 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
-import countryData from "../data/countryData"; 
+import countryData from "../data/countryData";
 import { normalizeCountryCode } from "../utils/countryCodeMapper";
 import ContinentSidebar from "../components/ContinentSidebar";
 import "./CountryInfo.css";
 
 // Firestore에서 읽기
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
-const FAV_KEY = "favoriteCountries";
+// 즐겨찾기: 계정별로 다른 key 사용
+const FAV_KEY_BASE = "favoriteCountries";
+const getFavKey = (uid) => `${FAV_KEY_BASE}:${uid}`;
 
 export default function CountryInfo() {
   const { countryCode: rawCode } = useParams();
   const countryCode = useMemo(() => normalizeCountryCode(rawCode), [rawCode]);
 
+  // 로그인 사용자
+  const [user, setUser] = useState(null);
+
+  // 즐겨찾기 여부
   const [isFav, setIsFav] = useState(false);
+
   const getIsDesktop = () =>
     typeof window !== "undefined"
       ? window.matchMedia("(min-width: 1024px)").matches
@@ -33,11 +41,27 @@ export default function CountryInfo() {
   const PAGE_TOP_PADDING = 96;
   const SIDEBAR_WIDTH = 240;
 
-  // 즐겨찾기 불러오기
+  // 로그인 상태 감지
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem(FAV_KEY) || "[]");
-    setIsFav(saved.includes(countryCode));
-  }, [countryCode]);
+    const unsub = onAuthStateChanged(auth, (u) => setUser(u));
+    return () => unsub();
+  }, []);
+
+  // 즐겨찾기 불러오기 
+  useEffect(() => {
+    // 로그인 안 되어 있으면 즐겨찾기 사용 안 함
+    if (!user?.uid) {
+      setIsFav(false);
+      return;
+    }
+
+    const key = getFavKey(user.uid);
+    const saved = JSON.parse(localStorage.getItem(key) || "[]");
+    const canon = Array.from(
+      new Set(saved.map((c) => normalizeCountryCode(c)))
+    );
+    setIsFav(canon.includes(countryCode));
+  }, [user?.uid, countryCode]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -50,7 +74,7 @@ export default function CountryInfo() {
     return () => media.removeEventListener("change", handleChange);
   }, []);
 
-  //Firestore → 실패/없음이면 countryData로 폴백
+  // Firestore → 실패/없음이면 countryData로 폴백
   useEffect(() => {
     let cancelled = false;
 
@@ -85,13 +109,29 @@ export default function CountryInfo() {
     };
   }, [countryCode]);
 
+  // 즐겨찾기 토글 (계정별 localStorage 저장)
   const toggleFavorite = () => {
-    const saved = JSON.parse(localStorage.getItem(FAV_KEY) || "[]");
-    const next = saved.includes(countryCode)
-      ? saved.filter((c) => c !== countryCode)
-      : [...saved, countryCode];
-    setIsFav(!saved.includes(countryCode));
-    localStorage.setItem(FAV_KEY, JSON.stringify(next));
+    if (!user?.uid) {
+      alert("로그인 후 즐겨찾기 기능을 이용할 수 있습니다.");
+      return;
+    }
+
+    const key = getFavKey(user.uid);
+    const saved = JSON.parse(localStorage.getItem(key) || "[]");
+    const canon = saved.map((c) => normalizeCountryCode(c));
+
+    let next;
+    if (canon.includes(countryCode)) {
+      // 즐겨찾기 해제
+      next = canon.filter((c) => c !== countryCode);
+      setIsFav(false);
+    } else {
+      // 즐겨찾기 추가
+      next = [...canon, countryCode];
+      setIsFav(true);
+    }
+
+    localStorage.setItem(key, JSON.stringify(next));
   };
 
   // 표기 보정
@@ -100,13 +140,16 @@ export default function CountryInfo() {
     : info?.language || "";
 
   return (
-    <div
-      className="country-info"
-      style={{ paddingTop: PAGE_TOP_PADDING }}
-    >
+    <div className="country-info" style={{ paddingTop: PAGE_TOP_PADDING }}>
       {/* 상단바 */}
-      <div className="country-info__toolbar" role="navigation" aria-label="국가 정보 툴바">
-        <Link className="country-info__home" to="/">← 홈</Link>
+      <div
+        className="country-info__toolbar"
+        role="navigation"
+        aria-label="국가 정보 툴바"
+      >
+        <Link className="country-info__home" to="/">
+          ← 홈
+        </Link>
 
         <div className="country-info__search">
           <div className="country-info__search-inner">
@@ -114,13 +157,21 @@ export default function CountryInfo() {
           </div>
         </div>
 
-        <Link className="country-info__cta" to="/exchange" aria-label="환율 변환기" title="환율 변환기">
+        <Link
+          className="country-info__cta"
+          to="/exchange"
+          aria-label="환율 변환기"
+          title="환율 변환기"
+        >
           환율 변환기
         </Link>
       </div>
 
       {/* 왼쪽 대륙 사이드바 */}
-      <ContinentSidebar headerHeight={GLOBAL_HEADER_HEIGHT} isDesktop={isDesktop} />
+      <ContinentSidebar
+        headerHeight={GLOBAL_HEADER_HEIGHT}
+        isDesktop={isDesktop}
+      />
 
       {/* 본문 */}
       <main
@@ -128,7 +179,14 @@ export default function CountryInfo() {
         style={{ paddingLeft: isDesktop ? 24 + SIDEBAR_WIDTH : 24 }}
       >
         {/* 제목, 즐겨찾기 */}
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
+            marginBottom: 8,
+          }}
+        >
           <h1 style={{ margin: 0 }}>
             {info?.nameKo || info?.name || countryCode}
             {info?.nameEn ? ` (${info.nameEn})` : ""}
@@ -158,10 +216,19 @@ export default function CountryInfo() {
         <h2>기본 정보</h2>
         {info ? (
           <ul>
-            <li><strong>수도:</strong> {info.capital || "-"}</li>
-            <li><strong>공용어:</strong> {languageText || "-"}</li>
-            <li><strong>통화:</strong> {(info.currency || "-")}{info.currencyCode ? ` (${info.currencyCode})` : ""}</li>
-            <li><strong>시간대:</strong> {info.timezone || "-"}</li>
+            <li>
+              <strong>수도:</strong> {info.capital || "-"}
+            </li>
+            <li>
+              <strong>공용어:</strong> {languageText || "-"}
+            </li>
+            <li>
+              <strong>통화:</strong> {info.currency || "-"}
+              {info.currencyCode ? ` (${info.currencyCode})` : ""}
+            </li>
+            <li>
+              <strong>시간대:</strong> {info.timezone || "-"}
+            </li>
           </ul>
         ) : (
           !loading && <p>해당 국가에 대한 정보가 없습니다.</p>
@@ -178,3 +245,4 @@ export default function CountryInfo() {
     </div>
   );
 }
+
