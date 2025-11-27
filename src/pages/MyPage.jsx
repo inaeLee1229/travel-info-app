@@ -14,46 +14,68 @@ import {
   getDocs,
   collectionGroup,
 } from "firebase/firestore";
-// 즐겨찾기 국가 저장
-const FAV_KEY = "favoriteCountries";
-//즐겨찾기 표시 개수
+
+
+const FAV_KEY_BASE = "favoriteCountries";
+// 사용자별 즐겨찾기 키: favoriteCountries:{uid}
+const getFavKey = (uid) => `${FAV_KEY_BASE}:${uid}`;
+
+// 즐겨찾기 카드에 기본으로 보여줄 개수
 const MAX_VISIBLE = 4;
 
+// Firestore Timestamp 포맷
 const fmt = (ts) => (ts?.toDate ? ts.toDate().toISOString().slice(0, 10) : "");
 
 export default function MyPage() {
-  // 즐겨찾기 국가 관리
-  const [favorites, setFavorites] = useState([]);
-  const [expanded, setExpanded] = useState(false);
-
-  useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem(FAV_KEY) || "[]");
-    const canon = Array.from(new Set(saved.map((c) => normalizeCountryCode(c))));
-    setFavorites(canon);
-  }, []);
-  //화면 표시용 즐겨찾기 목록
-  const visibleFavs = useMemo(
-    () => (expanded ? favorites : favorites.slice(0, MAX_VISIBLE)),
-    [favorites, expanded]
-  );
-  // 숨겨진 즐겨찾기 개수 계산
-  const hiddenCount = Math.max(favorites.length - MAX_VISIBLE, 0);
-  // 즐겨찾기 삭제 기능
-  const removeFav = (code) => {
-    const saved = JSON.parse(localStorage.getItem(FAV_KEY) || "[]");
-    const next = saved
-      .map((c) => normalizeCountryCode(c))
-      .filter((c) => c !== code);
-    localStorage.setItem(FAV_KEY, JSON.stringify(next));
-    setFavorites(next);
-  };
-
   // 로그인 사용자 
   const [user, setUser] = useState(null);
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, setUser);
     return () => unsub();
   }, []);
+
+  // 즐겨찾기 국가 관리
+  const [favorites, setFavorites] = useState([]);
+  const [expanded, setExpanded] = useState(false);
+
+  // 로그인된 사용자 기준으로 localStorage에서 즐겨찾기 로드
+  useEffect(() => {
+    // 로그인 안 되어 있으면 즐겨찾기 비움
+    if (!user?.uid) {
+      setFavorites([]);
+      return;
+    }
+
+    const key = getFavKey(user.uid);
+    const saved = JSON.parse(localStorage.getItem(key) || "[]");
+    const canon = Array.from(
+      new Set(saved.map((c) => normalizeCountryCode(c)))
+    );
+    setFavorites(canon);
+  }, [user?.uid]);
+
+  // 화면에 실제로 보여줄 즐겨찾기 목록 (접기/펼치기)
+  const visibleFavs = useMemo(
+    () => (expanded ? favorites : favorites.slice(0, MAX_VISIBLE)),
+    [favorites, expanded]
+  );
+
+  // 숨겨진 즐겨찾기 개수
+  const hiddenCount = Math.max(favorites.length - MAX_VISIBLE, 0);
+
+  // 즐겨찾기 해제
+  const removeFav = (code) => {
+    if (!user?.uid) return; // 로그인 안 되어 있으면 그냥 무시
+
+    const key = getFavKey(user.uid);
+    const saved = JSON.parse(localStorage.getItem(key) || "[]");
+    const next = saved
+      .map((c) => normalizeCountryCode(c))
+      .filter((c) => c !== code);
+
+    localStorage.setItem(key, JSON.stringify(next));
+    setFavorites(next);
+  };
 
   // 내가 쓴 글 
   const [myPosts, setMyPosts] = useState([]);
@@ -66,7 +88,8 @@ export default function MyPage() {
 
     if (!user?.uid) return;
     setMyPostsLoading(true);
-    // Firestore에서 authorUid가 자신의 uid와 일치하는 글만 가져오기
+
+    // authorUid == 내 uid 인 글만, 작성일시 내림차순
     const q1 = query(
       collection(db, "posts"),
       where("authorUid", "==", user.uid),
@@ -83,7 +106,10 @@ export default function MyPage() {
       async (err) => {
         console.warn("onSnapshot with orderBy failed. Fallback to client sort.", err);
         try {
-          const q2 = query(collection(db, "posts"), where("authorUid", "==", user.uid));
+          const q2 = query(
+            collection(db, "posts"),
+            where("authorUid", "==", user.uid)
+          );
           const snap = await getDocs(q2);
           const list = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
           list.sort((a, b) => {
@@ -104,7 +130,7 @@ export default function MyPage() {
     return () => unsub();
   }, [user?.uid]);
 
-  // 내가 쓴 댓글 불러오기
+  // 내가 쓴 댓글 
   const [myComments, setMyComments] = useState([]);
   const [myCommentsLoading, setMyCommentsLoading] = useState(false);
   const [myCommentsError, setMyCommentsError] = useState("");
@@ -126,7 +152,7 @@ export default function MyPage() {
       (snap) => {
         const list = snap.docs.map((d) => {
           const data = d.data();
-          // 부모 컬렉션(posts/{postId}/comments/{commentId}) 에서 postId 추출
+          // (posts/{postId}/comments/{commentId}) 에서 postId 추출
           const parentPostId = d.ref.parent?.parent?.id || data.postId || null;
           return {
             id: d.id,
@@ -135,7 +161,7 @@ export default function MyPage() {
           };
         });
 
-        // 최신 댓글이 위로 오게 정렬
+        // 최신 댓글이 위로 오도록 정렬
         list.sort((a, b) => {
           const ta = a.createdAt?.toMillis?.() ?? 0;
           const tb = b.createdAt?.toMillis?.() ?? 0;
@@ -160,10 +186,14 @@ export default function MyPage() {
       <div style={{ maxWidth: 1000, margin: "0 auto", padding: "24px" }}>
         <h1 style={{ marginTop: 0 }}>마이페이지</h1>
 
-        {/* 즐겨찾기*/}
+        {/* 즐겨찾기 */}
         <h2 style={{ marginTop: 24 }}>내 즐겨찾기</h2>
 
-        {favorites.length === 0 ? (
+        {!user ? (
+          <p style={{ color: "#666", padding: "24px 0" }}>
+            로그인하면 계정별 즐겨찾기 목록이 표시됩니다.
+          </p>
+        ) : favorites.length === 0 ? (
           <p style={{ color: "#666", padding: "24px 0" }}>
             즐겨찾기한 국가가 없습니다. 나라 정보 페이지에서 “즐겨찾기 추가”를 눌러보세요.
           </p>
@@ -196,7 +226,8 @@ export default function MyPage() {
                   >
                     <div style={{ fontWeight: 700 }}>{name}</div>
                     <div style={{ fontSize: 13, color: "#666" }}>
-                      수도: {info?.capital ?? "-"} / 통화: {info?.currencyCode ?? "-"}
+                      수도: {info?.capital ?? "-"} / 통화:{" "}
+                      {info?.currencyCode ?? "-"}
                     </div>
                     <div style={{ display: "flex", gap: 8, marginTop: 6 }}>
                       <Link
@@ -255,14 +286,17 @@ export default function MyPage() {
         <h2 style={{ marginTop: 36 }}>내가 쓴 글</h2>
 
         {!user ? (
-          <p style={{ color: "#666" }}>로그인하면 내가 작성한 글이 여기 표시됩니다.</p>
+          <p style={{ color: "#666" }}>
+            로그인하면 내가 작성한 글이 여기 표시됩니다.
+          </p>
         ) : myPostsLoading ? (
           <p style={{ color: "#666" }}>불러오는 중…</p>
         ) : myPostsError ? (
           <p style={{ color: "crimson" }}>{myPostsError}</p>
         ) : myPosts.length === 0 ? (
           <p style={{ color: "#666" }}>
-            아직 작성한 글이 없습니다. <Link to="/community">커뮤니티</Link>에서 글을 남겨보세요.
+            아직 작성한 글이 없습니다. <Link to="/community">커뮤니티</Link>에서 글을
+            남겨보세요.
           </p>
         ) : (
           <ul
@@ -286,7 +320,6 @@ export default function MyPage() {
                   overflow: "hidden",
                 }}
               >
-                {/* 카드 전체 클릭해서 PostDetail로 이동 */}
                 <Link
                   to={`/community/${post.id}`}
                   style={{
@@ -332,18 +365,21 @@ export default function MyPage() {
           </ul>
         )}
 
-        {/* 내가 쓴 댓글 */}
+        {/*내가 쓴 댓글*/}
         <h2 style={{ marginTop: 36 }}>내가 쓴 댓글</h2>
 
         {!user ? (
-          <p style={{ color: "#666" }}>로그인하면 내가 작성한 댓글이 여기 표시됩니다.</p>
+          <p style={{ color: "#666" }}>
+            로그인하면 내가 작성한 댓글이 여기 표시됩니다.
+          </p>
         ) : myCommentsLoading ? (
           <p style={{ color: "#666" }}>불러오는 중…</p>
         ) : myCommentsError ? (
           <p style={{ color: "crimson" }}>{myCommentsError}</p>
         ) : myComments.length === 0 ? (
           <p style={{ color: "#666" }}>
-            아직 작성한 댓글이 없습니다. <Link to="/community">커뮤니티</Link>에서 댓글을 남겨보세요.
+            아직 작성한 댓글이 없습니다.{" "}
+            <Link to="/community">커뮤니티</Link>에서 댓글을 남겨보세요.
           </p>
         ) : (
           <div
@@ -365,7 +401,6 @@ export default function MyPage() {
                 }}
               >
                 {c.postId ? (
-                  // postId가 있으면 카드 전체를 링크로
                   <Link
                     to={`/community/${c.postId}`}
                     style={{
@@ -409,7 +444,6 @@ export default function MyPage() {
                     </div>
                   </Link>
                 ) : (
-                  // 혹시라도 postId를 못 찾은 예전 댓글이면 그냥 텍스트만
                   <div style={{ padding: 16 }}>
                     <div
                       style={{
